@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AppProviders } from "./providers";
+import { Navigation } from "@/components/navigation/navigation";
+import { Screen } from "@/components/layout/screen";
+import { background } from "@/styles";
+import { Card, Label } from "@heroui/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +28,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className={`min-h-full h-screen flex flex-row overflow-hidden ${background.bluepurplegradient}`}>
+        <AppProviders>
+          <Navigation />
+          <Screen>
+            {children}
+
+          </Screen>
+
+        </AppProviders>
+
+      </body>
     </html>
   );
 }

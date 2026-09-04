@@ -1,0 +1,5 @@
+- zrobic average day tickets na podstawie np last week, last month, last year, zakres dat:
+    czyli ze pobiera ilosc ticketow z kazdego dnia, np ostatnie 30 dni, i potem dzieli tą sumę przez tą ilość
+    tak samo z tygodniem i zakresem itp
+
+-- wyodrebnic jakies style tekstowe do osobnych komponentow
