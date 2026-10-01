@@ -22,25 +22,22 @@ type TicketsPageType = {
         description?: string;
     }) => void;
 
-    otherFilters: TicketsPageFiltersType;
+    filters: TicketsPageFiltersType;
 
-    setFilters: (
-        filterName: string,
-        value: string
-    ) => void;
+    setFilters: (filters: Partial<TicketsPageFiltersType>) => void;
     itemsPerPage: number
 };
 
 export const useTicketsPageStore = create<TicketsPageType>((set) => ({
-    title: undefined,
-    description: undefined,
+    title: "All tickets",
+    description: "Here you can find all tickets",
     listFilter: "all",
     statsVisibility: true,
     setStatsVisibility: () =>
         set((state) => ({
             statsVisibility: !state.statsVisibility,
         })),
-    otherFilters: {
+    filters: {
         sortBy: "created_at",
         sortDir: "desc",
         searchValue: "",
@@ -49,11 +46,11 @@ export const useTicketsPageStore = create<TicketsPageType>((set) => ({
 
     setPageData: (data) => set(data),
 
-    setFilters: (filterName, value) =>
+    setFilters: (newFilters) =>
         set((state) => ({
-            otherFilters: {
-                ...state.otherFilters,
-                [filterName]: value,
+            filters: {
+                ...state.filters,
+                ...newFilters,
             },
         })),
     itemsPerPage: 15

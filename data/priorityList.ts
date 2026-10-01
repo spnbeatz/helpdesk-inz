@@ -13,11 +13,11 @@ export const priorityList = [
         {
         id: "231e1dd11d1",
         name: "medium",
-        color: "green"
+        color: "yellow"
     },
         {
         id: "231e1dd11ds",
         name: "high",
-        color: "green"
+        color: "red"
     }
 ]

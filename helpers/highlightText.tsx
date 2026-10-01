@@ -1,12 +1,20 @@
-export const highlightText = (text: string, searchValue?: string) => {
+export const highlightText = (
+    text: string | number | null | undefined,
+    searchValue?: string
+) => {
+    const value = String(text ?? "");
+
     if (!searchValue?.trim()) {
-        return text;
+        return value;
     }
 
     const search = searchValue.trim();
 
-    const parts = text.split(
-        new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi")
+    const parts = value.split(
+        new RegExp(
+            `(${search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+            "gi"
+        )
     );
 
     return parts.map((part, index) =>

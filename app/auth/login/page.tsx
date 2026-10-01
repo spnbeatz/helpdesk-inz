@@ -4,7 +4,7 @@ import { Form, TextField, Label, Input, FieldError, Button } from "@heroui/react
 import { useState, useEffect } from "react";
 import { LoginFormData } from "@/validation/types";
 import { validateEmail } from "@/validation/email.validation";
-import { Center } from "@/components/layout/center";
+import { Center } from "@/components/ui/layout/flex/Center";
 import { useRef } from "react";
 import { Fieldset, FieldGroup, Description } from "@heroui/react";
 import { background, text } from "@/styles";

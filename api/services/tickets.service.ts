@@ -2,7 +2,7 @@ import { ticketsList, TicketType } from "@/data/exampleTicketsList";
 import { categoryList } from "@/data/categoryList";
 import { priorityList } from "@/data/priorityList";
 import { TicketsPageFiltersType } from "@/store/pages/tickets.store";
-import { TicketFormDataType } from "@/components/modals/tickets/TicketFormModal";
+import { TicketFormDataType } from "@/components/features/tickets/modals/TicketFormModal";
 
 
 export type TicketListItemType = TicketType & {

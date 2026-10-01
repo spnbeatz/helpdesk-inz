@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import { GoHome } from "react-icons/go";
-import { LuBadgeAlert, LuBadgeCheck, LuBookMarked, LuBookText, LuFileChartColumn, LuFileCog, LuLayoutDashboard, LuPersonStanding, LuSettings, LuSettings2, LuTicket, LuTicketMinus, LuTickets, LuTicketX, LuUserRoundCog, LuUsers } from "react-icons/lu";
+import { LuBadgeAlert, LuBadgeCheck, LuBookMarked, LuBookText, LuFileChartColumn, LuFileCog, LuLayoutDashboard, LuPersonStanding, LuSettings, LuSettings2, LuTicket, LuTicketMinus, LuTickets, LuTicketX, LuUserRoundCog, LuUsers, LuPackage, LuShoppingCart, LuStore, LuTruck, LuMonitor, LuCornerDownLeft } from "react-icons/lu";
 
 export type NavigationRoutesType = {
     name: string,
@@ -22,35 +22,9 @@ export const navigationRoutes: NavigationRoutesType[] = [
     },
     {
         name: "Tickets",
-        href: null,
+        href: "/tickets",
         icon: LuTicket,
         key: "tickets",
-        children: [
-            {
-                name: "All Tickets",
-                href: "/tickets",
-                icon: LuTickets,
-                roles: ["admin"],
-            },
-            {
-                name: "My Tickets",
-                href: "/tickets/me",
-                icon: LuTicket,
-                roles: ["all"]
-            },
-            {
-                name: "Unassigned",
-                href: "/tickets/unassigned",
-                icon: LuTicketMinus,
-                roles: ["admin", "technician"]
-            },
-            {
-                name: "Closed",
-                href: "/tickets/closed",
-                icon: LuTicketX,
-                roles: ["admin", "technician"]
-            }
-        ],
         roles: ["all"],
     },
     {
@@ -59,6 +33,27 @@ export const navigationRoutes: NavigationRoutesType[] = [
         icon: LuUsers,
         key: "customers",
         roles: ["admin"]
+    },
+    {
+        name: "Logistics",
+        href: null,
+        icon: LuPackage,
+        key: "logistics",
+        roles: ["admin", "technician"],
+        children: [
+            {
+                name: "Orders",
+                href: "/logistics/orders",
+                icon: LuShoppingCart,
+                roles: ["admin", "technician"]
+            },
+            {
+                name: "Inventory",
+                href: "/logistics/inventory",
+                icon: LuStore,
+                roles: ["admin", "technician"]
+            }
+        ]
     },
     {
         name: "Reports",
@@ -107,19 +102,19 @@ export const navigationRoutes: NavigationRoutesType[] = [
             },
             {
                 name: "Categories",
-                href: "/settings/categories",
+                href: "/settings/tickets/#categories",
                 icon: LuBookMarked,
                 roles: ["admin"]
             },
             {
                 name: "Priorities",
-                href: "/settings/priorities",
+                href: "/settings/tickets/#priorities",
                 icon: LuBadgeAlert,
                 roles: ["admin"]
             },
             {
                 name: "Statuses",
-                href: "/settings/statuses",
+                href: "/settings/tickets/#statuses",
                 icon: LuBadgeCheck,
                 roles: ["admin"]
             }

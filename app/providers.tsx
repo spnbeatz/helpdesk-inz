@@ -1,6 +1,6 @@
 "use client"
 
-import { ModalManager } from "@/components/modals/ModalManager"
+import { ModalManager } from "@/components/composed/modals/ModalManager"
 import { AuthGuard } from "@/guards/auth.guard"
 import { AuthProvider } from "@/providers/auth.provider"
 import { QueryProvider } from "@/providers/query.provider"

@@ -5,7 +5,8 @@ type ModalType =
     | "ticketForm"
     | "deleteTicket"
     | "ticketDetails"
-    | "confirmation";
+    | "confirmation"
+    | "inventoryItem";
 
 type Modal = {
     id: string;

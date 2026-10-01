@@ -3,3 +3,11 @@
     tak samo z tygodniem i zakresem itp
 
 -- wyodrebnic jakies style tekstowe do osobnych komponentow
+
+zaaktualizowac nawigacje
+
+dodac filtry do INVENTORY
+
+ProductListFilterButton / przeniesc stan filtrow do globalnych stanow bo ise resetuje po kazdym otwarciu
+
+klikanie w ticket ma otworzyc modal nie do edycji a do podgladu wraz z czatem w nim
