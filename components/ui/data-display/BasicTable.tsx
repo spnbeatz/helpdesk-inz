@@ -29,7 +29,7 @@ export const BasicTable = ({
                 >
                     <Table.Header>
                         {selectedKeys && (
-                            <Table.Column isRowHeader>
+                            <Table.Column isRowHeader className={"bg-indigo-100/50 rounded-l-lg"}>
                                 <Checkbox aria-label="Select all" slot="selection">
                                     <Checkbox.Content>
                                         <Checkbox.Control>
@@ -40,9 +40,12 @@ export const BasicTable = ({
                             </Table.Column>
 
                         )}
-                        {columns.map((column) => (
-                            <Table.Column>{column}</Table.Column>
-                        ))}
+                        {columns.map((column, index) => {
+                            
+                            return (
+                                <Table.Column className={`bg-indigo-100/50 ${index === columns.length - 1 ? "rounded-r-lg" : ""}`}>{column}</Table.Column>
+                            )
+                        })}
                     </Table.Header>
                     <Table.Body>
                         {rows?.map((row) => (
@@ -51,7 +54,6 @@ export const BasicTable = ({
                                     <Table.Cell className="pe-0">
                                         <Checkbox
                                             slot="selection"
-                                            variant="secondary"
                                         >
                                             <Checkbox.Content>
                                                 <Checkbox.Control>

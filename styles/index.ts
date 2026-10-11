@@ -1,5 +1,5 @@
 export const background = {
-    bluepurplegradient: "bg-linear-to-r from-blue-500 to-indigo-500"
+    bluepurplegradient: "bg-linear-to-r from-blue-400 to-indigo-500"
 }
 
 export const text = {

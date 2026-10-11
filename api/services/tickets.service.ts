@@ -10,8 +10,17 @@ export type TicketListItemType = TicketType & {
     category: string | undefined;
 };
 
-export const getTicket = (id?: string): TicketType | undefined => {
-    return ticketsList.find((ticket) => ticket.id === id) || undefined;
+export const getTicket = (id?: string): TicketListItemType | undefined => {
+    const ticket = ticketsList.find((ticket) => ticket.id === id) || undefined;
+    return {
+        ...ticket,
+        priority: priorityList.find(
+            (priority) => priority.id === ticket?.priorityId
+        )?.name,
+        category: categoryList.find(
+            (category) => category.id === ticket?.categoryId
+        )?.name
+    } as TicketListItemType
 };
 
 export const getTicketList = (
@@ -121,10 +130,10 @@ export const createTicket = async (
 
     return {}
 
-/*     return fetch("/api/tickets", {
-        method: "POST",
-        body
-    }); */
+    /*     return fetch("/api/tickets", {
+            method: "POST",
+            body
+        }); */
 };
 
 export const updateTicket = async (
@@ -146,8 +155,8 @@ export const updateTicket = async (
 
     return {}
 
-/*     return fetch(`/api/tickets/${formData.id}`, {
-        method: "PUT",
-        body
-    }); */
+    /*     return fetch(`/api/tickets/${formData.id}`, {
+            method: "PUT",
+            body
+        }); */
 };

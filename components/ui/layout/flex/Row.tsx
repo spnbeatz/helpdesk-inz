@@ -1,17 +1,6 @@
-import { FlexProps, alignment, alignmentClasses } from ".";
+import { FlexProps } from ".";
+import { Flex } from "./Flex";
 
 export const Row = (props: FlexProps) => {
-
-    const { children, className } = props;
-
-    const align = alignment(props);
-
-    return (
-        <div
-            className={`flex flex-row gap-4 ${align ? alignmentClasses[align] : ""
-                } ${className ?? ""}`}
-        >
-            {children}
-        </div>
-    )
+    return <Flex {...props} direction="row" />
 }

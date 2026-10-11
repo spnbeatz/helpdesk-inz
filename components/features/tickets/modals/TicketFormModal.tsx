@@ -188,7 +188,7 @@ export const TicketFormModal = ({ data }: { data?: TicketFormModalProps }) => {
                 </Fieldset>
             </Form>
 
-            <Row CenterEnd className="w-full mt-4">
+            <Row CenterEnd className="w-full mt-4 gap-2">
                 <Button variant="tertiary" onClick={handleCancelEditing} className={"rounded-lg"}> {/* Jeśli nie ma wprowadzonych danych, poprostu closeModal */}
                     Cancel
                 </Button>

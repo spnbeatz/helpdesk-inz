@@ -38,5 +38,5 @@ export const useInventoryPageStore = create<InventoryPageType>((set) => ({
             },
         })),
 
-    itemsPerPage: 13,
+    itemsPerPage: 15,
 }));

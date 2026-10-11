@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchUsers } from "@/queries/users/users.query";
-import { Key, Autocomplete, SearchField, ListBox, EmptyState } from "@heroui/react";
+import { useState } from "react";
+import { Key, Autocomplete, SearchField } from "@heroui/react";
 import { SearchUsersList } from "./SearchUsersList";
 
 type SearchUserProps = {

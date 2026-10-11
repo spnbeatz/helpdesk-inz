@@ -6,7 +6,8 @@ type ModalType =
     | "deleteTicket"
     | "ticketDetails"
     | "confirmation"
-    | "inventoryItem";
+    | "inventoryItem"
+    | "viewTicket";
 
 type Modal = {
     id: string;

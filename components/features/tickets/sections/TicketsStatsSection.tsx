@@ -8,15 +8,16 @@ import {
     TicketsTimeLineChart,
     TicketsStatusChart
  } from "@/components/features/tickets/statistics/charts";
+import { Row } from "@/components/ui/layout/flex";
 
 export const TicketsStatsSection = () => {
     const { data: ticketsList = [] } = useTicketList({ status: "all" });
     return (
-        <Section className="shrink-0 w-full flex flex-row items-start justify-start gap-2 relative h-[250px] pr-2">
+        <Row CenterBetween className="w-full relative h-62 pr-2 gap-2">
                 <TotalTicketsCard ticketsList={ticketsList} />
                 <TicketsTimeLineChart />
                 <TicketsCountByPriorityChart ticketList={ticketsList} />
                 <TicketsStatusChart ticketList={ticketsList} />
-        </Section>
+        </Row>
     )
 }

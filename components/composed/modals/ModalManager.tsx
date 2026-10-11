@@ -7,6 +7,7 @@ import { TicketFormModal, TicketFormModalProps } from "@/components/features/tic
 
 import { ConfirmationModalProps } from "./ConfirmationModal";
 import { InventoryItemModal, InventoryItemModalType } from "../../features/logistics/modals/InventoryItemModal";
+import { TicketViewModal, TicketViewModalProps } from "@/components/features/tickets/modals/TicketViewModal";
 
 
 export const ModalManager = () => {
@@ -38,6 +39,13 @@ export const ModalManager = () => {
                                 data={modal.data as ConfirmationModalProps}
                             />
                         );
+                    case "viewTicket":
+                        return (
+                            <TicketViewModal
+                                key={modal.id}
+                                data={modal.data as TicketViewModalProps}
+                            />
+                        )
 
 /*                     case "deleteTicket":
                         return (

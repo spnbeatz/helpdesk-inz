@@ -13,6 +13,19 @@ export type UserType = {
     lastLoginAt: string | null;
 };
 
+export type CustomerType = {
+    id: string,
+    name: string,
+    email: string,
+    phone: string,
+    department: string,
+    position: string,
+    location: string, 
+    avatarUrl: string
+}
+
+
+
 export const usersList: UserType[] = [
     {
         id: "USR-001",
@@ -700,3 +713,14 @@ export const rolesList: RoleType[] = [
         description: "Can create and manage own support tickets",
     },
 ];
+
+export const customersList: CustomerType[] = usersList.map(user => ({
+    id: user.id,
+    name: `${user.firstName} ${user.lastName}`,
+    email: user.email,
+    phone: user.phone,
+    department: user.department,
+    position: user.position,
+    location: user.location,
+    avatarUrl: user.avatarUrl ?? "",
+}));

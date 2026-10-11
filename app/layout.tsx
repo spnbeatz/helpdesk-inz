@@ -22,9 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navigation />
           <Screen>
             {children}
-
           </Screen>
-
         </AppProviders>
 
       </body>

@@ -15,10 +15,13 @@ export type Alignment =
     | "End"
     | "EndBetween";
 
+export type Direction = "col" | "row";
+
 export type FlexProps = {
     children: React.ReactNode;
     className?: string;
     onClick?: () => void;
+    direction?: Direction;
 } & Partial<Record<Alignment, boolean>>;
 
 export const alignmentClasses: Record<Alignment, string> = {
@@ -42,6 +45,17 @@ export const alignment = (props: FlexProps) => {
     return (Object.keys(alignmentClasses) as Alignment[])
         .find(key => props[key] === true);
 };
+
+export const direction = (props: FlexProps) => {
+    switch(props.direction){
+        case "col":
+            return "flex-col";
+        case "row":
+            return "flex-row";
+        default:
+            return "flex-row";
+    }
+}
 
 export {
     Column,

@@ -27,20 +27,21 @@ export const Input = ({
             isRequired={isRequired || false}
             name={name}
             validate={validate}
+            className={"w-full"}
         >
             {label && <Label>{label}</Label>}
             {type === "input" ?
                 (
                     <HeroInput
                         placeholder={placeholder}
-                        className={"rounded-lg bg-white/70"}
+                        className={"rounded-lg bg-white/50 w-full"}
                         value={value}
                         onInput={(e) =>
                             onInput((e.target as HTMLInputElement).value, name || "")
                         }
                     />
                 ) : (
-                    <TextArea fullWidth className={"rounded-lg bg-white/70"}
+                    <TextArea fullWidth className={"rounded-lg bg-white/50"}
                         placeholder={placeholder} value={value} rows={rows}
                         onInput={(e) =>
                             onInput((e.target as HTMLTextAreaElement).value, name || "")

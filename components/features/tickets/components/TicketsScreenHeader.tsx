@@ -20,7 +20,7 @@ export const TicketsScreenHeader = () => {
     }
     return (
         <Column Center className="w-full pr-2">
-            <Row Start className="w-full">
+            <Row StartBetween className="w-full">
                 <Title title={title} description={description} />
                 <Row StartBetween className="gap-2">
                     <TicketStatusTabSwitch />
