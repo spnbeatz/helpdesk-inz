@@ -7,7 +7,8 @@ type ModalType =
     | "ticketDetails"
     | "confirmation"
     | "inventoryItem"
-    | "viewTicket";
+    | "viewTicket"
+    | "customerInfo";
 
 type Modal = {
     id: string;

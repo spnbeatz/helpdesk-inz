@@ -3,12 +3,21 @@ import { categoryList } from "@/data/categoryList";
 import { priorityList } from "@/data/priorityList";
 import { TicketsPageFiltersType } from "@/store/pages/tickets.store";
 import { TicketFormDataType } from "@/components/features/tickets/modals/TicketFormModal";
+import { usersList } from "@/data/users";
 
+type UserMiniType = {
+    id: string,
+    email: string,
+    avatarUrl: string
+}
 
 export type TicketListItemType = TicketType & {
     priority: string | undefined;
     category: string | undefined;
+    customer: UserMiniType
 };
+
+
 
 export const getTicket = (id?: string): TicketListItemType | undefined => {
     const ticket = ticketsList.find((ticket) => ticket.id === id) || undefined;
@@ -19,7 +28,16 @@ export const getTicket = (id?: string): TicketListItemType | undefined => {
         )?.name,
         category: categoryList.find(
             (category) => category.id === ticket?.categoryId
-        )?.name
+        )?.name,
+        customer: usersList.find((user) => {
+            if (user.id === ticket?.customer_id) {
+                return {
+                    id: user.id,
+                    email: user.email,
+                    avatarUrl: user.avatarUrl
+                }
+            }
+        }) as UserMiniType
     } as TicketListItemType
 };
 
@@ -107,7 +125,16 @@ export const getTicketList = (
         )?.name,
         category: categoryList.find(
             (category) => category.id === ticket.categoryId
-        )?.name
+        )?.name,
+        customer: usersList.find((user) => {
+            if (user.id === userId) {
+                return {
+                    id: user.id,
+                    email: user.email,
+                    avatarUrl: user.avatarUrl
+                }
+            }
+        }) as UserMiniType
     }));
 };
 

@@ -22,7 +22,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-09-02T08:12:00",
         updated_at: "2026-09-02T08:20:00",
         technician_id: null,
-        customer_id: "CUS-001",
+        customer_id: "USR-001",
     },
     {
         id: "TCK-0002",
@@ -34,7 +34,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-09-02T07:45:00",
         updated_at: "2026-09-02T07:50:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-004",
+        customer_id: "USR-004",
     },
     {
         id: "TCK-0003",
@@ -46,7 +46,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-09-01T16:32:00",
         updated_at: "2026-09-01T17:10:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-002",
+        customer_id: "USR-002",
     },
     {
         id: "TCK-0004",
@@ -58,7 +58,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-09-01T14:21:00",
         updated_at: "2026-09-01T14:35:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-007",
+        customer_id: "USR-007",
     },
     {
         id: "TCK-0005",
@@ -70,7 +70,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-09-01T13:08:00",
         updated_at: "2026-09-01T13:15:00",
         technician_id: null,
-        customer_id: "CUS-003",
+        customer_id: "USR-003",
     },
     {
         id: "TCK-0006",
@@ -82,7 +82,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-09-01T11:44:00",
         updated_at: "2026-09-01T12:20:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-005",
+        customer_id: "USR-005",
     },
     {
         id: "TCK-0007",
@@ -94,7 +94,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-09-01T10:15:00",
         updated_at: "2026-09-01T10:40:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-008",
+        customer_id: "USR-008",
     },
     {
         id: "TCK-0008",
@@ -106,7 +106,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-31T15:27:00",
         updated_at: "2026-08-31T15:52:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-006",
+        customer_id: "USR-006",
     },
     {
         id: "TCK-0009",
@@ -118,7 +118,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-31T13:11:00",
         updated_at: "2026-08-31T13:20:00",
         technician_id: null,
-        customer_id: "CUS-009",
+        customer_id: "USR-009",
     },
     {
         id: "TCK-0010",
@@ -130,7 +130,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-31T10:42:00",
         updated_at: "2026-08-31T11:30:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-001",
+        customer_id: "USR-001",
     },
     {
         id: "TCK-0011",
@@ -142,7 +142,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-30T16:05:00",
         updated_at: "2026-08-30T16:05:00",
         technician_id: null,
-        customer_id: "CUS-010",
+        customer_id: "USR-010",
     },
     {
         id: "TCK-0012",
@@ -154,7 +154,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-30T14:32:00",
         updated_at: "2026-08-30T15:47:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-004",
+        customer_id: "USR-004",
     },
     {
         id: "TCK-0013",
@@ -166,7 +166,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-30T12:18:00",
         updated_at: "2026-08-30T12:25:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-002",
+        customer_id: "USR-002",
     },
     {
         id: "TCK-0014",
@@ -178,7 +178,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-29T15:40:00",
         updated_at: "2026-08-29T16:18:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-011",
+        customer_id: "USR-011",
     },
     {
         id: "TCK-0015",
@@ -190,7 +190,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-29T13:05:00",
         updated_at: "2026-08-29T13:05:00",
         technician_id: null,
-        customer_id: "CUS-012",
+        customer_id: "USR-012",
     },
     {
         id: "TCK-0016",
@@ -202,7 +202,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-29T11:23:00",
         updated_at: "2026-08-29T11:50:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-003",
+        customer_id: "USR-003",
     },
     {
         id: "TCK-0017",
@@ -214,7 +214,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-28T16:14:00",
         updated_at: "2026-08-28T16:46:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-005",
+        customer_id: "USR-005",
     },
     {
         id: "TCK-0018",
@@ -226,7 +226,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-28T14:37:00",
         updated_at: "2026-08-28T14:45:00",
         technician_id: null,
-        customer_id: "CUS-007",
+        customer_id: "USR-007",
     },
     {
         id: "TCK-0019",
@@ -238,7 +238,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-28T12:02:00",
         updated_at: "2026-08-28T12:27:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-009",
+        customer_id: "USR-009",
     },
     {
         id: "TCK-0020",
@@ -250,7 +250,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-27T15:19:00",
         updated_at: "2026-08-27T15:32:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-006",
+        customer_id: "USR-006",
     },
     {
         id: "TCK-0021",
@@ -262,7 +262,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-27T13:44:00",
         updated_at: "2026-08-27T14:01:00",
         technician_id: null,
-        customer_id: "CUS-008",
+        customer_id: "USR-008",
     },
     {
         id: "TCK-0022",
@@ -274,7 +274,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-27T10:25:00",
         updated_at: "2026-08-27T10:48:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-010",
+        customer_id: "USR-010",
     },
     {
         id: "TCK-0023",
@@ -286,7 +286,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-26T16:12:00",
         updated_at: "2026-08-26T16:40:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-001",
+        customer_id: "USR-001",
     },
     {
         id: "TCK-0024",
@@ -298,7 +298,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-26T13:52:00",
         updated_at: "2026-08-26T15:05:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-011",
+        customer_id: "USR-011",
     },
     {
         id: "TCK-0025",
@@ -310,7 +310,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-26T11:17:00",
         updated_at: "2026-08-26T11:30:00",
         technician_id: null,
-        customer_id: "CUS-004",
+        customer_id: "USR-004",
     },
     {
         id: "TCK-0026",
@@ -322,7 +322,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-25T15:08:00",
         updated_at: "2026-08-25T16:12:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-012",
+        customer_id: "USR-012",
     },
     {
         id: "TCK-0027",
@@ -334,7 +334,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-25T12:46:00",
         updated_at: "2026-08-25T12:46:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-002",
+        customer_id: "USR-002",
     },
     {
         id: "TCK-0028",
@@ -346,7 +346,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-25T10:31:00",
         updated_at: "2026-08-25T10:55:00",
         technician_id: null,
-        customer_id: "CUS-005",
+        customer_id: "USR-005",
     },
     {
         id: "TCK-0029",
@@ -358,7 +358,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-24T14:15:00",
         updated_at: "2026-08-24T15:02:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-006",
+        customer_id: "USR-006",
     },
     {
         id: "TCK-0030",
@@ -370,7 +370,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-24T09:20:00",
         updated_at: "2026-08-24T11:35:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-010",
+        customer_id: "USR-010",
     },
     {
         id: "TCK-0031",
@@ -382,7 +382,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-23T16:42:00",
         updated_at: "2026-08-23T16:55:00",
         technician_id: null,
-        customer_id: "CUS-003",
+        customer_id: "USR-003",
     },
     {
         id: "TCK-0032",
@@ -394,7 +394,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-23T14:18:00",
         updated_at: "2026-08-23T14:30:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-007",
+        customer_id: "USR-007",
     },
     {
         id: "TCK-0033",
@@ -406,7 +406,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-23T11:37:00",
         updated_at: "2026-08-23T12:25:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-009",
+        customer_id: "USR-009",
     },
     {
         id: "TCK-0034",
@@ -418,7 +418,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-22T15:11:00",
         updated_at: "2026-08-22T15:35:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-004",
+        customer_id: "USR-004",
     },
     {
         id: "TCK-0035",
@@ -430,7 +430,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-22T13:47:00",
         updated_at: "2026-08-22T14:02:00",
         technician_id: null,
-        customer_id: "CUS-011",
+        customer_id: "USR-011",
     },
     {
         id: "TCK-0036",
@@ -442,7 +442,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-22T10:24:00",
         updated_at: "2026-08-22T11:16:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-010",
+        customer_id: "USR-010",
     },
     {
         id: "TCK-0037",
@@ -454,7 +454,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-21T16:05:00",
         updated_at: "2026-08-21T16:10:00",
         technician_id: null,
-        customer_id: "CUS-006",
+        customer_id: "USR-006",
     },
     {
         id: "TCK-0038",
@@ -466,7 +466,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-21T14:32:00",
         updated_at: "2026-08-21T14:50:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-001",
+        customer_id: "USR-001",
     },
     {
         id: "TCK-0039",
@@ -478,7 +478,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-21T12:18:00",
         updated_at: "2026-08-21T13:42:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-008",
+        customer_id: "USR-008",
     },
     {
         id: "TCK-0040",
@@ -490,7 +490,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-21T09:45:00",
         updated_at: "2026-08-21T10:12:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-005",
+        customer_id: "USR-005",
     },
     {
         id: "TCK-0041",
@@ -502,7 +502,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-20T16:22:00",
         updated_at: "2026-08-20T16:40:00",
         technician_id: null,
-        customer_id: "CUS-012",
+        customer_id: "USR-012",
     },
     {
         id: "TCK-0042",
@@ -514,7 +514,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-20T14:08:00",
         updated_at: "2026-08-20T14:52:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-002",
+        customer_id: "USR-002",
     },
     {
         id: "TCK-0043",
@@ -526,7 +526,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-20T11:26:00",
         updated_at: "2026-08-20T11:48:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-003",
+        customer_id: "USR-003",
     },
     {
         id: "TCK-0044",
@@ -538,7 +538,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-20T09:15:00",
         updated_at: "2026-08-20T09:40:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-007",
+        customer_id: "USR-007",
     },
     {
         id: "TCK-0045",
@@ -550,7 +550,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-19T15:42:00",
         updated_at: "2026-08-19T16:00:00",
         technician_id: null,
-        customer_id: "CUS-004",
+        customer_id: "USR-004",
     },
     {
         id: "TCK-0046",
@@ -562,7 +562,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-19T13:27:00",
         updated_at: "2026-08-19T13:51:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-006",
+        customer_id: "USR-006",
     },
     {
         id: "TCK-0047",
@@ -574,7 +574,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-19T11:04:00",
         updated_at: "2026-08-19T11:22:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-010",
+        customer_id: "USR-010",
     },
     {
         id: "TCK-0048",
@@ -586,7 +586,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-19T08:36:00",
         updated_at: "2026-08-19T08:50:00",
         technician_id: null,
-        customer_id: "CUS-011",
+        customer_id: "USR-011",
     },
     {
         id: "TCK-0049",
@@ -598,7 +598,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-18T16:15:00",
         updated_at: "2026-08-18T17:32:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-005",
+        customer_id: "USR-005",
     },
     {
         id: "TCK-0050",
@@ -610,7 +610,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-18T14:44:00",
         updated_at: "2026-08-18T15:10:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-009",
+        customer_id: "USR-009",
     },
     {
         id: "TCK-0051",
@@ -622,7 +622,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-18T12:31:00",
         updated_at: "2026-08-18T12:48:00",
         technician_id: null,
-        customer_id: "CUS-002",
+        customer_id: "USR-002",
     },
     {
         id: "TCK-0052",
@@ -634,7 +634,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-18T10:17:00",
         updated_at: "2026-08-18T10:31:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-008",
+        customer_id: "USR-008",
     },
     {
         id: "TCK-0053",
@@ -646,7 +646,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-17T15:03:00",
         updated_at: "2026-08-17T15:29:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-003",
+        customer_id: "USR-003",
     },
     {
         id: "TCK-0054",
@@ -658,7 +658,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-17T13:16:00",
         updated_at: "2026-08-17T13:40:00",
         technician_id: null,
-        customer_id: "CUS-012",
+        customer_id: "USR-012",
     },
     {
         id: "TCK-0055",
@@ -670,7 +670,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-17T11:42:00",
         updated_at: "2026-08-17T11:58:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-001",
+        customer_id: "USR-001",
     },
     {
         id: "TCK-0056",
@@ -682,7 +682,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-17T09:28:00",
         updated_at: "2026-08-17T09:45:00",
         technician_id: "TEC-003",
-        customer_id: "CUS-006",
+        customer_id: "USR-006",
     },
     {
         id: "TCK-0057",
@@ -694,7 +694,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-16T16:51:00",
         updated_at: "2026-08-16T17:05:00",
         technician_id: null,
-        customer_id: "CUS-007",
+        customer_id: "USR-007",
     },
     {
         id: "TCK-0058",
@@ -706,7 +706,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-16T14:23:00",
         updated_at: "2026-08-16T15:18:00",
         technician_id: "TEC-001",
-        customer_id: "CUS-004",
+        customer_id: "USR-004",
     },
     {
         id: "TCK-0059",
@@ -718,7 +718,7 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-16T11:36:00",
         updated_at: "2026-08-16T12:12:00",
         technician_id: "TEC-002",
-        customer_id: "CUS-010",
+        customer_id: "USR-010",
     },
     {
         id: "TCK-0060",
@@ -730,6 +730,6 @@ export const ticketsList: TicketType[] = [
         created_at: "2026-08-16T09:12:00",
         updated_at: "2026-08-16T09:30:00",
         technician_id: null,
-        customer_id: "CUS-005",
+        customer_id: "USR-005",
     },
 ];

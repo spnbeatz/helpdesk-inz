@@ -10,7 +10,7 @@ import { Fieldset, FieldGroup, Description } from "@heroui/react";
 import { background, text } from "@/styles";
 import { useAuth } from "@/providers/auth.provider";
 import { useRouter } from "next/navigation";
-import { DecorCard } from "@/components/other/DecorCard";
+import { DecorCard } from "@/components/misc/DecorCard";
 
 export default function LoginPage() {
 

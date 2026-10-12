@@ -11,7 +11,7 @@ type InventoryItem = Equipment & {
     quantity?: number;
 };
 
-type InventoryColumn = {
+export type InventoryColumn = {
     id: keyof InventoryItem;
     name: string;
 };

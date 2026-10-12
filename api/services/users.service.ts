@@ -71,3 +71,7 @@ export const searchCustomerList = (filters: CustomersPageFilterType): CustomerTy
 
 
 }
+
+export const getCustomer = (customerId: string) => {
+    return customersList.find((customer) => customer.id === customerId);
+}

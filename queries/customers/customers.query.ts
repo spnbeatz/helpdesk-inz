@@ -1,4 +1,4 @@
-import { searchCustomerList } from "@/api/services/users.service"
+import { getCustomer, searchCustomerList } from "@/api/services/users.service"
 import { CustomersPageFilterType } from "@/store/pages/customers.store"
 import { useQuery } from "@tanstack/react-query"
 
@@ -7,5 +7,13 @@ export const useSearchCustomers = (filters: CustomersPageFilterType) => {
         queryKey: ["users", filters],
         queryFn: () => searchCustomerList(filters),
         enabled: !!filters
+    })
+}
+
+export const useCustomer = (customerId: string) => {
+    return useQuery({
+        queryKey: ["user", customerId],
+        queryFn: () => getCustomer(customerId),
+        enabled: !!customerId
     })
 }
