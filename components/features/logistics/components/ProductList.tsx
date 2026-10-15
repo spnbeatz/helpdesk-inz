@@ -6,8 +6,9 @@ import { useInventoryPageStore } from "@/store/pages/inventory.store";
 import { useModalStore } from "@/store/modals";
 import { Column } from "../../../ui/layout/flex";
 import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
+import { inventoryTableColumns } from "../config/inventoryTableColumns";
 
-type InventoryItem = Equipment & {
+export type InventoryItem = Equipment & {
     quantity?: number;
 };
 
@@ -24,24 +25,6 @@ export const ProductList = () => {
 
     const { data: productList } = useEquipmentList(filters);
 
-    const columns: InventoryColumn[] = [
-        { id: "id", name: "ID" },
-        { id: "assetTag", name: "Asset Tag" },
-        { id: "name", name: "Name" },
-        { id: "type", name: "Type" },
-        { id: "model", name: "Model" },
-        { id: "serialNumber", name: "Serial Number" },
-        { id: "status", name: "Status" },
-
-        ...(filters.userId === null
-            ? []
-            : [{ id: "assignedTo" as keyof InventoryItem, name: "User ID" }]),
-
-        ...(filters.isInventory
-            ? [{ id: "quantity" as keyof InventoryItem, name: "Quantity" }]
-            : []),
-    ];
-
     const handleOpenItemModal = (productId: string) => {
         openModal("inventoryItem", { productId });
         setSelectedKeys(new Set());
@@ -50,7 +33,7 @@ export const ProductList = () => {
     return (
         <TableWithPagination
             data={productList ?? []}
-            columns={columns}
+            columns={inventoryTableColumns()}
             itemsPerPage={itemsPerPage}
             searchValue={filters.searchValue}
             sortBy={filters.sortBy}

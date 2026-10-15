@@ -24,7 +24,7 @@ export default function InventoryPage() {
                 <Row Center className="gap-2">
                     <Search onSearch={(v) => setFilters({searchValue: v})} />
                     <ProductListFilterButton />
-                    <ProtectedComponent roles={["admin", "technician"]}>
+                    <ProtectedComponent permission="equipment.create">
                         <AddButton label="Add new product" />
                     </ProtectedComponent>
                 </Row>

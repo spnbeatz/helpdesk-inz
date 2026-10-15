@@ -6,20 +6,24 @@ export const IconButton = ({
     onClick,
     variant = "outline",
     children,
-    className
+    className,
+    disabled = false,
+    iconColor
 }: {
     Icon: IconType,
     onClick?: () => void,
     variant?: "outline" | "danger" | "danger-soft" | "ghost" | "primary" | "secondary" | "tertiary" | undefined,
     children?: React.ReactNode,
-    className?: string
+    className?: string,
+    disabled?: boolean,
+    iconColor?: string
 }) => {
     return (
         <Button
             onClick={onClick}
             className={`rounded-lg shadow-sm px-3 relative ${className}`}
-            variant={variant}>
-            <Icon className="text-black/70" />
+            variant={variant} isDisabled={disabled}>
+            <Icon className="text-black/70" color={iconColor}/>
             {children}
         </Button>
     )

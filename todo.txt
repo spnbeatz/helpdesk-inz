@@ -11,3 +11,5 @@ dodac filtry do INVENTORY
 ProductListFilterButton / przeniesc stan filtrow do globalnych stanow bo ise resetuje po kazdym otwarciu
 
 klikanie w ticket ma otworzyc modal nie do edycji a do podgladu wraz z czatem w nim
+
+refaktor settings/user/page, settings/roles/page

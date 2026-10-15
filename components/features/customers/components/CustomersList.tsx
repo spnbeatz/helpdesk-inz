@@ -2,9 +2,8 @@ import { TableWithPagination, TableColumn } from "@/components/ui/data-display/T
 import { useCustomersPageStore } from "@/store/pages/customers.store";
 import { useSearchCustomers } from "@/queries/customers/customers.query";
 import { CustomerType } from "@/data/users";
-import { useModalStore } from "@/store/modals";
 import { useRouter } from "next/navigation";
-
+import { customerTableColumns } from "../config/customerTableColumns";
 
 export const CustomersList = () => {
     const { filters, setFilters, itemsPerPage } =
@@ -15,16 +14,6 @@ export const CustomersList = () => {
     const { data: customersList } =
         useSearchCustomers(filters);
 
-    const columns: TableColumn<CustomerType>[] = [
-        { id: "id", name: "ID" },
-        { id: "name", name: "Name" },
-        { id: "location", name: "Location" },
-        { id: "email", name: "Email" },
-        { id: "phone", name: "Phone" },
-        { id: "department", name: "Department" },
-        { id: "position", name: "Position" },
-    ];
-
     const goToCustomerPage = (customer: CustomerType) => {
         router.push(`/customers/${customer.id}`);
     }
@@ -33,7 +22,7 @@ export const CustomersList = () => {
         <TableWithPagination
             data={customersList ?? []}
             onRowClick={goToCustomerPage}
-            columns={columns}
+            columns={customerTableColumns}
             itemsPerPage={itemsPerPage}
             searchValue={filters.searchValue}
             sortBy={filters.sortBy}

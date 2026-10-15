@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
 
 
 @theme inline {
@@ -7,4 +7,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+@layer components {
+  .popover__heading {
+    @apply text-sm font-bold;
+  }
 }

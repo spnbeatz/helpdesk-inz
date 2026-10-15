@@ -18,40 +18,40 @@ export const navigationRoutes: NavigationRoutesType[] = [
         icon: LuLayoutDashboard,
         children: null,
         key: "",
-        roles: ["all"],
+        roles: ["Administrator", "Technician", "Manager", "User"],
     },
     {
         name: "Tickets",
         href: "/tickets",
         icon: LuTicket,
         key: "tickets",
-        roles: ["all"],
+        roles: ["Administrator", "Technician"],
     },
     {
         name: "Customers & Technicians",
         href: "/customers",
         icon: LuUsers,
         key: "customers",
-        roles: ["admin"]
+        roles: ["Administrator", "Technician", "Manager", "User"]
     },
     {
         name: "Logistics",
         href: null,
         icon: LuPackage,
         key: "logistics",
-        roles: ["admin", "technician"],
+        roles: ["Administrator", "Technician", "Manager", "User"],
         children: [
             {
                 name: "Orders",
                 href: "/logistics/orders",
                 icon: LuShoppingCart,
-                roles: ["admin", "technician"]
+                roles: ["Administrator", "Technician", "Manager", "User"]
             },
             {
                 name: "Inventory",
                 href: "/logistics/inventory",
                 icon: LuStore,
-                roles: ["admin", "technician"]
+                roles: ["Administrator", "Technician", "Manager", "User"]
             }
         ]
     },
@@ -60,63 +60,45 @@ export const navigationRoutes: NavigationRoutesType[] = [
         href: "/reports",
         icon: LuFileChartColumn,
         key: "reports",
-        roles: ["admin", "technician"]
+        roles: ["Administrator", "Technician"]
     },
     {
         name: "Knowledge Base",
         href: "/knowbase",
         icon: LuBookText,
         key: "knowbase",
-        roles: ["all"]
+        roles: ["Administrator", "Technician", "Manager", "User"]
     },
     {
         name: "Settings",
         href: null,
         icon: LuSettings,
-        roles: ["all"],
+        roles: ["Administrator", "Technician", "Manager", "User"],
         key: "settings",
         children: [
             {
                 name: "General",
                 href: "/settings/general",
                 icon: LuSettings2,
-                roles: ['all']
+                roles: ["Administrator", "Technician", "Manager", "User"]
             },
             {
                 name: "Users",
                 href: "/settings/users",
                 icon: LuUserRoundCog,
-                roles: ['admin']
+                roles: ["Administrator"]
             },
             {
                 name: "Roles & Permissions",
                 href: "/settings/roles",
                 icon: LuPersonStanding,
-                roles: ["admin"]
+                roles: ["Administrator"]
             },
             {
                 name: "Ticket Settings",
                 href: "/settings/tickets",
                 icon: LuFileCog,
-                roles: ["admin"]
-            },
-            {
-                name: "Categories",
-                href: "/settings/tickets/#categories",
-                icon: LuBookMarked,
-                roles: ["admin"]
-            },
-            {
-                name: "Priorities",
-                href: "/settings/tickets/#priorities",
-                icon: LuBadgeAlert,
-                roles: ["admin"]
-            },
-            {
-                name: "Statuses",
-                href: "/settings/tickets/#statuses",
-                icon: LuBadgeCheck,
-                roles: ["admin"]
+                roles: ["Administrator"]
             }
         ]
     }

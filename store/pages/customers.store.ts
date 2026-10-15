@@ -28,5 +28,5 @@ export const useCustomersPageStore = create<CustomersPageType>((set) => ({
                 ...newFilters
             }
         })),
-    itemsPerPage: 15
+    itemsPerPage: 14
 }))

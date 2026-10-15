@@ -4,6 +4,10 @@ import { TicketsTab } from "./TicketsTab"
 
 const tabs:TabsListType[] = [
     {
+        id: "general",
+        label: "General"
+    },
+    {
         id: "inventory",
         label: "Inventory"
     },

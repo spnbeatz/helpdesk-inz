@@ -1,12 +1,16 @@
-import { Checkbox, Selection, Table } from "@heroui/react";
+import { Selection, Table } from "@heroui/react";
 import { useState } from "react";
 import { PaginationBasic } from "./PaginationBasic";
 import { highlightText } from "@/helpers/highlightText";
 import { Column } from "../layout/flex";
+import { EmptyState } from "@heroui/react";
+import { LuInbox } from "react-icons/lu";
+import { Checkbox } from "../controls/inputs/Checkbox";
 
 export type TableColumn<T> = {
     id: keyof T;
     name: string;
+    customValue?: (item: T) => React.ReactNode
 };
 
 type TableWithPaginationProps<T extends object> = {
@@ -47,7 +51,7 @@ export const TableWithPagination = <T extends object>({
     };
 
     return (
-        <Column className="w-full h-full min-h-0 gap-4 pt-4">
+        <Column className="w-full h-full min-h-0 gap-4">
             <Table variant="secondary" className="h-full">
                 <Table.ScrollContainer className="flex-1 min-h-0">
                     <Table.Content
@@ -57,20 +61,14 @@ export const TableWithPagination = <T extends object>({
                         }
                         selectionMode={selectable ? "multiple" : undefined}
                     >
-                        <Table.Header>
+                        <Table.Header className={"shadow-xs"}>
 
                             {selectable && (
-                                <Table.Column className="bg-indigo-100/50 rounded-l-lg">
+                                <Table.Column className="bg-indigo-200/60 rounded-l-lg py-3">
                                     <Checkbox
                                         aria-label="Select all"
                                         slot="selection"
-                                    >
-                                        <Checkbox.Content>
-                                            <Checkbox.Control>
-                                                <Checkbox.Indicator />
-                                            </Checkbox.Control>
-                                        </Checkbox.Content>
-                                    </Checkbox>
+                                    />
                                 </Table.Column>
                             )}
 
@@ -78,9 +76,9 @@ export const TableWithPagination = <T extends object>({
                                 <Table.Column
                                     key={String(column.id)}
                                     allowsSorting={!!setSort}
-                                    className={`bg-indigo-100/50 ${index === columns.length - 1
-                                            ? "rounded-r-lg"
-                                            : ""
+                                    className={`bg-indigo-200/60  text-black/60 py-3 ${index === columns.length - 1
+                                        ? "rounded-r-lg"
+                                        : ""
                                         }`}
                                     isRowHeader={column.id === "name"}
                                     onClick={() => {
@@ -104,43 +102,49 @@ export const TableWithPagination = <T extends object>({
                             ))}
                         </Table.Header>
 
-                        <Table.Body items={getPaginatedData()}>
+                        <Table.Body
+                            dependencies={[columns]}
+                            items={getPaginatedData()}
+                            renderEmptyState={() => (
+                                <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center py-10">
+                                    <LuInbox className="text-3xl text-black/40" />
+                                    <span className="text-md text-black/40">No results found</span>
+                                </EmptyState>
+                            )}
+                        >
                             {(item) => (
-                                <Table.Row>
-                                    <Table.Collection>
+                                <Table.Row
+                                    id={String((item as { id: string }).id)}
+                                    className="border-b-0"
+                                >
+                                    {selectable && (
+                                        <Table.Cell
+                                            className="pe-0"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <Checkbox slot="selection" />
+                                        </Table.Cell>
+                                    )}
 
-                                        {selectable && (
+                                    <Table.Collection items={columns}>
+                                        {(column) => (
                                             <Table.Cell
-                                                className="pe-0"
-                                                onClick={(e) =>
-                                                    e.stopPropagation()
-                                                }
-                                            >
-                                                <Checkbox slot="selection">
-                                                    <Checkbox.Content>
-                                                        <Checkbox.Control>
-                                                            <Checkbox.Indicator />
-                                                        </Checkbox.Control>
-                                                    </Checkbox.Content>
-                                                </Checkbox>
-                                            </Table.Cell>
-                                        )}
-
-                                        {columns.map((column) => (
-                                            <Table.Cell
-                                                key={String(column.id)}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     onRowClick?.(item);
                                                 }}
                                             >
-                                                {highlightText(
-                                                    String(item[column.id] ?? ""),
-                                                    searchValue
-                                                )}
+                                                {Array.isArray(item[column.id])
+                                                    ? (item[column.id] as string[]).join(" ")
+                                                    : column.customValue
+                                                        ? column.customValue(item)
+                                                        : highlightText(
+                                                            String(item[column.id] ?? ""),
+                                                            searchValue
+                                                        )
+                                                }
                                             </Table.Cell>
-                                        ))}
-
+                                        )}
                                     </Table.Collection>
                                 </Table.Row>
                             )}
@@ -150,12 +154,12 @@ export const TableWithPagination = <T extends object>({
                 </Table.ScrollContainer>
 
                 <Table.Footer>
-                    <PaginationBasic
+                    {data && data.length > 0 && <PaginationBasic
                         page={page}
                         setPage={setPage}
                         totalItems={data.length}
                         itemsPerPage={itemsPerPage}
-                    />
+                    />}
                 </Table.Footer>
             </Table>
         </Column>

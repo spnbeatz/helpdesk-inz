@@ -6,11 +6,19 @@ import { BiChevronDown } from "react-icons/bi";
 import { useRouter, usePathname } from "next/navigation";
 import { MdChevronRight } from "react-icons/md";
 import { Row } from "@/components/ui/layout/flex";
+import { useAuth } from "@/providers/auth.provider";
 
 
 export const NormalTypeNavItem = ({ item, isAccordion = false }: { item: NavigationRoutesType, isAccordion?: boolean }) => {
     const router = useRouter();
     const pathname = usePathname();
+    const { user } = useAuth();
+
+    const hasAccess = user?.role.some(role =>
+        item.roles.includes(role)
+    );
+
+    if (!hasAccess) return null;
     return (
         <Row CenterStart
             className={`p-2 rounded-lg gap-2 w-full 
@@ -30,7 +38,13 @@ export const NormalTypeNavItem = ({ item, isAccordion = false }: { item: Navigat
 
 export const MultipleTypeNavItem = ({ item }: { item: NavigationRoutesType }) => {
     const pathname = usePathname();
+    const { user } = useAuth();
 
+    const hasAccess = user?.role.some(role =>
+        item.roles.includes(role)
+    );
+
+    if (!hasAccess) return null;
 
     return (
         <Accordion.Item className={"w-full rounded-4xl"} id={item.key}>

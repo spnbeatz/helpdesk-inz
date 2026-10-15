@@ -1,4 +1,4 @@
-import { usersList, CustomerType, customersList } from "@/data/users";
+import { usersList, CustomerType, customersList, users } from "@/data/users";
 import { CustomersPageFilterType } from "@/store/pages/customers.store";
 
 export const searchUserList = (searchValue: string) => {
@@ -6,6 +6,24 @@ export const searchUserList = (searchValue: string) => {
     const search = searchValue.trim().toLowerCase();
 
     return usersList.filter(user => {
+        const searchableText = [
+            user.firstName,
+            user.lastName,
+            user.email
+        ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+
+        return searchableText.includes(search);
+    })
+}
+
+export const adminSearchUserList = (searchValue: string) => {
+    if (searchValue === "") return users;
+    const search = searchValue.trim().toLowerCase();
+
+    return users.filter(user => {
         const searchableText = [
             user.firstName,
             user.lastName,

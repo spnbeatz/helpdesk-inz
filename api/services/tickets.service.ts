@@ -127,7 +127,7 @@ export const getTicketList = (
             (category) => category.id === ticket.categoryId
         )?.name,
         customer: usersList.find((user) => {
-            if (user.id === userId) {
+            if (user.id === userId || user.id === ticket.customer_id) {
                 return {
                     id: user.id,
                     email: user.email,

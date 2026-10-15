@@ -1,4 +1,3 @@
-import { TicketListItemType } from "@/api/services/tickets.service";
 import { Tab } from "@/components/ui/controls/tabs/Tabs";
 import { useTicketList } from "@/queries/tickets/tickets.query";
 import { useParams } from "next/navigation";

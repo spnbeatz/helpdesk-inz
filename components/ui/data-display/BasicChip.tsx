@@ -1,12 +1,18 @@
 import { background } from "@/styles"
 
-export const BasicChip = ({children, color = "normal"} : {children: React.ReactNode | string, color?: "normal" | "danger"}) => {
+export const BasicChip = ({children, color = "normal"} : {children: React.ReactNode | string, color?: "normal" | "danger" | "green" | "yellow" | "white"}) => {
     const getColorClass = () => {
         switch(color){
             case "normal":
                 return `${background.bluepurplegradient}`;
             case "danger":
-                return "bg-red-500"
+                return "bg-red-500";
+            case "green":
+                return "bg-green-500";
+            case "yellow":
+                return "bg-yellow-500";
+            case "white":
+                return "bg-white"
             default:
                 return `${background.bluepurplegradient}`
         }

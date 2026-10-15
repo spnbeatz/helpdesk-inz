@@ -16,7 +16,7 @@ export const Section = ({
 }) => {
     return (
         <div className={`w-full flex flex-col min-h-0 ${className}`}>
-            <Row CenterBetween className="w-full shrink-0">
+            <Row CenterBetween className="w-full shrink-0 mb-2">
                 <Column StartCenter>
                     <Label className="text-black/80 text-lg">
                         {title}
