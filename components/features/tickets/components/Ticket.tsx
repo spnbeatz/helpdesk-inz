@@ -31,7 +31,7 @@ export const Ticket = ({ ticket }: { ticket: TicketListItemType }) => {
             <Row CenterBetween className=" w-full mt-auto">
                 <AttachmentCounter count={1} />
                 <AssignmentInfo technicianId={ticket.technician_id} />
-                
+
             </Row>
         </Card>
     )
@@ -39,7 +39,7 @@ export const Ticket = ({ ticket }: { ticket: TicketListItemType }) => {
 }
 
 export const AssignmentInfo = ({ technicianId }: { technicianId: string | null }) => {
-    
+
     const { data: technicianData } = useCustomer(technicianId);
 
     if (!technicianId) return (
@@ -50,7 +50,7 @@ export const AssignmentInfo = ({ technicianId }: { technicianId: string | null }
         <Row StartCenter className="text-black/60 text-xs gap-1 ">
             <Row StartCenter className="gap-2">
                 <Avatar className="w-[18px] h-[18px]">
-                    <Avatar.Image src={technicianData?.avatarUrl}/>
+                    <Avatar.Image src={technicianData?.avatarUrl} />
                 </Avatar>
                 <Description>{technicianData?.name}</Description>
             </Row>
@@ -60,9 +60,12 @@ export const AssignmentInfo = ({ technicianId }: { technicianId: string | null }
 
 export const AttachmentCounter = ({ count }: { count: number }) => {
     return (
-        <Row Center className="opacity-70">
-            <RiAttachment2 />
-            <p>{count}</p>
-        </Row>
+        <BasicChip>
+            <Row Center className="opacity-70">
+                <RiAttachment2 />
+                <p>{count} attachment</p>
+            </Row>
+        </BasicChip>
+
     )
 }

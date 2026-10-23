@@ -14,7 +14,7 @@ export const StatisticCard = ({ title, value, description, rightContent, onClick
     return (
         <Panel className={`
                 flex-1 transition-transform duration-200
-                ${onClick ? "cursor-pointer hover:scale-[1.02]" : ""}
+                ${onClick ? "cursor-pointer hover:scale-[1.05]" : ""}
             `}>
             <Row StartBetween className={`w-full`} onClick={onClick}>
                 <Column Start className="gap-2">

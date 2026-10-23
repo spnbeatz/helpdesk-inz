@@ -11,9 +11,8 @@ import { TicketListFilterButton } from "./TicketListFilterButton";
 import { Row, Column } from "../../../ui/layout/flex"
 
 export const TicketsScreenHeader = () => {
-    const { setStatsVisibility, statsVisibility, title, description } = useTicketsPageStore();
+    const { title, description, setFilters } = useTicketsPageStore();
     const { openModal } = useModalStore();
-    const { setFilters } = useTicketsPageStore();
 
     const handleCreateTicket = () => {
         openModal("ticketForm");
@@ -21,18 +20,11 @@ export const TicketsScreenHeader = () => {
     return (
         <Column Center className="w-full pr-2">
             <Row StartBetween className="w-full">
-                <Title title={title} description={description} />
+                <Title title={title}  />
                 <Row StartBetween className="gap-2">
                     <TicketStatusTabSwitch />
-
-                    <Search onSearch={(v) => setFilters({searchValue: v})}/>
-
-                    <IconButton Icon={LuChartLine} onClick={setStatsVisibility}>
-                        {!statsVisibility && <LuSlash className="absolute" />}
-                    </IconButton>
-
+                    <Search onSearch={(v) => setFilters({ searchValue: v })} />
                     <TicketListFilterButton />
-
                     <AddButton label="New Ticket" onClick={handleCreateTicket} />
 
                     <IconButton Icon={LuSettings} />

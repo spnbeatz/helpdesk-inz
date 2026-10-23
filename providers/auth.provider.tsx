@@ -1,6 +1,9 @@
+"use client"
+
 import {
   createContext,
   useContext,
+  useState,
   type ReactNode,
 } from "react";
 
@@ -9,12 +12,15 @@ import { User } from "@/data/users";
 import { useCurrentUser, UserData } from "@/hooks/auth/useCurrentUser";
 
 import { useQueryClient } from "@tanstack/react-query";
+import { Dispatch, SetStateAction } from "react";
 
 type AuthContextType = {
   user: User | null;
   isAuthenticated: boolean;
   logout: () => Promise<void>;
-  isLoading: boolean
+  isLoading: boolean,
+  activeLoggedUser: string,
+  setActiveLoggedUser: Dispatch<SetStateAction<string>>
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -23,15 +29,17 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-const userId = "USR-002"; // USR-005 - user, USR-002 - technician
+const userId = "USR-001"; // USR-005 - user, USR-002 - technician
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const queryClient = useQueryClient();
 
+  const [ activeLoggedUser, setActiveLoggedUser ] = useState<string>("USR-001")
+
   const {
     data: user,
     isLoading,
-  } = useCurrentUser(userId);
+  } = useCurrentUser(activeLoggedUser);
 
   const handleLogout = async () => {
     console.log("logged out")
@@ -48,7 +56,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user: user ?? null,
         isAuthenticated: !!user,
         logout: handleLogout,
-        isLoading
+        isLoading,
+        activeLoggedUser,
+        setActiveLoggedUser
       }}
     >
       {children}

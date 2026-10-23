@@ -1,5 +1,6 @@
 import { TicketType } from "@/data/exampleTicketsList";
 import { create } from "zustand";
+import { useScreen } from "@/hooks/useScreen";
 
 export type TicketsPageFiltersType = {
     sortBy?: keyof TicketType;

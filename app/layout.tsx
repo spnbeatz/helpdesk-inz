@@ -5,6 +5,7 @@ import { AppProviders } from "./providers";
 import { Navigation } from "@/components/composed/navigation/Navigation";
 import { Screen } from "@/components/ui/surfaces/Screen";
 import { background } from "@/styles";
+import { UserSwitch } from "@/components/ui/controls/TabSwitch";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AppProviders>
           <Navigation />
           <Screen>
+            
             {children}
           </Screen>
         </AppProviders>
@@ -29,3 +31,4 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     </html>
   );
 }
+

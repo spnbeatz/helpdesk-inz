@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { UserPanel } from "./User";
 import { Notifications } from "./Notifications";
 import { Row } from "@/components/ui/layout/flex";
+import { UserSwitch } from "@/components/ui/controls/TabSwitch";
 
 export const Navigation = () => {
     const { user } = useAuth();
@@ -40,7 +41,9 @@ export const Navigation = () => {
                         return <MultipleTypeNavItem item={item} key={item.name}/>
                     })}
                 </Accordion>
+
                 <UserPanel />
+                <UserSwitch />
             </div>
         </div>
     )

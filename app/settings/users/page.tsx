@@ -38,7 +38,7 @@ export default function UsersSettingsPage() {
             <TableWithPagination
                 data={userList || []}
                 columns={columns}
-                itemsPerPage={15}
+                itemsPerPage={22}
                 selectable
             />
         </Column>

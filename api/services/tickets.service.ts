@@ -8,7 +8,8 @@ import { usersList } from "@/data/users";
 type UserMiniType = {
     id: string,
     email: string,
-    avatarUrl: string
+    avatarUrl: string,
+    name: string
 }
 
 export type TicketListItemType = TicketType & {
@@ -20,32 +21,37 @@ export type TicketListItemType = TicketType & {
 
 
 export const getTicket = (id?: string): TicketListItemType | undefined => {
-    const ticket = ticketsList.find((ticket) => ticket.id === id) || undefined;
+    const ticket = ticketsList.find(ticket => ticket.id === id);
+
+    if (!ticket) return undefined;
+
+    const user = usersList.find(
+        user => user.id === ticket.customer_id
+    );
+
+    if (!user) return undefined;
+
     return {
         ...ticket,
         priority: priorityList.find(
-            (priority) => priority.id === ticket?.priorityId
+            priority => priority.id === ticket.priorityId
         )?.name,
         category: categoryList.find(
-            (category) => category.id === ticket?.categoryId
+            category => category.id === ticket.categoryId
         )?.name,
-        customer: usersList.find((user) => {
-            if (user.id === ticket?.customer_id) {
-                return {
-                    id: user.id,
-                    email: user.email,
-                    avatarUrl: user.avatarUrl
-                }
-            }
-        }) as UserMiniType
-    } as TicketListItemType
+        customer: {
+            id: user.id,
+            email: user.email,
+            avatarUrl: user.avatarUrl ?? "",
+            name: `${user.firstName} ${user.lastName}`
+        }
+    };
 };
+
 
 export const getTicketList = (
     filter: TicketsPageFiltersType = {}
 ): TicketListItemType[] => {
-    console.log(filter);
-
     const {
         sortBy = "created_at",
         sortDir = "desc",
@@ -65,51 +71,53 @@ export const getTicketList = (
     // Status
     if (status !== "all") {
         result = result.filter(
-            (ticket) => ticket.status === status
+            ticket => ticket.status === status
         );
     }
 
     // Priority
     if (priorityId) {
         result = result.filter(
-            (ticket) => ticket.priorityId === priorityId
+            ticket => ticket.priorityId === priorityId
         );
     }
 
-    //Category
+    // Category
     if (categoryId) {
         result = result.filter(
-            (ticket) => ticket.categoryId === categoryId
+            ticket => ticket.categoryId === categoryId
         );
     }
 
+    // Created after
     if (createdAfter) {
         const after = new Date(createdAfter);
 
-        result = result.filter(ticket =>
-            new Date(ticket.created_at).getTime() >= after.getTime()
+        result = result.filter(
+            ticket => new Date(ticket.created_at) >= after
         );
     }
 
-
+    // Created before
     if (createdBefore) {
         const before = new Date(createdBefore);
 
-        result = result.filter(ticket =>
-            new Date(ticket.created_at).getTime() <= before.getTime()
+        result = result.filter(
+            ticket => new Date(ticket.created_at) <= before
         );
     }
 
+    // Technician
     if (technicianId !== undefined) {
         result = result.filter(
-            (ticket) => ticket.technician_id === technicianId
-        )
+            ticket => ticket.technician_id === technicianId
+        );
     }
 
-    // User / customer
+    // Customer
     if (userId) {
         result = result.filter(
-            (ticket) => ticket.customer_id === userId
+            ticket => ticket.customer_id === userId
         );
     }
 
@@ -117,7 +125,7 @@ export const getTicketList = (
     if (searchValue?.trim()) {
         const search = searchValue.trim().toLowerCase();
 
-        result = result.filter((ticket) =>
+        result = result.filter(ticket =>
             ticket.id.toLowerCase().includes(search) ||
             ticket.title.toLowerCase().includes(search) ||
             ticket.description.toLowerCase().includes(search)
@@ -136,7 +144,7 @@ export const getTicketList = (
             undefined,
             {
                 numeric: true,
-                sensitivity: "base",
+                sensitivity: "base"
             }
         );
 
@@ -147,28 +155,45 @@ export const getTicketList = (
 
     // Limit
     if (limit !== undefined && Number.isFinite(limit)) {
-        result = result.slice(0, Math.max(0, Math.floor(limit)));
+        result = result.slice(
+            0,
+            Math.max(0, Math.floor(limit))
+        );
     }
 
-    return result.map((ticket) => ({
-        ...ticket,
-        priority: priorityList.find(
-            (priority) => priority.id === ticket.priorityId
-        )?.name,
-        category: categoryList.find(
-            (category) => category.id === ticket.categoryId
-        )?.name,
-        customer: usersList.find((user) => {
-            if (user.id === userId || user.id === ticket.customer_id) {
-                return {
-                    id: user.id,
-                    email: user.email,
-                    avatarUrl: user.avatarUrl
-                }
+    // Map
+    return result.map(ticket => {
+        const user = usersList.find(
+            user => user.id === ticket.customer_id
+        );
+
+        if (!user) {
+            throw new Error(
+                `Customer not found for ticket ${ticket.id}`
+            );
+        }
+
+        return {
+            ...ticket,
+
+            priority: priorityList.find(
+                priority => priority.id === ticket.priorityId
+            )?.name,
+
+            category: categoryList.find(
+                category => category.id === ticket.categoryId
+            )?.name,
+
+            customer: {
+                id: user.id,
+                email: user.email,
+                avatarUrl: user.avatarUrl ?? "",
+                name: `${user.firstName} ${user.lastName}`
             }
-        }) as UserMiniType
-    }));
+        };
+    });
 };
+
 
 export const createTicket = async (
     formData: TicketFormDataType,
