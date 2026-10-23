@@ -20,7 +20,7 @@ export type CustomerType = {
     phone: string,
     department: string,
     position: string,
-    location: string, 
+    location: string,
     avatarUrl: string
 }
 
@@ -395,6 +395,11 @@ export const permissionsList: PermissionType[] = [
         description: "View tickets",
     },
     {
+        id: "PERM-123",
+        name: "tickets.viewAll",
+        description: "View all tickets"
+    },
+    {
         id: "PERM-002",
         name: "tickets.create",
         description: "Create tickets",
@@ -411,13 +416,28 @@ export const permissionsList: PermissionType[] = [
     },
     {
         id: "PERM-005",
-        name: "tickets.assign",
-        description: "Assign tickets to technicians",
+        name: "tickets.assign.self",
+        description: "Assign unassigned tickets to yourself"
+    },
+    {
+        id: "PERM-027",
+        name: "tickets.assign.other",
+        description: "Assign unassigned tickets to another technician"
+    },
+    {
+        id: "PERM-028",
+        name: "tickets.reassign",
+        description: "Transfer assigned tickets to another technician"
     },
     {
         id: "PERM-006",
         name: "tickets.close",
         description: "Close tickets",
+    },
+    {
+        id: "PERM-192",
+        name: "tickets.remote",
+        description: "Remote resolve"
     },
 
     // Users
@@ -561,6 +581,10 @@ export const rolePermissionsList: RolePermissionType[] = [
     { roleId: "ROLE-001", permissionId: "PERM-024" },
     { roleId: "ROLE-001", permissionId: "PERM-025" },
     { roleId: "ROLE-001", permissionId: "PERM-026" },
+    { roleId: "ROLE-001", permissionId: "PERM-123" },
+    { roleId: "ROLE-001", permissionId: "PERM-192" },
+    { roleId: "ROLE-001", permissionId: "PERM-027" },
+    { roleId: "ROLE-001", permissionId: "PERM-028" },
 
     // Technician
     { roleId: "ROLE-002", permissionId: "PERM-001" },
@@ -576,16 +600,19 @@ export const rolePermissionsList: RolePermissionType[] = [
     { roleId: "ROLE-002", permissionId: "PERM-016" },
     { roleId: "ROLE-002", permissionId: "PERM-017" },
     { roleId: "ROLE-002", permissionId: "PERM-020" },
+    { roleId: "ROLE-002", permissionId: "PERM-123" },
+    { roleId: "ROLE-002", permissionId: "PERM-192" },
+    { roleId: "ROLE-002", permissionId: "PERM-028" },
 
     // Manager
     { roleId: "ROLE-003", permissionId: "PERM-001" },
-    { roleId: "ROLE-003", permissionId: "PERM-005" },
     { roleId: "ROLE-003", permissionId: "PERM-006" },
     { roleId: "ROLE-003", permissionId: "PERM-007" },
     { roleId: "ROLE-003", permissionId: "PERM-011" },
     { roleId: "ROLE-003", permissionId: "PERM-016" },
     { roleId: "ROLE-003", permissionId: "PERM-020" },
     { roleId: "ROLE-003", permissionId: "PERM-021" },
+    { roleId: "ROLE-003", permissionId: "PERM-027" },
 
     // User
     { roleId: "ROLE-004", permissionId: "PERM-001" },
@@ -727,16 +754,54 @@ export const customersList: CustomerType[] = usersList.map(user => ({
 
 export type User = UserType & {
     roleNames: string[];
+    permissions: string[];
 };
 
 export const users: User[] = usersList.map((user) => {
+    const userRoleIds = userRolesList
+        .filter((r) => r.userId === user.id)
+        .map((r) => r.roleId);
+
     return {
         ...user,
-        roleNames: rolesList.filter((role) => {
-            const foundRole = userRolesList.find((r) => {
-                return r.roleId === role.id
-            })
-            return foundRole?.userId === user.id && role.name
-        }).map((role) => role.name)
-    }
-})
+
+        roleNames: rolesList
+            .filter((role) => userRoleIds.includes(role.id))
+            .map((role) => role.name),
+
+        permissions: permissionsList
+            .filter((permission) =>
+                rolePermissionsList.some((rp) =>
+                    userRoleIds.includes(rp.roleId) &&
+                    rp.permissionId === permission.id
+                )
+            )
+            .map((permission) => permission.name)
+    };
+});
+
+export type RoleBlockedRouteType = {
+    roleId: string;
+    routeKey: string;
+};
+
+export const roleBlockedRoutesList: RoleBlockedRouteType[] = [
+    // Technician
+    { roleId: "ROLE-002", routeKey: "settings.users" },
+    { roleId: "ROLE-002", routeKey: "settings.roles" },
+    { roleId: "ROLE-002", routeKey: "settings.tickets" },
+
+    // Manager
+    { roleId: "ROLE-003", routeKey: "tickets" },
+    { roleId: "ROLE-003", routeKey: "reports" },
+    { roleId: "ROLE-003", routeKey: "settings.users" },
+    { roleId: "ROLE-003", routeKey: "settings.roles" },
+    { roleId: "ROLE-003", routeKey: "settings.tickets" },
+
+    // User
+    { roleId: "ROLE-004", routeKey: "reports" },
+    { roleId: "ROLE-004", routeKey: "settings.users" },
+    { roleId: "ROLE-004", routeKey: "settings.roles" },
+    { roleId: "ROLE-004", routeKey: "settings.tickets" },
+    { roleId: "ROLE-004", routeKey: "customer" }
+];

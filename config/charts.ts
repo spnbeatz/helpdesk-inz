@@ -125,7 +125,7 @@ export const ticketsTimeLineChartOptions = {
     scales: {
         x: {
             grid: {
-                display: false,
+                display: true,
             },
 
             border: {
@@ -137,7 +137,7 @@ export const ticketsTimeLineChartOptions = {
             beginAtZero: true,
 
             ticks: {
-                precision: 0,
+                precision: 2,
             },
 
             grid: {

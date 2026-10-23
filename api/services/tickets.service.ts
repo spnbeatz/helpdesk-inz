@@ -53,7 +53,11 @@ export const getTicketList = (
         userId,
         searchValue,
         priorityId,
-        categoryId
+        categoryId,
+        technicianId,
+        createdBefore,
+        createdAfter,
+        limit
     } = filter;
 
     let result = [...ticketsList];
@@ -77,6 +81,29 @@ export const getTicketList = (
         result = result.filter(
             (ticket) => ticket.categoryId === categoryId
         );
+    }
+
+    if (createdAfter) {
+        const after = new Date(createdAfter);
+
+        result = result.filter(ticket =>
+            new Date(ticket.created_at).getTime() >= after.getTime()
+        );
+    }
+
+
+    if (createdBefore) {
+        const before = new Date(createdBefore);
+
+        result = result.filter(ticket =>
+            new Date(ticket.created_at).getTime() <= before.getTime()
+        );
+    }
+
+    if (technicianId !== undefined) {
+        result = result.filter(
+            (ticket) => ticket.technician_id === technicianId
+        )
     }
 
     // User / customer
@@ -117,6 +144,11 @@ export const getTicketList = (
             ? comparison
             : -comparison;
     });
+
+    // Limit
+    if (limit !== undefined && Number.isFinite(limit)) {
+        result = result.slice(0, Math.max(0, Math.floor(limit)));
+    }
 
     return result.map((ticket) => ({
         ...ticket,

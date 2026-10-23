@@ -14,7 +14,7 @@ export const NormalTypeNavItem = ({ item, isAccordion = false }: { item: Navigat
     const pathname = usePathname();
     const { user } = useAuth();
 
-    const hasAccess = user?.role.some(role =>
+    const hasAccess = user?.roleNames.some(role =>
         item.roles.includes(role)
     );
 
@@ -40,7 +40,7 @@ export const MultipleTypeNavItem = ({ item }: { item: NavigationRoutesType }) =>
     const pathname = usePathname();
     const { user } = useAuth();
 
-    const hasAccess = user?.role.some(role =>
+    const hasAccess = user?.roleNames.some(role =>
         item.roles.includes(role)
     );
 

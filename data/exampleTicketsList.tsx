@@ -7,11 +7,13 @@ export type TicketType = {
     categoryId: string;
     created_at: string;
     updated_at: string;
+    resolved_at: string | null;
+    resolution_minutes: number | null;
     technician_id: string | null;
     customer_id: string;
 };
 
-export const ticketsList: TicketType[] = [
+const ticketsSeed: Omit<TicketType, "created_at" | "updated_at" | "resolved_at" | "resolution_minutes">[] = [
     {
         id: "TCK-0001",
         title: "Problem z logowaniem do systemu",
@@ -19,8 +21,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-004",
-        created_at: "2026-09-02T08:12:00",
-        updated_at: "2026-09-02T08:20:00",
         technician_id: null,
         customer_id: "USR-001",
     },
@@ -31,9 +31,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-006",
-        created_at: "2026-09-02T07:45:00",
-        updated_at: "2026-09-02T07:50:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-004",
     },
     {
@@ -43,9 +41,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-001",
-        created_at: "2026-09-01T16:32:00",
-        updated_at: "2026-09-01T17:10:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-002",
     },
     {
@@ -55,9 +51,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-004",
-        created_at: "2026-09-01T14:21:00",
-        updated_at: "2026-09-01T14:35:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-007",
     },
     {
@@ -67,8 +61,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-003",
-        created_at: "2026-09-01T13:08:00",
-        updated_at: "2026-09-01T13:15:00",
         technician_id: null,
         customer_id: "USR-003",
     },
@@ -79,9 +71,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "closed",
         categoryId: "CAT-005",
-        created_at: "2026-09-01T11:44:00",
-        updated_at: "2026-09-01T12:20:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-005",
     },
     {
@@ -91,9 +81,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-008",
-        created_at: "2026-09-01T10:15:00",
-        updated_at: "2026-09-01T10:40:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-008",
     },
     {
@@ -103,9 +91,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-31T15:27:00",
-        updated_at: "2026-08-31T15:52:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-006",
     },
     {
@@ -115,8 +101,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-006",
-        created_at: "2026-08-31T13:11:00",
-        updated_at: "2026-08-31T13:20:00",
         technician_id: null,
         customer_id: "USR-009",
     },
@@ -127,9 +111,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "closed",
         categoryId: "CAT-003",
-        created_at: "2026-08-31T10:42:00",
-        updated_at: "2026-08-31T11:30:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-001",
     },
     {
@@ -139,8 +121,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-009",
-        created_at: "2026-08-30T16:05:00",
-        updated_at: "2026-08-30T16:05:00",
         technician_id: null,
         customer_id: "USR-010",
     },
@@ -151,9 +131,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-30T14:32:00",
-        updated_at: "2026-08-30T15:47:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-004",
     },
     {
@@ -163,9 +141,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-004",
-        created_at: "2026-08-30T12:18:00",
-        updated_at: "2026-08-30T12:25:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-002",
     },
     {
@@ -175,9 +151,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-29T15:40:00",
-        updated_at: "2026-08-29T16:18:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-011",
     },
     {
@@ -187,8 +161,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "new",
         categoryId: "CAT-004",
-        created_at: "2026-08-29T13:05:00",
-        updated_at: "2026-08-29T13:05:00",
         technician_id: null,
         customer_id: "USR-012",
     },
@@ -199,9 +171,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-002",
-        created_at: "2026-08-29T11:23:00",
-        updated_at: "2026-08-29T11:50:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-003",
     },
     {
@@ -211,9 +181,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-28T16:14:00",
-        updated_at: "2026-08-28T16:46:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-005",
     },
     {
@@ -223,8 +191,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-001",
-        created_at: "2026-08-28T14:37:00",
-        updated_at: "2026-08-28T14:45:00",
         technician_id: null,
         customer_id: "USR-007",
     },
@@ -235,9 +201,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-28T12:02:00",
-        updated_at: "2026-08-28T12:27:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-009",
     },
     {
@@ -247,9 +211,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-006",
-        created_at: "2026-08-27T15:19:00",
-        updated_at: "2026-08-27T15:32:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-006",
     },
     {
@@ -259,8 +221,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-003",
-        created_at: "2026-08-27T13:44:00",
-        updated_at: "2026-08-27T14:01:00",
         technician_id: null,
         customer_id: "USR-008",
     },
@@ -271,9 +231,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-008",
-        created_at: "2026-08-27T10:25:00",
-        updated_at: "2026-08-27T10:48:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-010",
     },
     {
@@ -283,9 +241,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-004",
-        created_at: "2026-08-26T16:12:00",
-        updated_at: "2026-08-26T16:40:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-001",
     },
     {
@@ -295,9 +251,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "closed",
         categoryId: "CAT-006",
-        created_at: "2026-08-26T13:52:00",
-        updated_at: "2026-08-26T15:05:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-011",
     },
     {
@@ -307,8 +261,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-002",
-        created_at: "2026-08-26T11:17:00",
-        updated_at: "2026-08-26T11:30:00",
         technician_id: null,
         customer_id: "USR-004",
     },
@@ -319,9 +271,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "closed",
         categoryId: "CAT-007",
-        created_at: "2026-08-25T15:08:00",
-        updated_at: "2026-08-25T16:12:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-012",
     },
     {
@@ -331,9 +281,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "new",
         categoryId: "CAT-004",
-        created_at: "2026-08-25T12:46:00",
-        updated_at: "2026-08-25T12:46:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-002",
     },
     {
@@ -343,8 +291,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-001",
-        created_at: "2026-08-25T10:31:00",
-        updated_at: "2026-08-25T10:55:00",
         technician_id: null,
         customer_id: "USR-005",
     },
@@ -355,9 +301,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "closed",
         categoryId: "CAT-005",
-        created_at: "2026-08-24T14:15:00",
-        updated_at: "2026-08-24T15:02:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-006",
     },
     {
@@ -367,9 +311,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-009",
-        created_at: "2026-08-24T09:20:00",
-        updated_at: "2026-08-24T11:35:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-010",
     },
     {
@@ -379,8 +321,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-003",
-        created_at: "2026-08-23T16:42:00",
-        updated_at: "2026-08-23T16:55:00",
         technician_id: null,
         customer_id: "USR-003",
     },
@@ -391,9 +331,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-003",
-        created_at: "2026-08-23T14:18:00",
-        updated_at: "2026-08-23T14:30:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-007",
     },
     {
@@ -403,9 +341,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "closed",
         categoryId: "CAT-007",
-        created_at: "2026-08-23T11:37:00",
-        updated_at: "2026-08-23T12:25:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-009",
     },
     {
@@ -415,9 +351,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-22T15:11:00",
-        updated_at: "2026-08-22T15:35:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-004",
     },
     {
@@ -427,8 +361,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-005",
-        created_at: "2026-08-22T13:47:00",
-        updated_at: "2026-08-22T14:02:00",
         technician_id: null,
         customer_id: "USR-011",
     },
@@ -439,9 +371,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "closed",
         categoryId: "CAT-002",
-        created_at: "2026-08-22T10:24:00",
-        updated_at: "2026-08-22T11:16:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-010",
     },
     {
@@ -451,8 +381,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "new",
         categoryId: "CAT-001",
-        created_at: "2026-08-21T16:05:00",
-        updated_at: "2026-08-21T16:10:00",
         technician_id: null,
         customer_id: "USR-006",
     },
@@ -463,9 +391,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-004",
-        created_at: "2026-08-21T14:32:00",
-        updated_at: "2026-08-21T14:50:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-001",
     },
     {
@@ -475,9 +401,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-21T12:18:00",
-        updated_at: "2026-08-21T13:42:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-008",
     },
     {
@@ -487,9 +411,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-002",
-        created_at: "2026-08-21T09:45:00",
-        updated_at: "2026-08-21T10:12:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-005",
     },
     {
@@ -499,8 +421,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-003",
-        created_at: "2026-08-20T16:22:00",
-        updated_at: "2026-08-20T16:40:00",
         technician_id: null,
         customer_id: "USR-012",
     },
@@ -511,9 +431,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-20T14:08:00",
-        updated_at: "2026-08-20T14:52:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-002",
     },
     {
@@ -523,9 +441,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-002",
-        created_at: "2026-08-20T11:26:00",
-        updated_at: "2026-08-20T11:48:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-003",
     },
     {
@@ -535,9 +451,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-005",
-        created_at: "2026-08-20T09:15:00",
-        updated_at: "2026-08-20T09:40:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-007",
     },
     {
@@ -547,8 +461,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-006",
-        created_at: "2026-08-19T15:42:00",
-        updated_at: "2026-08-19T16:00:00",
         technician_id: null,
         customer_id: "USR-004",
     },
@@ -559,9 +471,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-008",
-        created_at: "2026-08-19T13:27:00",
-        updated_at: "2026-08-19T13:51:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-006",
     },
     {
@@ -571,9 +481,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-002",
-        created_at: "2026-08-19T11:04:00",
-        updated_at: "2026-08-19T11:22:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-010",
     },
     {
@@ -583,8 +491,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-007",
-        created_at: "2026-08-19T08:36:00",
-        updated_at: "2026-08-19T08:50:00",
         technician_id: null,
         customer_id: "USR-011",
     },
@@ -595,9 +501,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "closed",
         categoryId: "CAT-009",
-        created_at: "2026-08-18T16:15:00",
-        updated_at: "2026-08-18T17:32:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-005",
     },
     {
@@ -607,9 +511,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-18T14:44:00",
-        updated_at: "2026-08-18T15:10:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-009",
     },
     {
@@ -619,8 +521,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-002",
-        created_at: "2026-08-18T12:31:00",
-        updated_at: "2026-08-18T12:48:00",
         technician_id: null,
         customer_id: "USR-002",
     },
@@ -631,9 +531,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-003",
-        created_at: "2026-08-18T10:17:00",
-        updated_at: "2026-08-18T10:31:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-008",
     },
     {
@@ -643,9 +541,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-001",
-        created_at: "2026-08-17T15:03:00",
-        updated_at: "2026-08-17T15:29:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-003",
     },
     {
@@ -655,8 +551,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-007",
-        created_at: "2026-08-17T13:16:00",
-        updated_at: "2026-08-17T13:40:00",
         technician_id: null,
         customer_id: "USR-012",
     },
@@ -667,9 +561,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-009",
-        created_at: "2026-08-17T11:42:00",
-        updated_at: "2026-08-17T11:58:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-001",
     },
     {
@@ -679,9 +571,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "new",
         categoryId: "CAT-002",
-        created_at: "2026-08-17T09:28:00",
-        updated_at: "2026-08-17T09:45:00",
-        technician_id: "TEC-003",
+        technician_id: "USR-003",
         customer_id: "USR-006",
     },
     {
@@ -691,8 +581,6 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-003",
-        created_at: "2026-08-16T16:51:00",
-        updated_at: "2026-08-16T17:05:00",
         technician_id: null,
         customer_id: "USR-007",
     },
@@ -703,9 +591,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11dz",
         status: "closed",
         categoryId: "CAT-008",
-        created_at: "2026-08-16T14:23:00",
-        updated_at: "2026-08-16T15:18:00",
-        technician_id: "TEC-001",
+        technician_id: "USR-001",
         customer_id: "USR-004",
     },
     {
@@ -715,9 +601,7 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11d1",
         status: "closed",
         categoryId: "CAT-005",
-        created_at: "2026-08-16T11:36:00",
-        updated_at: "2026-08-16T12:12:00",
-        technician_id: "TEC-002",
+        technician_id: "USR-002",
         customer_id: "USR-010",
     },
     {
@@ -727,9 +611,124 @@ export const ticketsList: TicketType[] = [
         priorityId: "231e1dd11ds",
         status: "new",
         categoryId: "CAT-001",
-        created_at: "2026-08-16T09:12:00",
-        updated_at: "2026-08-16T09:30:00",
         technician_id: null,
         customer_id: "USR-005",
     },
 ];
+// Stały pseudolosowy rozkład na podstawie ID (bez Math.random()).
+// Dzięki temu dane nie zmieniają się przy każdym renderowaniu.
+const seedFromId = (id: string): number =>
+    Number(id.replace(/\D/g, "")) || 1;
+
+const toLocalISOString = (date: Date): string => {
+    const pad = (value: number) => String(value).padStart(2, "0");
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
+};
+
+const MINUTE = 60_000;
+
+
+export const generateTickets = (now = new Date()): TicketType[] => {
+    const today = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate()
+    );
+
+    // Generator pseudolosowy - stabilne dane w ciągu jednego dnia
+    let seed = today.getTime() % 2147483647;
+
+    const random = () => {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+    };
+
+    // Losowanie liczby całkowitej
+    const randomInt = (min: number, max: number) =>
+        Math.floor(random() * (max - min + 1)) + min;
+
+    // Wagi dni - niektóre dni mają więcej zgłoszeń
+    const dayWeights = Array.from({ length: 30 }, (_, index) => {
+        const date = new Date(today);
+        date.setDate(date.getDate() - index);
+
+        const isWeekend = [0, 6].includes(date.getDay());
+
+        return isWeekend
+            ? random() * 0.4
+            : 0.3 + random() * 2.5;
+    });
+
+    const totalWeight = dayWeights.reduce(
+        (sum, weight) => sum + weight,
+        0
+    );
+
+    const pickDay = () => {
+        let value = random() * totalWeight;
+
+        for (let i = 0; i < dayWeights.length; i++) {
+            value -= dayWeights[i];
+
+            if (value <= 0) return i;
+        }
+
+        return dayWeights.length - 1;
+    };
+
+    return ticketsSeed.map(ticket => {
+        const daysAgo = pickDay();
+        const hour = randomInt(8, 17);
+        const minute = randomInt(0, 59);
+
+        const created = new Date(today);
+        created.setDate(created.getDate() - daysAgo);
+        created.setHours(hour, minute, 0, 0);
+
+        // Nie generuj przyszłych dat
+        if (created > now) {
+            created.setDate(created.getDate() - 1);
+        }
+
+        const isClosed = ticket.status === "closed";
+
+        // Rozwiązanie od 30 minut do 3 dni po utworzeniu
+        const durationMinutes = isClosed
+            ? randomInt(30, 3 * 24 * 60)
+            : null;
+
+        const resolved = durationMinutes !== null
+            ? new Date(
+                Math.min(
+                    created.getTime() + durationMinutes * MINUTE,
+                    now.getTime()
+                )
+            )
+            : null;
+
+        const updated = resolved ?? new Date(
+            Math.min(
+                created.getTime() + randomInt(5, 360) * MINUTE,
+                now.getTime()
+            )
+        );
+
+        return {
+            ...ticket,
+            created_at: toLocalISOString(created),
+            updated_at: toLocalISOString(updated),
+            resolved_at: resolved
+                ? toLocalISOString(resolved)
+                : null,
+            resolution_minutes: resolved
+                ? Math.round(
+                    (resolved.getTime() - created.getTime()) / MINUTE
+                )
+                : null,
+        };
+    });
+};
+
+
+export const ticketsList: TicketType[] = generateTickets();

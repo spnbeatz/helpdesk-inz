@@ -33,6 +33,7 @@ export const Input = ({
             {type === "input" ?
                 (
                     <HeroInput
+                        aria-label="input"
                         placeholder={placeholder}
                         className={"rounded-lg bg-white/50 w-full"}
                         value={value}

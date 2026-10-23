@@ -26,6 +26,8 @@ type TableWithPaginationProps<T extends object> = {
 
     selectable?: boolean;
     onRowClick?: (item: T) => void;
+
+    pagination?: boolean
 };
 
 export const TableWithPagination = <T extends object>({
@@ -38,6 +40,7 @@ export const TableWithPagination = <T extends object>({
     setSort,
     selectable = false,
     onRowClick,
+    pagination = true
 }: TableWithPaginationProps<T>) => {
 
     const [page, setPage] = useState<number>(1);
@@ -50,11 +53,14 @@ export const TableWithPagination = <T extends object>({
         return data.slice(startIndex, endIndex);
     };
 
+
+
     return (
         <Column className="w-full h-full min-h-0 gap-4">
-            <Table variant="secondary" className="h-full">
+            <Table variant="secondary" className="h-full" aria-label="table">
                 <Table.ScrollContainer className="flex-1 min-h-0">
                     <Table.Content
+                        aria-label="tablecontent"
                         selectedKeys={selectable ? selectedKeys : undefined}
                         onSelectionChange={
                             selectable ? setSelectedKeys : undefined
@@ -80,7 +86,7 @@ export const TableWithPagination = <T extends object>({
                                         ? "rounded-r-lg"
                                         : ""
                                         }`}
-                                    isRowHeader={column.id === "name"}
+                                    isRowHeader={index === 0}
                                     onClick={() => {
                                         if (setSort) {
                                             setSort(column.id);
@@ -120,15 +126,17 @@ export const TableWithPagination = <T extends object>({
                                     {selectable && (
                                         <Table.Cell
                                             className="pe-0"
+
                                             onClick={(e) => e.stopPropagation()}
                                         >
-                                            <Checkbox slot="selection" />
+                                            <Checkbox slot="selection" aria-label="Select Row" />
                                         </Table.Cell>
                                     )}
 
                                     <Table.Collection items={columns}>
                                         {(column) => (
                                             <Table.Cell
+                                                onPointerDown={(e) => e.stopPropagation()}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     onRowClick?.(item);
@@ -154,7 +162,7 @@ export const TableWithPagination = <T extends object>({
                 </Table.ScrollContainer>
 
                 <Table.Footer>
-                    {data && data.length > 0 && <PaginationBasic
+                    {pagination && data && data.length > 0 && <PaginationBasic
                         page={page}
                         setPage={setPage}
                         totalItems={data.length}

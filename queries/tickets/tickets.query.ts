@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getTicket, getTicketList } from "@/api/services/tickets.service";
 import { TicketsPageFiltersType } from "@/store/pages/tickets.store";
 import { ticketKeys } from "./tickets.keys";
+import { useAccess } from "@/providers/access.provider";
+import { useAuth } from "@/providers/auth.provider";
 
 export const useTicket = (id?: string) => {
     return useQuery({

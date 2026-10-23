@@ -6,10 +6,6 @@ import { formatRelativeDate } from "@/utils/date..util";
 
 export const userTableColumns: TableColumn<User>[] = [
     { id: "id", name: "ID" },
-    { id: "firstName", name: "First name" },
-    { id: "lastName", name: "Last Name" },
-    { id: "location", name: "Location" },
-    { id: "position", name: "Position" },
     {
         id: "email", name: "Email", customValue: (item) => (
             <Row CenterStart className="gap-2 group">
@@ -21,6 +17,10 @@ export const userTableColumns: TableColumn<User>[] = [
             </Row>
         )
     },
+    { id: "firstName", name: "First name" },
+    { id: "lastName", name: "Last Name" },
+    { id: "location", name: "Location" },
+    { id: "position", name: "Position" },
     {
         id: "status", name: "Status",
         customValue: (item) => (
@@ -37,6 +37,6 @@ export const userTableColumns: TableColumn<User>[] = [
     { id: "createdAt", name: "Created At", customValue: (item) => formatRelativeDate(item.createdAt) },
     { id: "lastLoginAt", name: "Last login at", customValue: (item) => item.lastLoginAt ? formatRelativeDate(item.lastLoginAt) : "Not logged yet" },
     { id: "roleNames", name: "Roles" },
-    { id: "phone", name: "Phone"},
-    { id: "department", name: "Department"},
+    { id: "phone", name: "Phone" },
+    { id: "department", name: "Department" },
 ];

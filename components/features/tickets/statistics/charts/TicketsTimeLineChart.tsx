@@ -34,7 +34,7 @@ ChartJS.register(
 
 type DefaultRangeType = "lastMonth" | "lastYear" | "lastWeek" | null
 
-export const TicketsTimeLineChart = () => {
+export const TicketsTimeLineChart = ({ className }: { className?: string }) => {
 
     const [defaultRange, setDefaultRange] = useState<DefaultRangeType>("lastMonth")
     const [range, setRange] = useState<TicketsChartRange>(getDefaultRanges(defaultRange || "lastMonth"));
@@ -58,49 +58,36 @@ export const TicketsTimeLineChart = () => {
                 data: statsData?.newTickets,
 
                 borderWidth: 2,
-                tension: 0.35,
-                borderColor: "skyblue",
-                backgroundColor: "skyblue",
+                tension: 0.1,
+                borderColor: "#87CEEB",
+                backgroundColor: "rgba(135, 206, 235, 0.2)",
                 pointRadius: 0,
                 pointHoverRadius: 5,
 
-                fill: false,
+                fill: true,
             },
             {
                 label: "Closed tickets",
                 data: statsData?.closedTickets,
 
                 borderWidth: 2,
-                tension: 0.35,
-                borderColor: "blueviolet",
-                backgroundColor: "blueviolet",
+                tension: 0.1,
+                borderColor: "#8A2BE2",
+                backgroundColor: "rgba(138, 43, 226, 0.2)",
                 pointRadius: 0,
                 pointHoverRadius: 5,
 
-                fill: false,
+                fill: true,
 
-            },
-            {
-                label: "Average tickets",
-                data: (statsData?.labels ?? []).map(
-                    () => statsData?.average ?? 0
-                ),
-                borderWidth: 2,
-                tension: 0.35,
-                borderColor: "red",
-                backgroundColor: "red",
-                pointRadius: 0,
-                pointHoverRadius: 0,
-                fill: false
             }
         ],
     };
 
     return (
-        <Card className="bg-white/60 rounded-lg w-full h-full flex flex-col items-start justify-center gap-2 p-6 min-w-[500px]">
+        <Card className={`bg-white/60 rounded-lg w-full h-full flex flex-col items-start justify-between gap-2 p-6 min-w-[500px] ${className}`}>
 
             <Row CenterBetween className="w-full">
-                <Label className="text-black/70 flex flex-row gap-2 items-center"><LuTickets color="blueviolet" /> New & closed tickets</Label>
+                <Label className="text-black/70 flex flex-row gap-2 items-center"><LuTickets color="blueviolet" />Tickets over time</Label>
                 <Row Center className="gap-2">
                     <TimeSwitch selected={defaultRange} onClick={setDefaultRange} />
                     <Button className={"w-5 h-7 bg-white/60 text-black/60 rounded-lg shadow-sm"}>
@@ -121,10 +108,6 @@ export const TicketsTimeLineChart = () => {
                 <Row Center className="gap-2">
                     <GoDotFill color="blueviolet" />
                     <p className="text-xs text-muted">Closed tickets</p>
-                </Row>
-                <Row Center className="gap-2">
-                    <GoDotFill color="red" />
-                    <p className="text-xs text-muted">Average tickets</p>
                 </Row>
             </Row>
         </Card>

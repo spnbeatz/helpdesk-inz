@@ -4,12 +4,14 @@ import {
   type ReactNode,
 } from "react";
 
+import { User } from "@/data/users";
+
 import { useCurrentUser, UserData } from "@/hooks/auth/useCurrentUser";
 
 import { useQueryClient } from "@tanstack/react-query";
 
 type AuthContextType = {
-  user: UserData | null;
+  user: User | null;
   isAuthenticated: boolean;
   logout: () => Promise<void>;
   isLoading: boolean
@@ -21,13 +23,15 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
+const userId = "USR-002"; // USR-005 - user, USR-002 - technician
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const queryClient = useQueryClient();
 
   const {
     data: user,
     isLoading,
-  } = useCurrentUser();
+  } = useCurrentUser(userId);
 
   const handleLogout = async () => {
     console.log("logged out")

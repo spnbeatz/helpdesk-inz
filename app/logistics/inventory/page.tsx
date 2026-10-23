@@ -4,16 +4,17 @@ import { AddButton } from "@/components/ui/controls/buttons/addButton";
 import { Search } from "@/components/ui/controls/inputs/Search";
 import { Title } from "@/components/ui/typography/Title";
 import { ProductListFilterButton } from "@/components/features/logistics/components/ProductListFilterButton";
-import { ProtectedComponent } from "@/components/misc/ProtectedComponent";
 import { useInventoryPageStore } from "@/store/pages/inventory.store";
 import { Column } from "@/components/ui/layout/flex/Column";
 import { Row } from "@/components/ui/layout/flex/Row";
 import { ProductListSection } from "@/components/features/logistics/sections/ProductListSection";
+import { useAccess } from "@/providers/access.provider";
 
 export default function InventoryPage() {
 
     const { setFilters } = useInventoryPageStore();
-    
+    const { hasPermission } = useAccess();
+
     return (
         <Column Start className="w-full h-full relative">
             <Row CenterBetween className="w-full">
@@ -22,11 +23,9 @@ export default function InventoryPage() {
                     description="List of available products"
                 />
                 <Row Center className="gap-2">
-                    <Search onSearch={(v) => setFilters({searchValue: v})} />
+                    <Search onSearch={(v) => setFilters({ searchValue: v })} />
                     <ProductListFilterButton />
-                    <ProtectedComponent permission="equipment.create">
-                        <AddButton label="Add new product" />
-                    </ProtectedComponent>
+                    {hasPermission("equipment.create") && <AddButton label="Add new product" />}
                 </Row>
             </Row>
             <ProductListSection />

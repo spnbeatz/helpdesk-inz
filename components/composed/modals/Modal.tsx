@@ -9,14 +9,16 @@ export const Modal = ({
     isDismissable = true,
     onOpenChange,
     size = "lg",
-    closeTrigger = false
+    closeTrigger = false,
+    className
 }: {
     children: React.ReactNode,
     isOpen?: boolean,
     isDismissable?: boolean,
     onOpenChange?: (isOpen: boolean) => void,
     size?: "lg" | "cover" | "full" | "md" | "sm" | "xs" | undefined,
-    closeTrigger?: boolean
+    closeTrigger?: boolean,
+    className?: string
 }) => {
 
     const { closeModal } = useModalStore();
@@ -36,7 +38,7 @@ export const Modal = ({
             <HModal.Backdrop isDismissable={isDismissable}>
                 <HModal.Container size={size}>
                     
-                    <HModal.Dialog className="rounded-lg bg-white backdrop-blur-md p-10">
+                    <HModal.Dialog className={`rounded-lg bg-white backdrop-blur-md p-10 ${className}`}>
                         {closeTrigger && <HModal.CloseTrigger />}
                         <HModal.Body>
                             {children}

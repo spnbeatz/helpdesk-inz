@@ -21,7 +21,7 @@ export const IconButton = ({
     return (
         <Button
             onClick={onClick}
-            className={`rounded-lg shadow-sm px-3 relative ${className}`}
+            className={`rounded-lg text-xs shadow-sm px-3 font-normal relative ${className}`}
             variant={variant} isDisabled={disabled}>
             <Icon className="text-black/70" color={iconColor}/>
             {children}

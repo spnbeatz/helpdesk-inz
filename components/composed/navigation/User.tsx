@@ -11,11 +11,11 @@ export const UserPanel = () => {
         <Card className="mt-auto w-full flex flex-col items-center justify-between bg-white/30 rounded-lg p-2">
             <Row CenterStart className="gap-2 w-full">
                 <Avatar className="rounded-lg">
-                    <Avatar.Image src={user?.avatar} />
+                    <Avatar.Image src={user?.avatarUrl || ""} />
                 </Avatar>
                 <Column StartCenter>
-                    <Label className="text-xs">{user?.email}</Label>
-                    <Description>{user?.role[0]}</Description>
+                    <Label className="text-xs">{user?.firstName + " " + user?.lastName}</Label>
+                    <Description>{user?.roleNames[0]}</Description>
                 </Column>
 
             </Row>

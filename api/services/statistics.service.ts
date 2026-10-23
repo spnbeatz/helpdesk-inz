@@ -1,11 +1,21 @@
+
 import { ticketsList, TicketType } from "@/data/exampleTicketsList";
-import { TicketListItemType } from "./tickets.service";
+import { UserType } from "@/data/users";
+import { usersList, userRolesList } from "@/data/users";
+
+export type TechnicianPerformanceType = {
+    id: string;
+    name: string;
+    assigned: number;
+    resolved: number;
+    avgResolutionMinutes: number;
+    resolutionRate: number;
+};
 
 export type TicketsChartData = {
     labels: string[];
     newTickets: number[];
     closedTickets: number[];
-    average: number;
 };
 
 export type TicketsChartRange = {
@@ -16,13 +26,31 @@ export type TicketsChartRange = {
 export const getTicketsChartData = (
     { from, to }: TicketsChartRange
 ): TicketsChartData => {
-
     const tickets: TicketType[] = ticketsList;
-    const diffInDays =
-        Math.ceil(
-            (to.getTime() - from.getTime()) /
-            (1000 * 60 * 60 * 24)
-        ) + 1;
+
+    const start = new Date(
+        from.getFullYear(),
+        from.getMonth(),
+        from.getDate()
+    );
+
+    const end = new Date(
+        to.getFullYear(),
+        to.getMonth(),
+        to.getDate()
+    );
+
+    const diffInDays = Math.round(
+        (Date.UTC(
+            end.getFullYear(),
+            end.getMonth(),
+            end.getDate()
+        ) - Date.UTC(
+            start.getFullYear(),
+            start.getMonth(),
+            start.getDate()
+        )) / 86400000
+    ) + 1;
 
     const groupBy = diffInDays <= 31 ? "day" : "month";
 
@@ -30,10 +58,31 @@ export const getTicketsChartData = (
     const newTickets: number[] = [];
     const closedTickets: number[] = [];
 
-    if (groupBy === "day") {
-        const current = new Date(from);
+    const countTickets = (
+        dateField: "created_at" | "resolved_at",
+        year: number,
+        month: number,
+        day?: number
+    ) => {
+        return tickets.filter(ticket => {
+            const value = ticket[dateField];
 
-        while (current <= to) {
+            if (!value) return false;
+
+            const date = new Date(value);
+
+            return (
+                date.getFullYear() === year &&
+                date.getMonth() === month &&
+                (day === undefined || date.getDate() === day)
+            );
+        }).length;
+    };
+
+    if (groupBy === "day") {
+        const current = new Date(start);
+
+        while (current <= end) {
             const year = current.getFullYear();
             const month = current.getMonth();
             const day = current.getDate();
@@ -41,96 +90,128 @@ export const getTicketsChartData = (
             labels.push(
                 current.toLocaleDateString("pl-PL", {
                     day: "2-digit",
-                    month: "2-digit",
+                    month: "2-digit"
                 })
             );
 
             newTickets.push(
-                tickets.filter(ticket => {
-                    const date = new Date(ticket.created_at);
-
-                    return (
-                        ticket.status === "new" &&
-                        date.getFullYear() === year &&
-                        date.getMonth() === month &&
-                        date.getDate() === day
-                    );
-                }).length
+                countTickets("created_at", year, month, day)
             );
 
             closedTickets.push(
-                tickets.filter(ticket => {
-                    const date = new Date(ticket.updated_at);
-
-                    return (
-                        ticket.status === "closed" &&
-                        date.getFullYear() === year &&
-                        date.getMonth() === month &&
-                        date.getDate() === day
-                    );
-                }).length
+                countTickets("resolved_at", year, month, day)
             );
 
             current.setDate(current.getDate() + 1);
         }
-    }
-
-    if (groupBy === "month") {
+    } else {
         const current = new Date(
-            from.getFullYear(),
-            from.getMonth(),
+            start.getFullYear(),
+            start.getMonth(),
             1
         );
 
-        while (current <= to) {
+        while (current <= end) {
             const year = current.getFullYear();
             const month = current.getMonth();
 
             labels.push(
                 current.toLocaleDateString("pl-PL", {
                     month: "short",
-                    year: "2-digit",
+                    year: "2-digit"
                 })
             );
 
             newTickets.push(
-                tickets.filter(ticket => {
-                    const date = new Date(ticket.created_at);
-
-                    return (
-                        ticket.status === "new" &&
-                        date.getFullYear() === year &&
-                        date.getMonth() === month
-                    );
-                }).length
+                countTickets("created_at", year, month)
             );
 
             closedTickets.push(
-                tickets.filter(ticket => {
-                    const date = new Date(ticket.updated_at);
-
-                    return (
-                        ticket.status === "closed" &&
-                        date.getFullYear() === year &&
-                        date.getMonth() === month
-                    );
-                }).length
+                countTickets("resolved_at", year, month)
             );
 
             current.setMonth(current.getMonth() + 1);
         }
     }
 
-    const totalTickets =
-        newTickets.reduce((sum, value) => sum + value, 0);
-
-    const average =
-        totalTickets / diffInDays;
-
     return {
         labels,
         newTickets,
         closedTickets,
-        average: Number(average.toFixed(2)),
     };
+};
+
+
+export const getTechnicianPerformance = (): TechnicianPerformanceType[] => {
+    const tickets = ticketsList;
+
+    const technicianIds = new Set(
+        userRolesList
+            .filter(role => role.roleId === "ROLE-002")
+            .map(role => role.userId)
+    );
+
+    const technicians = usersList.filter(user =>
+        technicianIds.has(user.id)
+    );
+
+    return technicians.map(technician => {
+        const assignedTickets = tickets.filter(ticket =>
+            ticket.technician_id === technician.id
+        );
+
+        const resolvedTickets = assignedTickets.filter(ticket =>
+            ticket.status === "closed" &&
+            ticket.resolved_at !== null
+        );
+
+        const assigned = assignedTickets.length;
+        const resolved = resolvedTickets.length;
+
+        const totalMinutes = resolvedTickets.reduce(
+            (sum, ticket) =>
+                sum + (ticket.resolution_minutes ?? 0),
+            0
+        );
+
+        return {
+            id: technician.id,
+            name: `${technician.firstName} ${technician.lastName}`,
+            avatarUrl: technician.avatarUrl,
+            assigned,
+            resolved,
+            avgResolutionMinutes: resolved > 0
+                ? Math.round(totalMinutes / resolved)
+                : 0,
+            resolutionRate: assigned > 0
+                ? Number(((resolved / assigned) * 100).toFixed(1))
+                : 0
+        };
+    }).sort((a, b) => b.resolved - a.resolved);
+};
+
+export const getTechnicianWorkload = (
+    tickets: TicketType[],
+    limit = 4
+) => {
+    tickets = ticketsList
+    const technicianIds = new Set(
+        userRolesList
+            .filter(role => role.roleId === "ROLE-002")
+            .map(role => role.userId)
+    );
+
+    return usersList
+        .filter(user => technicianIds.has(user.id))
+        .map(user => ({
+            technicianId: user.id,
+            name: `${user.firstName} ${user.lastName}`,
+            avatarUrl: user.avatarUrl,
+            openTickets: tickets.filter(ticket =>
+                ticket.technician_id === user.id &&
+                ticket.status === "new"
+            ).length
+        }))
+        .sort((a, b) => b.openTickets - a.openTickets)
+        .slice(0, limit);
 };

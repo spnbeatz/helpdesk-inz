@@ -28,7 +28,7 @@ export default function ReportsPage() {
                 <Section title="Create report">
                     <Grid cols={3} gap={4}>
                         {createReportCards.map((card) => (
-                            <CreateReportCard {...card} />
+                            <CreateReportCard key={card.id} {...card} />
                         ))}
                     </Grid>
                 </Section>
@@ -83,7 +83,7 @@ export const CreateReportCard = ({ title, description, imageUrl, id, href, inclu
                 <Description >{description}</Description>
             </Column>
             <LuChevronRight className="absolute right-6 top-6" />
-            <Grid cols={2} className={`p-2 border-2 w-full rounded-md gap-4`}
+{/*             <Grid cols={2} className={`p-2 border-2 w-full rounded-md gap-4`}
                 style={{
                     backgroundColor: `color-mix(in oklab, var(--color-${color}-400) 5%, transparent)`,
                     borderColor: `color-mix(in oklab, var(--color-${color}-400) 20%, transparent)`,
@@ -96,7 +96,7 @@ export const CreateReportCard = ({ title, description, imageUrl, id, href, inclu
                         <Description>{item}</Description>
                     </Row>
                 ))}
-            </Grid>
+            </Grid> */}
         </Column>
     )
 }

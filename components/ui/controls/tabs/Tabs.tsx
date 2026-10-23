@@ -1,4 +1,5 @@
-import { Tabs as HTabs, Orientation } from "@heroui/react";
+import { Description, Tabs as HTabs, Orientation, Label } from "@heroui/react";
+import { Column } from "../../layout/flex";
 
 export type TabsListType = {
     label: string,
@@ -20,12 +21,15 @@ export type TabProps = {
 export const Tabs = (props : TabsProps) => {
     return (
         <HTabs className="w-full h-full" orientation={props.orientation || "horizontal"} variant="primary">
-            <HTabs.ListContainer className="bg-white/60 max-w-100">
+            <HTabs.ListContainer className={`${props.orientation === "vertical" ? "bg-transparent" : "bg-white/60"} max-w-100 max-h-auto`}>
                 <HTabs.List>
                     {props.tabs.map((tab) => {
                         return (
-                            <HTabs.Tab className={`${props.orientation === "vertical" && "justify-start items-center"}`} id={tab.id}>
+                            <HTabs.Tab key={"tab" + tab.id} className={`${props.orientation === "vertical" && "justify-start items-center"}`} id={tab.id}>
+
                                 {tab.label}
+                                
+                                
                                 <TabsIndicator />
                             </HTabs.Tab>
                         )
@@ -37,7 +41,7 @@ export const Tabs = (props : TabsProps) => {
     )
 }
 
-export const TabsIndicator = () => <HTabs.Indicator className="bg-indigo-200/60 text-white/60!"/>
+export const TabsIndicator = () => <HTabs.Indicator className="bg-indigo-200/60 text-white/60! h-full"/>
 
 export const Tab = (props: TabProps) => {
     return (

@@ -10,7 +10,7 @@ export const useSearchCustomers = (filters: CustomersPageFilterType) => {
     })
 }
 
-export const useCustomer = (customerId: string) => {
+export const useCustomer = (customerId?: string | null) => {
     return useQuery({
         queryKey: ["user", customerId],
         queryFn: () => getCustomer(customerId),

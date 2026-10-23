@@ -29,6 +29,7 @@ export const Select = ({
 }: SelectProps) => {
     return (
         <HSelect
+            aria-label="select"
             isRequired={isRequired}
             value={defaultValue}
             placeholder={placeholder}

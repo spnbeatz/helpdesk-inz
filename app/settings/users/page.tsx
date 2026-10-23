@@ -25,7 +25,7 @@ export default function UsersSettingsPage() {
     );
 
     return (
-        <Column Start className="w-full gap-4">
+        <Column Start className="w-full h-full gap-4">
             <Row CenterBetween className="w-full">
                 <Title title="Users" />
                 <Row Center className="gap-2">

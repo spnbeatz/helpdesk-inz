@@ -9,7 +9,25 @@ export type TicketsPageFiltersType = {
     categoryId?: string;
     userId?: string;  
     status?: "new" | "closed" | "all";
+    technicianId?: string | null,
+    createdBefore?: string,
+    createdAfter?: string,
+    limit?: number
 };
+
+export const initialTicketsFilters: TicketsPageFiltersType = {
+    sortBy: "created_at",
+    sortDir: "desc",
+    searchValue: "",
+    priorityId: undefined,
+    categoryId: undefined,
+    userId: undefined,
+    status: "all",
+    technicianId: undefined,
+    createdBefore: undefined,
+    createdAfter: undefined,
+    limit: undefined
+}
 
 type TicketsPageType = {
     title?: string;
@@ -37,12 +55,7 @@ export const useTicketsPageStore = create<TicketsPageType>((set) => ({
         set((state) => ({
             statsVisibility: !state.statsVisibility,
         })),
-    filters: {
-        sortBy: "created_at",
-        sortDir: "desc",
-        searchValue: "",
-        priority: "all",
-    },
+    filters: initialTicketsFilters,
 
     setPageData: (data) => set(data),
 
@@ -55,3 +68,4 @@ export const useTicketsPageStore = create<TicketsPageType>((set) => ({
         })),
     itemsPerPage: 15
 }));
+

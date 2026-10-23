@@ -90,6 +90,7 @@ export const searchCustomerList = (filters: CustomersPageFilterType): CustomerTy
 
 }
 
-export const getCustomer = (customerId: string) => {
+export const getCustomer = (customerId?: string | null) => {
+    if(!customerId) return null;
     return customersList.find((customer) => customer.id === customerId);
 }

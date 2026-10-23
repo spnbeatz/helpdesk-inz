@@ -18,7 +18,36 @@ export const actions: PermissionAction[] = [
     "delete"
 ];
 
-export const permissionGroups: PermissionGroup[] = Object.values(
+export type PermissionGroupType = {
+    resource: string;
+    permissions: PermissionType[];
+};
+
+export const permissionGroups = (): PermissionGroupType[] => {
+    const permissions = permissionsList;
+    const grouped = permissions.reduce<Record<string, PermissionType[]>>(
+        (acc, permission) => {
+            const resource = permission.name.split(".")[0];
+
+            if (!acc[resource]) {
+                acc[resource] = [];
+            }
+
+            acc[resource].push(permission);
+
+            return acc;
+        },
+        {}
+    );
+
+    return Object.entries(grouped).map(([resource, permissions]) => ({
+        resource:
+            resource.charAt(0).toUpperCase() + resource.slice(1),
+        permissions
+    }));
+};
+
+/* export const permissionGroups: PermissionGroup[] = Object.values(
     permissionsList.reduce<Record<string, PermissionGroup>>(
         (acc, permission) => {
             const [resource, action] = permission.name.split(".") as [
@@ -41,7 +70,7 @@ export const permissionGroups: PermissionGroup[] = Object.values(
         },
         {}
     )
-);
+); */
 
 export const getRolePermissionsList = () => {
     return rolePermissionsList;

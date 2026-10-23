@@ -21,11 +21,12 @@ export const Search = ({ onSearch }: SearchProps) => {
     };
 
     return (
-        <SearchField>
+        <SearchField aria-label="search">
             <SearchField.Group className="rounded-lg bg-white/50">
                 <SearchField.SearchIcon />
 
                 <SearchField.Input
+                    aria-label="searchinput"
                     className="w-[280px]"
                     placeholder="Search..."
                     onInput={handleOnInput}

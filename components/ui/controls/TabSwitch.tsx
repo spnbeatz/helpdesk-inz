@@ -20,7 +20,7 @@ export const TabSwitch = ({
                 {tabs.map((tab, index) => {
 
                     return (
-                        <div className={`
+                        <div key={tab.name} className={`
                         h-full px-4 whitespace-nowrap text-black/60
                         shadow-muted flex justify-center items-center text-xs cursor-pointer
                         ${activeTabValue === tab.value ? "bg-indigo-400/60 rounded-lg text-white" : ""}

@@ -9,6 +9,7 @@ import { highlightText } from "@/helpers/highlightText";
 import { Row, Column } from "../../../ui/layout/flex";
 import { TicketUser } from "./TicketUser";
 import { TicketInfoChips } from "./TicketInfoChips";
+import { useCustomer } from "@/queries/customers/customers.query";
 
 export const Ticket = ({ ticket }: { ticket: TicketListItemType }) => {
 
@@ -28,22 +29,33 @@ export const Ticket = ({ ticket }: { ticket: TicketListItemType }) => {
             <p className="text-black/70">{highlightText(ticket.title, filters.searchValue)}</p>
             <p className="text-black/60 text-sm">{highlightText(ticket.description, filters.searchValue)}</p>
             <Row CenterBetween className=" w-full mt-auto">
-                {
-                    ticket.technician_id ? (
-                        <Row StartCenter className="text-black/60 text-xs gap-1 ">
-                            <p className="font-semibold">Assigned to: </p>
-                            <p>{"Jan Kowalski"}</p>
-                        </Row>
-                    ) : (
-                        <p className="text-black/60 text-xs">Not assigned yet</p>
-                    )
-                }
-
                 <AttachmentCounter count={1} />
+                <AssignmentInfo technicianId={ticket.technician_id} />
+                
             </Row>
         </Card>
     )
 
+}
+
+export const AssignmentInfo = ({ technicianId }: { technicianId: string | null }) => {
+    
+    const { data: technicianData } = useCustomer(technicianId);
+
+    if (!technicianId) return (
+        <Description className="text-black/60 text-xs">Not assigned</Description>
+    )
+
+    return (
+        <Row StartCenter className="text-black/60 text-xs gap-1 ">
+            <Row StartCenter className="gap-2">
+                <Avatar className="w-[18px] h-[18px]">
+                    <Avatar.Image src={technicianData?.avatarUrl}/>
+                </Avatar>
+                <Description>{technicianData?.name}</Description>
+            </Row>
+        </Row>
+    )
 }
 
 export const AttachmentCounter = ({ count }: { count: number }) => {

@@ -5,8 +5,6 @@ import { Avatar } from "@heroui/react";
 
 export const customerTableColumns: TableColumn<CustomerType>[] = [
     { id: "id", name: "ID" },
-    { id: "name", name: "Name" },
-    { id: "location", name: "Location" },
     {
         id: "email", name: "Email", customValue: (item) => (
             <Row CenterStart className="gap-2 group">
@@ -18,6 +16,9 @@ export const customerTableColumns: TableColumn<CustomerType>[] = [
             </Row>
         )
     },
+    { id: "name", name: "Name" },
+    { id: "location", name: "Location" },
+
     { id: "phone", name: "Phone" },
     { id: "department", name: "Department" },
     { id: "position", name: "Position" },

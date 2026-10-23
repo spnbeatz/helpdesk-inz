@@ -12,8 +12,9 @@ export const getTicketsByPriority = (tickets: TicketListItemType[]) => {
                     tickets.filter(ticket => ticket.priority === "medium").length,
                     tickets.filter(ticket => ticket.priority === "high").length,
                 ],
-                barThickness: 15,
-                backgroundColor: "rgba(40, 43, 254, 0.4)"
+                barThickness: 25,
+                backgroundColor: "rgba(40, 43, 254, 0.4)",
+                borderRadius: 2
             },
         ],
     };

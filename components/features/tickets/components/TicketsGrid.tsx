@@ -26,7 +26,7 @@ export const TicketsGrid = ({ ticketsList, itemsPerPage } : { ticketsList: Ticke
 
     return (
         <Column
-            className={`w-full h-full min-h-0 gap-4 pt-4`}
+            className={`w-full h-full min-h-0 gap-4`}
         >
             <ScrollShadow
                 size={20}

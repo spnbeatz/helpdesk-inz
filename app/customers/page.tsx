@@ -11,7 +11,7 @@ export default function CustomersPage() {
     const { setFilters } = useCustomersPageStore();
 
     return (
-        <Column StartBetween className="gap-4">
+        <Column StartBetween className="gap-4 h-full">
             <Row StartBetween className="w-full">
                 <Title
                     title={"Customers & Technicians"}

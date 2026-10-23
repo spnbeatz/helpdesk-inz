@@ -20,22 +20,8 @@ export const protectedRoutes: RouteAccessType[] = [
         path: "/settings/tickets",
         roles: ["Administrator"]
     },
-
-    // nie ma tego w navigation, ale nadal chronisz
-    {
-        path: "/users",
-        roles: ["Administrator"]
-    },
-    {
-        path: "/users/[id]",
-        roles: ["Administrator", "Technician"]
-    },
     {
         path: "/tickets",
         roles: ["Administrator", "Technician"]
     },
-    {
-        path: "/tickets/[id]/edit",
-        roles: ["Administrator", "Technician"]
-    }
 ];
