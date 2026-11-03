@@ -25,7 +25,7 @@ export default function CustomerInfoPage() {
                         </Avatar>
                         <Column StartCenter>
                             <div className="text-xl text-black/70 font-semibold">{customer?.name}</div>
-                            <Row Center className="gap-1 text-xs text-black/50">{customer.position} <LuDot /> {customer.location}</Row>
+                            <Row Center className="gap-1 text-xs text-black/50">{customer.position} <LuDot /> {customer.locationName}</Row>
                         </Column>
 
                     </Row>

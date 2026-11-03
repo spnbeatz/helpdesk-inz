@@ -1,7 +1,7 @@
 
-import { FilterPopoverButton } from "../../../ui/controls/buttons/filterPopoverButton"
+import { FilterPopoverButton } from "../../../../ui/controls/buttons/filterPopoverButton"
 
-import { SearchUser } from "../../users/components/SearchUsers/SearchUsers";
+import { SearchUser } from "../../../users/components/SearchUsers/SearchUsers";
 import { useInventoryPageStore } from "@/store/pages/inventory.store";
 
 export const ProductListFilterButton = () => {

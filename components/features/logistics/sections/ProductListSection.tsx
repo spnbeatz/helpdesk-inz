@@ -1,4 +1,4 @@
-import { ProductList } from "@/components/features/logistics/components/ProductList";
+import { ProductList } from "@/components/features/logistics/components/products/ProductList";
 import { Section } from "@/components/ui/surfaces/Section";
 
 export const ProductListSection = () => {

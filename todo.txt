@@ -17,4 +17,7 @@ Recent activity
 Average resolution time 
 technician workload
 
-ticketViewModal refaktor
+uspójnić nazwy inventory/product/item
+
+
+

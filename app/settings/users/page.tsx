@@ -10,15 +10,13 @@ import { useAdminSearchUserList } from "@/queries/admin/admin.query";
 import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
 import { userTableColumns } from "@/components/features/settings/users/config/userTableColumns";
 import { SettingsPopover } from "@/components/features/settings/users/components/SettingsPopover";
-import { useSettingsUserPageStore } from "@/store/pages/settings/users.store";
+import { useUsersSettingsTableConfig } from "@/store/tables/tableConfig.store";
 
 export default function UsersSettingsPage() {
 
     const [searchValue, setSearchValue] = useState<string>("");
     const { data: userList } = useAdminSearchUserList(searchValue);
-    const visibleColumns = useSettingsUserPageStore(
-        (state) => state.tableConfig.visibleColumns
-    );
+    const { visibleColumns } = useUsersSettingsTableConfig();
 
     const columns = userTableColumns.filter((column) =>
         visibleColumns.includes(column.id)

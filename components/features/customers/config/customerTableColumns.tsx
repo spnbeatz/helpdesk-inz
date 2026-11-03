@@ -17,7 +17,7 @@ export const customerTableColumns: TableColumn<CustomerType>[] = [
         )
     },
     { id: "name", name: "Name" },
-    { id: "location", name: "Location" },
+    { id: "locationName", name: "Location" },
 
     { id: "phone", name: "Phone" },
     { id: "department", name: "Department" },

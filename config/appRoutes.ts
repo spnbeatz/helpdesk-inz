@@ -31,6 +31,11 @@ export const appRoutes = [
         path: "/logistics/orders"
     },
     {
+        key: "logistics.owned",
+        name: "Owned",
+        path: "/logistics/owned"
+    },
+    {
         key: "logistics.inventory",
         name: "Inventory",
         path: "/logistics/inventory"

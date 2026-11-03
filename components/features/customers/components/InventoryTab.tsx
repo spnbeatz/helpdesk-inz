@@ -1,7 +1,7 @@
 import { Tab } from "@/components/ui/controls/tabs/Tabs"
 import { useParams } from "next/navigation";
 import { useEquipmentList } from "@/queries/logistics/logistics.query";
-import { InventoryColumn } from "../../logistics/components/ProductList";
+import { InventoryColumn } from "../../logistics/components/products/ProductList";
 import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
 import { useModalStore } from "@/store/modals";
 import { Section } from "@/components/ui/surfaces/Section";
@@ -9,14 +9,22 @@ import { Column, Row } from "@/components/ui/layout/flex";
 import { Select, SelectOptionsType } from "@/components/ui/controls/inputs/Select";
 import { IconButton } from "@/components/ui/controls/buttons/iconButton";
 import { LuArrowRightLeft, LuTrash } from "react-icons/lu";
+import { useMemo } from "react";
+import { mapInventoryTableItems } from "../../logistics/config/inventoryTableColumns";
+import { TableColumn } from "@/components/ui/data-display/TableWithPagination";4
+import { InventoryTableItemType } from "../../logistics/config/inventoryTableColumns";
 
 export const InventoryTab = () => {
 
     const params = useParams<{ id: string }>();
-    const { data: inventoryList } = useEquipmentList({ userId: params.id });
+    const { data: products } = useEquipmentList({ userId: params.id });
     const { openModal } = useModalStore();
 
-    const columns: InventoryColumn[] = [
+    const inventoryList = useMemo(() => {
+        return mapInventoryTableItems(products)
+    }, [products]);
+
+    const columns: TableColumn<InventoryTableItemType>[] = [
         { id: "id", name: "ID" },
         { id: "assetTag", name: "Asset Tag" },
         { id: "name", name: "Name" },
@@ -25,7 +33,6 @@ export const InventoryTab = () => {
         { id: "serialNumber", name: "Serial Number" },
         { id: "status", name: "Status" },
         { id: "manufacturer", name: "Manufacturer" },
-        { id: "location", name: "Location" },
         { id: "purchaseDate", name: "Purchase Date" },
         { id: "warrantyUntil", name: "Warranty until" }
     ];

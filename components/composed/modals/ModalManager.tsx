@@ -9,7 +9,8 @@ import { ConfirmationModalProps } from "./ConfirmationModal";
 import { InventoryItemModal, InventoryItemModalType } from "../../features/logistics/modals/InventoryItemModal";
 import { TicketViewModal, TicketViewModalProps } from "@/components/features/tickets/modals/TicketViewModal";
 import { CustomerInfoModal, CustomerInfoModalType } from "@/components/features/customers/modals/CustomerInfoModal";
-
+import { CreateOrderModal, CreateOrderModalType} from "@/components/features/logistics/modals/CreateOrderModal";
+import { OrderViewModal, OrderViewModalType } from "@/components/features/logistics/modals/OrderViewModal";
 
 export const ModalManager = () => {
     const { modals } = useModalStore();
@@ -52,6 +53,20 @@ export const ModalManager = () => {
                             <CustomerInfoModal
                                 key={modal.id}
                                 data={modal.data as CustomerInfoModalType}
+                            />
+                        );
+                    case "createOrder":
+                        return (
+                            <CreateOrderModal
+                                key={modal.id}
+                                data={modal.data as CreateOrderModalType}
+                            />
+                        )
+                    case "viewOrder":
+                        return (
+                            <OrderViewModal 
+                                key={modal.id}
+                                data={modal.data as OrderViewModalType}
                             />
                         )
 

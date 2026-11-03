@@ -14,7 +14,7 @@ export type ConfirmationModalProps = {
 
 export const ConfirmationModal = ({ data }: { data: ConfirmationModalProps }) => {
 
-    const { closeModal } = useModalStore();
+    const { closeModal, closeAllModals } = useModalStore();
 
     const getIcon = () => {
 
@@ -56,7 +56,7 @@ export const ConfirmationModal = ({ data }: { data: ConfirmationModalProps }) =>
                             <Button variant="tertiary" onClick={closeModal} className={"rounded-lg"}>
                                 Cancel
                             </Button>}
-                            <Button onClick={data.confirmAction} className={"rounded-lg bg-sky-700/60"}>
+                            <Button onClick={data.confirmAction ? data.confirmAction : closeAllModals} className={"rounded-lg bg-sky-700/60"}>
                                 {data.confirmButtonText || "Confirm"}
                             </Button>
                         </Modal.Footer>

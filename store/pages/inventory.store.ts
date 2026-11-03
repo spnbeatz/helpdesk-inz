@@ -1,42 +1,26 @@
-import { Equipment } from "@/data/equipments";
-import { create } from "zustand";
+import { InventoryTableItemType } from "@/components/features/logistics/config/inventoryTableColumns";
+import { BaseFiltersType } from "@/types/filters.types";
+import { EquipmentStatus, EquipmentType } from "@/data/equipments";
+import { createPageStore } from "../factories/createPageStore";
 
-export type InventorySortKey = keyof Equipment | "quantity";
+export type InventorySortKey = keyof InventoryTableItemType;
 
-export type InventoryPageFiltersType = {
-    sortBy?: InventorySortKey;
-    sortDir?: "asc" | "desc";
-    userId?: string | null;
-    type?: string;
-    searchValue?: string;
-    status?: string;
-    isInventory?: boolean;
-};
+export type InventoryPageFiltersType =
+    BaseFiltersType<InventorySortKey> & {
+        userId?: string | null;
+        type?: EquipmentType;
+        status?: EquipmentStatus | "all";
+        itemIds?: string[] | null;
+        locationId?: string;
+    };
 
-type InventoryPageType = {
-    filters: InventoryPageFiltersType;
-    setFilters: (filters: Partial<InventoryPageFiltersType>) => void;
-    itemsPerPage: number;
-};
-
-export const useInventoryPageStore = create<InventoryPageType>((set) => ({
-    filters: {
-        sortBy: "name",
-        sortDir: "asc",
-        userId: null,
-        type: undefined,
-        searchValue: "",
-        status: undefined,
-        isInventory: true,
-    },
-
-    setFilters: (newFilters) =>
-        set((state) => ({
-            filters: {
-                ...state.filters,
-                ...newFilters,
-            },
-        })),
-
-    itemsPerPage: 23,
-}));
+export const useInventoryPageStore =
+    createPageStore<InventoryPageFiltersType>({
+        initialFilters: {
+            sortBy: "name",
+            sortDir: "asc",
+            searchValue: "",
+            status: "all"
+        },
+        itemsPerPage: 23
+    });

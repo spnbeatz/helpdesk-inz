@@ -19,7 +19,7 @@ export const userTableColumns: TableColumn<User>[] = [
     },
     { id: "firstName", name: "First name" },
     { id: "lastName", name: "Last Name" },
-    { id: "location", name: "Location" },
+    { id: "locationName", name: "Location", customValue: (item) => item.locationName},
     { id: "position", name: "Position" },
     {
         id: "status", name: "Status",

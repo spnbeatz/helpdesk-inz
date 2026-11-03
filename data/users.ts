@@ -1,3 +1,5 @@
+import { locations } from "./locations";
+
 export type UserType = {
     id: string;
     firstName: string;
@@ -7,7 +9,7 @@ export type UserType = {
     status: "active" | "inactive" | "blocked";
     department: string;
     position: string;
-    location: string;
+    location_id: string;
     avatarUrl: string | null;
     createdAt: string;
     lastLoginAt: string | null;
@@ -20,8 +22,15 @@ export type CustomerType = {
     phone: string,
     department: string,
     position: string,
-    location: string,
+    location_id: string,
+    locationName: string,
     avatarUrl: string
+}
+
+export type UserMinType = {
+    id: string,
+    name: string,
+    avatarUrl: string | null,
 }
 
 
@@ -36,7 +45,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "IT",
         position: "IT Administrator",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP._32M20QZ2_4OnsoFzIRfdAHaHa?w=154&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-01-12T08:30:00Z",
         lastLoginAt: "2026-09-10T07:42:00Z",
@@ -50,7 +59,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "IT",
         position: "IT Support Specialist",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.vhI6WDCn5wYm7burmn87MgHaGG?w=204&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-03-18T10:15:00Z",
         lastLoginAt: "2026-09-11T06:58:00Z",
@@ -64,7 +73,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "IT",
         position: "Helpdesk Technician",
-        location: "Poznań",
+        location_id: "LOC-007",
         avatarUrl: "https://th.bing.com/th/id/OIP.KfJyyO5MvvMU86PvnZ5IeAHaHa?w=171&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-06-02T09:20:00Z",
         lastLoginAt: "2026-09-10T15:31:00Z",
@@ -78,7 +87,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Sales",
         position: "Sales Manager",
-        location: "Kraków",
+        location_id: "LOC-003",
         avatarUrl: "https://th.bing.com/th/id/OIP.H7pX-M8lF6Xbc8IQs0NoiQHaGH?w=198&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-02-21T11:45:00Z",
         lastLoginAt: "2026-09-10T12:18:00Z",
@@ -92,7 +101,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Finance",
         position: "Financial Analyst",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.ASUkkTjX8b8qdMiT41hcIwHaHa?w=171&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-08-14T07:50:00Z",
         lastLoginAt: "2026-09-09T09:12:00Z",
@@ -106,7 +115,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "HR",
         position: "HR Specialist",
-        location: "Gdańsk",
+        location_id: "LOC-009",
         avatarUrl: "https://th.bing.com/th/id/OIP.0AnR43zWdi414PM4uU6-TwHaFa?w=214&h=183&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-01-09T13:10:00Z",
         lastLoginAt: "2026-09-11T08:03:00Z",
@@ -120,7 +129,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Marketing",
         position: "Marketing Specialist",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.1JvRljDwRFR__zC-KJReJQHaE9?w=274&h=183&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-02-17T10:30:00Z",
         lastLoginAt: "2026-09-08T14:44:00Z",
@@ -134,7 +143,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Legal",
         position: "Legal Specialist",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.sZFAZRSt0WQjEBxZJCWfCQHaHa?w=171&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-03-11T09:05:00Z",
         lastLoginAt: "2026-09-10T10:22:00Z",
@@ -148,7 +157,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Operations",
         position: "Operations Specialist",
-        location: "Wrocław",
+        location_id: "LOC-005",
         avatarUrl: "https://th.bing.com/th/id/OIP.gD7GPAi1PDYfsUddJDgpOgHaHa?w=170&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-04-23T08:40:00Z",
         lastLoginAt: "2026-09-09T16:11:00Z",
@@ -162,7 +171,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Sales",
         position: "Account Manager",
-        location: "Poznań",
+        location_id: "LOC-007",
         avatarUrl: "https://th.bing.com/th/id/OIP.KJE-Xx-NwUbIwbNfnEYGpgHaIV?w=152&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-05-06T12:20:00Z",
         lastLoginAt: "2026-09-11T07:35:00Z",
@@ -176,7 +185,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Logistics",
         position: "Logistics Coordinator",
-        location: "Łódź",
+        location_id: "LOC-011",
         avatarUrl: "https://th.bing.com/th/id/OIP.0CEOgJYqeuFQIDdBNpCS7AHaHa?w=185&h=184&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-06-18T14:15:00Z",
         lastLoginAt: "2026-09-10T11:46:00Z",
@@ -190,7 +199,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Administration",
         position: "Office Administrator",
-        location: "Kraków",
+        location_id: "LOC-003",
         avatarUrl: "https://th.bing.com/th/id/OIP.ru3MDRWFnt4p5cNb9x_r9AHaHa?w=183&h=183&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-07-04T08:55:00Z",
         lastLoginAt: "2026-09-10T08:31:00Z",
@@ -204,7 +213,7 @@ export const usersList: UserType[] = [
         status: "inactive",
         department: "Sales",
         position: "Sales Representative",
-        location: "Wrocław",
+        location_id: "LOC-005",
         avatarUrl: "https://th.bing.com/th/id/OIP.ErzwUlEoaIE2DMzmNjm3QgHaEK?w=322&h=186&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-11-19T10:40:00Z",
         lastLoginAt: "2026-07-21T13:19:00Z",
@@ -218,7 +227,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Finance",
         position: "Accountant",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.-Rh3ZpioWtNtd1b6v0H45gHaGf?w=184&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-08-12T11:25:00Z",
         lastLoginAt: "2026-09-09T07:58:00Z",
@@ -232,7 +241,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "IT",
         position: "System Administrator",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.6Ms4HZrTyGoGrFfzzyYO0AHaLH?w=132&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-05-27T09:30:00Z",
         lastLoginAt: "2026-09-11T08:19:00Z",
@@ -246,7 +255,7 @@ export const usersList: UserType[] = [
         status: "blocked",
         department: "Marketing",
         position: "Content Specialist",
-        location: "Gdańsk",
+        location_id: "LOC-009",
         avatarUrl: "https://th.bing.com/th/id/OIP.uNjRJCLgQv3Pz5cPDORJ7AHaKK?w=132&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-09-02T12:05:00Z",
         lastLoginAt: "2026-08-28T09:41:00Z",
@@ -260,7 +269,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Operations",
         position: "Operations Manager",
-        location: "Łódź",
+        location_id: "LOC-011",
         avatarUrl: "https://th.bing.com/th/id/OIP.qPvUF5cEHh2MSx5gXuu8hAHaHa?w=177&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-09-15T08:10:00Z",
         lastLoginAt: "2026-09-10T16:02:00Z",
@@ -274,7 +283,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "HR",
         position: "Recruitment Specialist",
-        location: "Poznań",
+        location_id: "LOC-007",
         avatarUrl: "https://th.bing.com/th/id/OIP.1xmxFYs5VGs5u-1v-S_v_gHaFp?w=243&h=185&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-10-08T09:45:00Z",
         lastLoginAt: "2026-09-11T07:12:00Z",
@@ -288,7 +297,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Engineering",
         position: "Software Engineer",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.QfyKr9mFxhryDLOVPTqlSwHaFo?w=208&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-11-16T13:35:00Z",
         lastLoginAt: "2026-09-11T08:27:00Z",
@@ -302,7 +311,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Engineering",
         position: "QA Engineer",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.MCHqaZL02mqz1JKqpdioEwHaE8?w=236&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2025-01-13T10:20:00Z",
         lastLoginAt: "2026-09-10T09:47:00Z",
@@ -316,7 +325,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Engineering",
         position: "DevOps Engineer",
-        location: "Kraków",
+        location_id: "LOC-003",
         avatarUrl: "https://th.bing.com/th/id/OIP.Hpelb-U7MkYoJXCSfsUL6AHaHa?w=158&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2025-02-24T07:45:00Z",
         lastLoginAt: "2026-09-11T08:08:00Z",
@@ -330,7 +339,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "Administration",
         position: "Administrative Specialist",
-        location: "Gdańsk",
+        location_id: "LOC-009",
         avatarUrl: "https://th.bing.com/th/id/OIP.iyOIYoYmEzojo8TH13SUxgHaFj?w=210&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2025-03-09T11:10:00Z",
         lastLoginAt: "2026-09-09T12:26:00Z",
@@ -344,7 +353,7 @@ export const usersList: UserType[] = [
         status: "active",
         department: "IT",
         position: "Network Administrator",
-        location: "Warszawa",
+        location_id: "LOC-002",
         avatarUrl: "https://th.bing.com/th/id/OIP.bKP5TlBCQrH1ZMqDeKKvSQHaHa?w=160&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2023-07-31T08:35:00Z",
         lastLoginAt: "2026-09-11T06:45:00Z",
@@ -358,7 +367,7 @@ export const usersList: UserType[] = [
         status: "inactive",
         department: "Legal",
         position: "Legal Assistant",
-        location: "Kraków",
+        location_id: "LOC-003",
         avatarUrl: "https://th.bing.com/th/id/OIP.K1Sy86v-Mj1UlHEcE2NbXQHaEK?w=300&h=185&c=7&r=0&o=7&pid=1.7&rm=3",
         createdAt: "2024-02-05T14:50:00Z",
         lastLoginAt: "2026-06-18T10:12:00Z",
@@ -488,6 +497,95 @@ export const permissionsList: PermissionType[] = [
         name: "equipment.assign",
         description: "Assign equipment to users",
     },
+    // Locations
+    {
+        id: "PERM-029",
+        name: "locations.view",
+        description: "View company locations"
+    },
+    {
+        id: "PERM-030",
+        name: "locations.manage",
+        description: "Create, edit and delete locations"
+    },
+
+    // Inventory
+    {
+        id: "PERM-031",
+        name: "inventory.view.all",
+        description: "View inventory across all locations"
+    },
+    {
+        id: "PERM-032",
+        name: "inventory.view.branch",
+        description: "View inventory in assigned branches"
+    },
+    {
+        id: "PERM-033",
+        name: "equipment.reserve",
+        description: "Reserve available equipment"
+    },
+    {
+        id: "PERM-034",
+        name: "equipment.release",
+        description: "Confirm equipment handover to users"
+    },
+    {
+        id: "PERM-035",
+        name: "equipment.return",
+        description: "Process equipment returns"
+    },
+    {
+        id: "PERM-036",
+        name: "equipment.transfer",
+        description: "Transfer equipment between locations"
+    },
+    {
+        id: "PERM-037",
+        name: "equipment.history",
+        description: "View equipment assignment history"
+    },
+
+    // Orders
+    {
+        id: "PERM-038",
+        name: "orders.approve",
+        description: "Approve or decline equipment orders"
+    },
+    {
+        id: "PERM-039",
+        name: "orders.process",
+        description: "Start processing approved orders"
+    },
+    {
+        id: "PERM-040",
+        name: "orders.complete",
+        description: "Complete orders after equipment delivery"
+    },
+
+    // Products
+    {
+        id: "PERM-041",
+        name: "products.view",
+        description: "View orderable products catalog"
+    },
+    {
+        id: "PERM-042",
+        name: "products.manage",
+        description: "Create, edit and deactivate catalog products"
+    },
+
+    // Equipment assignments
+    {
+        id: "PERM-043",
+        name: "equipment.reservation.cancel",
+        description: "Cancel equipment reservations"
+    },
+    {
+        id: "PERM-044",
+        name: "equipment.view.own",
+        description: "View equipment assigned to yourself"
+    },
 
     // Orders
     {
@@ -553,7 +651,7 @@ export const permissionsList: PermissionType[] = [
     },
 ];
 
-export const rolePermissionsList: RolePermissionType[] = [
+export const existingRolePermissionsList: RolePermissionType[] = [
     // Administrator
     { roleId: "ROLE-001", permissionId: "PERM-001" },
     { roleId: "ROLE-001", permissionId: "PERM-002" },
@@ -617,6 +715,75 @@ export const rolePermissionsList: RolePermissionType[] = [
     // User
     { roleId: "ROLE-004", permissionId: "PERM-001" },
     { roleId: "ROLE-004", permissionId: "PERM-002" },
+];
+
+const createRolePermissions = (
+    roleId: string,
+    permissionIds: string[]
+): RolePermissionType[] =>
+    permissionIds.map(permissionId => ({
+        roleId,
+        permissionId
+    }));
+
+export const newRolePermissionsList: RolePermissionType[] = [
+    // Administrator – wszystkie nowe uprawnienia
+    ...createRolePermissions("ROLE-001", [
+        "PERM-029",
+        "PERM-030",
+        "PERM-031",
+        "PERM-032",
+        "PERM-033",
+        "PERM-034",
+        "PERM-035",
+        "PERM-036",
+        "PERM-037",
+        "PERM-038",
+        "PERM-039",
+        "PERM-040",
+        "PERM-041",
+        "PERM-042",
+        "PERM-043",
+        "PERM-044"
+    ]),
+
+    // Technician
+    ...createRolePermissions("ROLE-002", [
+        "PERM-029", // View locations
+        "PERM-031", // View all inventory
+        "PERM-032", // View branch inventory
+        "PERM-033", // Reserve equipment
+        "PERM-034", // Hand over equipment
+        "PERM-035", // Return equipment
+        "PERM-037", // Assignment history
+        "PERM-039", // Process approved orders
+        "PERM-040", // Complete orders
+        "PERM-041", // View product catalog
+        "PERM-043", // Cancel reservation
+        "PERM-044"  // Own equipment
+    ]),
+
+    // Manager
+    ...createRolePermissions("ROLE-003", [
+        "PERM-029", // View locations
+        "PERM-031", // View all inventory
+        "PERM-032", // View branch inventory
+        "PERM-036", // Transfer equipment
+        "PERM-037", // Assignment history
+        "PERM-038", // Approve orders
+        "PERM-041", // View products
+        "PERM-044"  // Own equipment
+    ]),
+
+    // User
+    ...createRolePermissions("ROLE-004", [
+        "PERM-044" // Own equipment
+    ])
+];
+
+export const rolePermissionsList: RolePermissionType[] = [
+    ...existingRolePermissionsList,
+    ...newRolePermissionsList
 ];
 
 export const userRolesList: UserRoleType[] = [
@@ -718,6 +885,8 @@ export const userRolesList: UserRoleType[] = [
     },
 ];
 
+
+
 export const rolesList: RoleType[] = [
     {
         id: "ROLE-001",
@@ -748,11 +917,15 @@ export const customersList: CustomerType[] = usersList.map(user => ({
     phone: user.phone,
     department: user.department,
     position: user.position,
-    location: user.location,
+    location_id: user.location_id,
+    locationName: locations.find(
+        location => location.id === user.location_id
+    )?.name ?? "Unknown location",
     avatarUrl: user.avatarUrl ?? "",
 }));
 
 export type User = UserType & {
+    locationName: string;
     roleNames: string[];
     permissions: string[];
 };
@@ -776,7 +949,8 @@ export const users: User[] = usersList.map((user) => {
                     rp.permissionId === permission.id
                 )
             )
-            .map((permission) => permission.name)
+            .map((permission) => permission.name),
+        locationName: locations.find((location) => location.id === user.location_id)?.name ?? ""
     };
 });
 

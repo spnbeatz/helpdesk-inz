@@ -1,3 +1,4 @@
+import { locations } from "@/data/locations";
 import { usersList, CustomerType, customersList, users } from "@/data/users";
 import { CustomersPageFilterType } from "@/store/pages/customers.store";
 
@@ -17,6 +18,8 @@ export const searchUserList = (searchValue: string) => {
 
         return searchableText.includes(search);
     })
+
+    
 }
 
 export const adminSearchUserList = (searchValue: string) => {

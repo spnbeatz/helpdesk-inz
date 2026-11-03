@@ -8,7 +8,10 @@ type ModalType =
     | "confirmation"
     | "inventoryItem"
     | "viewTicket"
-    | "customerInfo";
+    | "customerInfo"
+    | "createOrder"
+    | "productSelect"
+    | "viewOrder";
 
 type Modal = {
     id: string;

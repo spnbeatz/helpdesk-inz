@@ -1,12 +1,15 @@
-import { useState } from "react";
+"use client"
+
+import { useMemo, useState } from "react";
 import { Equipment } from "@/data/equipments";
 import { useEquipmentList } from "@/queries/logistics/logistics.query";
 import { Selection, Table } from "@heroui/react";
-import { useInventoryPageStore } from "@/store/pages/inventory.store";
+import { InventorySortKey, useInventoryPageStore } from "@/store/pages/inventory.store";
 import { useModalStore } from "@/store/modals";
-import { Column } from "../../../ui/layout/flex";
+import { Column } from "../../../../ui/layout/flex";
 import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
-import { inventoryTableColumns } from "../config/inventoryTableColumns";
+import { inventoryTableColumns, mapInventoryTableItems } from "../../config/inventoryTableColumns";
+import { useInventoryTableConfig } from "@/store/tables/tableConfig.store";
 
 export type InventoryItem = Equipment & {
     quantity?: number;
@@ -23,7 +26,22 @@ export const ProductList = () => {
     const { filters, setFilters, itemsPerPage } = useInventoryPageStore();
     const { openModal } = useModalStore();
 
-    const { data: productList } = useEquipmentList(filters);
+    const { visibleColumns } = useInventoryTableConfig();
+    
+    const columns = useMemo(() => 
+        inventoryTableColumns().filter((col) => 
+            visibleColumns.includes(col.id)
+        )
+    , [visibleColumns]);
+
+    const { data: products } = useEquipmentList(filters);
+
+    const productList = useMemo(() => {
+        const items = mapInventoryTableItems(products);
+        console.log(items, "mapped items")
+        return items;
+    }, [products]);
+
 
     const handleOpenItemModal = (productId: string) => {
         openModal("inventoryItem", { productId });
@@ -32,8 +50,8 @@ export const ProductList = () => {
 
     return (
         <TableWithPagination
-            data={productList ?? []}
-            columns={inventoryTableColumns()}
+            data={productList}
+            columns={columns}
             itemsPerPage={itemsPerPage}
             searchValue={filters.searchValue}
             sortBy={filters.sortBy}
@@ -41,7 +59,7 @@ export const ProductList = () => {
             selectable
             setSort={(column) => {
                 setFilters({
-                    sortBy: column,
+                    sortBy: column as InventorySortKey,
                     sortDir:
                         filters.sortBy === column
                             ? filters.sortDir === "asc"
@@ -51,7 +69,7 @@ export const ProductList = () => {
                 });
             }}
             onRowClick={(product) => {
-                handleOpenItemModal(product.id);
+                handleOpenItemModal("");
             }}
         />
 

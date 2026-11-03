@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import { GoHome } from "react-icons/go";
-import { LuBadgeAlert, LuBadgeCheck, LuBookMarked, LuBookText, LuFileChartColumn, LuFileCog, LuLayoutDashboard, LuPersonStanding, LuSettings, LuSettings2, LuTicket, LuTicketMinus, LuTickets, LuTicketX, LuUserRoundCog, LuUsers, LuPackage, LuShoppingCart, LuStore, LuTruck, LuMonitor, LuCornerDownLeft } from "react-icons/lu";
+import { LuBadgeAlert, LuBadgeCheck, LuBookMarked, LuBookText, LuFileChartColumn, LuFileCog, LuLayoutDashboard, LuPersonStanding, LuSettings, LuSettings2, LuTicket, LuTicketMinus, LuTickets, LuTicketX, LuUserRoundCog, LuUsers, LuPackage, LuShoppingCart, LuStore, LuTruck, LuMonitor, LuCornerDownLeft, LuUserRound } from "react-icons/lu";
 
 export type NavigationRoutesType = {
     name: string,
@@ -42,17 +42,24 @@ export const navigationRoutes: NavigationRoutesType[] = [
         roles: ["Administrator", "Technician", "Manager", "User"],
         children: [
             {
+                name: "Owned",
+                href: "/logistics/owned",
+                icon: LuUserRound,
+                roles: ["Administrator", "Technician", "Manager", "User"]
+            },
+            {
                 name: "Orders",
                 href: "/logistics/orders",
                 icon: LuShoppingCart,
-                roles: ["Administrator", "Technician", "Manager", "User"]
+                roles: ["Administrator", "Technician", "Manager"]
             },
             {
                 name: "Inventory",
                 href: "/logistics/inventory",
                 icon: LuStore,
-                roles: ["Administrator", "Technician", "Manager", "User"]
-            }
+                roles: ["Administrator", "Technician", "Manager"]
+            },
+
         ]
     },
     {

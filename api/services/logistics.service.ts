@@ -1,40 +1,112 @@
 import { equipmentList, Equipment } from "@/data/equipments";
 import { InventoryPageFiltersType } from "@/store/pages/inventory.store";
+import { ProductType, productsList } from "@/data/products";
+import { LocationType, locations } from "@/data/locations";
 
-export const getEquipmentList = (filters?: InventoryPageFiltersType) => {
-    let result = [...equipmentList];
+export type EquipmentListItemType = Equipment & {
+    product: ProductType;
+    location: LocationType | null;
+    quantity?: number;
+    assignedUser: UserMinType | null
+};
 
-    if (filters?.userId) {
-        result = result.filter(
-            equipment => equipment.assignedTo === filters.userId
+
+
+export const getEquipmentList = (
+    filters: InventoryPageFiltersType = {}
+): EquipmentListItemType[] => {
+    const productMap = new Map(
+        productsList.map(product => [product.id, product])
+    );
+
+    const locationMap = new Map(
+        locations.map(location => [location.id, location])
+    );
+
+    const usersMap = new Map(
+        usersList.map(user => [user.id, user])
+    );
+
+    // Join Equipment + Product + Location + User
+    let result: EquipmentListItemType[] = equipmentList.flatMap(
+        equipment => {
+            const product = productMap.get(equipment.product_id);
+
+            if (!product) return [];
+
+            const user = equipment.assignedTo
+                ? usersMap.get(equipment.assignedTo)
+                : undefined;
+
+            return [{
+                ...equipment,
+                product,
+                location: locationMap.get(equipment.location_id) ?? null,
+                assignedUser: user
+                    ? {
+                        id: user.id,
+                        name: `${user.firstName} ${user.lastName}`,
+                        avatarUrl: user.avatarUrl
+                    }
+                    : null
+            }];
+        }
+    );
+
+    // Equipment IDs
+    if (filters.itemIds?.length) {
+        result = result.filter(item =>
+            filters.itemIds!.includes(item.id)
         );
     }
 
-    if (filters?.type) {
+    // Assigned user
+    if (filters.userId !== undefined) {
         result = result.filter(
-            equipment => equipment.type === filters.type
+            item => item.assignedTo === filters.userId
         );
     }
 
-    if (filters?.status) {
+    // Product type
+    if (filters.type) {
         result = result.filter(
-            equipment => equipment.status === filters.status
+            item => item.product.type === filters.type
         );
     }
 
-    if (filters?.searchValue?.trim()) {
+    // Equipment status
+    if (filters.status && filters.status !== "all") {
+        result = result.filter(
+            item => item.status === filters.status
+        );
+    }
+
+    // Location
+    if (filters.locationId) {
+        result = result.filter(
+            item => item.location_id === filters.locationId
+        );
+    }
+
+    // Search
+    if (filters.searchValue?.trim()) {
         const search = filters.searchValue.trim().toLowerCase();
 
-        result = result.filter(equipment => {
+        result = result.filter(item => {
             const searchableText = [
-                equipment.assetTag,
-                equipment.name,
-                equipment.manufacturer,
-                equipment.model,
-                equipment.serialNumber,
-                equipment.location,
-                equipment.type,
-                equipment.status
+                item.id,
+                item.product_id,
+                item.assetTag,
+                item.serialNumber,
+                item.product.name,
+                item.product.manufacturer,
+                item.product.model,
+                item.product.type,
+                item.location?.name,
+                item.location?.city,
+                item.room,
+                item.assignedUser?.name,
+                item.status
             ]
                 .filter(Boolean)
                 .join(" ")
@@ -44,52 +116,39 @@ export const getEquipmentList = (filters?: InventoryPageFiltersType) => {
         });
     }
 
-    // Grupowanie tylko dla inventory
-    let finalResult: (Equipment & { quantity?: number })[];
-
-    if (filters?.isInventory) {
-        finalResult = Object.values(
-            result.reduce<Record<string, Equipment & { quantity: number }>>(
-                (acc, equipment) => {
-                    const key = [
-                        equipment.name,
-                        equipment.manufacturer,
-                        equipment.model,
-                        equipment.type
-                    ].join("|");
-
-                    if (!acc[key]) {
-                        acc[key] = {
-                            ...equipment,
-                            quantity: 1
-                        };
-                    } else {
-                        acc[key].quantity++;
-                    }
-
-                    return acc;
-                },
-                {}
-            )
-        );
-    } else {
-        finalResult = result;
-    }
-
-    // Sortowanie
-    if (filters?.sortBy) {
+    // Sort
+    if (filters.sortBy) {
         const { sortBy, sortDir = "asc" } = filters;
 
-        finalResult.sort((a, b) => {
-            const aValue = a[sortBy];
-            const bValue = b[sortBy];
+        const getSortValue = (
+            item: EquipmentListItemType
+        ): string => {
+            switch (sortBy) {
+                case "name":
+                    return item.product.name;
 
-            if (aValue == null && bValue == null) return 0;
-            if (aValue == null) return 1;
-            if (bValue == null) return -1;
+                case "manufacturer":
+                    return item.product.manufacturer;
 
-            const comparison = String(aValue).localeCompare(
-                String(bValue),
+                case "model":
+                    return item.product.model;
+
+                case "type":
+                    return item.product.type;
+
+                case "assignedUser":
+                    return item.assignedUser?.name ?? "";
+
+                default:
+                    return String(
+                        item[sortBy as keyof Equipment] ?? ""
+                    );
+            }
+        };
+
+        result.sort((a, b) => {
+            const comparison = getSortValue(a).localeCompare(
+                getSortValue(b),
                 undefined,
                 {
                     numeric: true,
@@ -103,13 +162,62 @@ export const getEquipmentList = (filters?: InventoryPageFiltersType) => {
         });
     }
 
-    return finalResult;
+    return result;
 };
 
-export const getInventoryProduct = (productId: string) => {
+export const getInventoryProduct = (productId?: string) => {
+    if (!productId) return null;
     const product = equipmentList.find(
         (equipment) => equipment.id === productId
     );
 
     return product;
+};
+
+import { EquipmentType } from "@/data/equipments";
+import { UserMinType, usersList } from "@/data/users";
+
+export type ProductsFiltersType = {
+    searchValue?: string;
+    type?: EquipmentType;
+    activeOnly?: boolean;
+    productId?: string
+};
+
+export const getProduct = (productId: string) => {
+    return getProductsList({ productId })[0];
+}
+
+export const getProductsList = (
+    filters: ProductsFiltersType = {}
+): ProductType[] => {
+    let result = [...productsList];
+
+    if (filters.activeOnly !== false) {
+        result = result.filter(product => product.is_active);
+    }
+
+    if (filters.type) {
+        result = result.filter(
+            product => product.type === filters.type
+        );
+    }
+
+    if (filters.searchValue?.trim()) {
+        const search = filters.searchValue.trim().toLowerCase();
+
+        result = result.filter(product =>
+            [
+                product.name,
+                product.manufacturer,
+                product.model,
+                product.type
+            ]
+                .join(" ")
+                .toLowerCase()
+                .includes(search)
+        );
+    }
+
+    return result;
 };

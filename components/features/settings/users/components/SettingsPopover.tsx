@@ -4,12 +4,12 @@ import { Grid } from "@/components/ui/layout/Grid";
 import { Section } from "@/components/ui/surfaces/Section";
 import { LuSettings } from "react-icons/lu";
 import { userTableColumns } from "../config/userTableColumns";
-import { useSettingsUserPageStore } from "@/store/pages/settings/users.store";
-import { Row } from "@/components/ui/layout/flex";
 import { Checkbox } from "@/components/ui/controls/inputs/Checkbox";
+import { useUsersSettingsTableConfig } from "@/store/tables/tableConfig.store";
 
 export const SettingsPopover = () => {
-    const { tableConfig, toggleColumn } = useSettingsUserPageStore();
+    const { toggleColumn, visibleColumns } = useUsersSettingsTableConfig();
+
     return (
         <Popover
             trigger={<IconButton className="bg-white/40" Icon={LuSettings} />}
@@ -19,7 +19,7 @@ export const SettingsPopover = () => {
                     {userTableColumns.map((column) => (
                         <Checkbox
                             key={String(column.id)}
-                            isSelected={tableConfig.visibleColumns.includes(column.id)}
+                            isSelected={visibleColumns.includes(column.id)}
                             onChange={() => toggleColumn(column.id)}
                         >
                             {column.name}

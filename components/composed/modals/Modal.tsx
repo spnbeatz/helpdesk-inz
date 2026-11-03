@@ -36,7 +36,7 @@ export const Modal = ({
     return (
         <HModal isOpen={isOpen} onOpenChange={handleOpenChange}>
             <HModal.Backdrop isDismissable={isDismissable}>
-                <HModal.Container size={size}>
+                <HModal.Container size={size} className={"h-auto"}>
                     
                     <HModal.Dialog className={`rounded-lg bg-white backdrop-blur-md p-10 ${className}`}>
                         {closeTrigger && <HModal.CloseTrigger />}
