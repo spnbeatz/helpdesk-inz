@@ -6,9 +6,11 @@ import { SearchUsersList } from "./SearchUsersList";
 
 type SearchUserProps = {
     onSelect: (userId: string | null) => void;
+    placeholder?: string
 };
 
 export const SearchUser = ({
+    placeholder,
     onSelect,
 }: SearchUserProps) => {
     const [searchValue, setSearchValue] = useState("");
@@ -23,7 +25,7 @@ export const SearchUser = ({
         <Autocomplete
             value={selectedKey}
             onChange={handleChange}
-            placeholder="Select User"
+            placeholder={placeholder || "Select User"}
             variant="primary"
             fullWidth
             allowsEmptyCollection

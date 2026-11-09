@@ -341,6 +341,23 @@ const equipmentById = new Map(equipmentList.map(e => [e.id, e]));
 
 export const getOrderDetails = (orderId: string): OrderDetailsType | null => {
     const o = ordersList.find(v => v.id === orderId);
+    const history = orderHistoryList
+        .filter(h => h.order_id === orderId)
+        .map(h => {
+            const user = usersList.find(user => user.id === h.changed_by_id);
+
+            return {
+                ...h,
+                changed_by: user
+                    ? {
+                        id: user.id,
+                        name: `${user.firstName} ${user.lastName}`,
+                        avatarUrl: user.avatarUrl
+                    }
+                    : undefined
+            };
+        });
+
     if (!o) return null;
     const ticket = ticketMap.get(o.ticket_id);
     return {
@@ -366,7 +383,7 @@ export const getOrderDetails = (orderId: string): OrderDetailsType | null => {
                 fulfillments: f, equipment,
             };
         }),
-        history: orderHistoryList.filter(h => h.order_id === orderId),
+        history,
         fulfillment_tasks: orderFulfillmentTasksList.filter(t => t.order_id === orderId),
     };
 };

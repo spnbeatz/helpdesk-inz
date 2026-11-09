@@ -9,7 +9,6 @@ export const inventoryDefaultColumns: (keyof InventoryTableItemType)[] = [
     "manufacturer",
     "serialNumber",
     "assignedTo",
-    "status"
 ];
 
 export const usersDefaultColumns: (keyof User)[] = [

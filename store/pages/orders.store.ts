@@ -1,5 +1,10 @@
+import {
+    OrderCreateType,
+    OrderWithAssignmentType,
+    OrderStatus
+} from "@/data/orders/types";
 
-import { OrderCreateType, OrderType, OrderStatus } from "@/data/orders/types";
+import { OrdersView } from "@/components/features/logistics/components/types/orderTabs.types";
 
 import {
     BaseFiltersType,
@@ -9,15 +14,21 @@ import {
 
 import { createPageStore } from "../factories/createPageStore";
 
-type OrdersSortKey = keyof OrderType;
+type OrdersSortKey = keyof OrderWithAssignmentType;
 
 export type OrdersPageFiltersType =
     BaseFiltersType<OrdersSortKey> &
     DateRangeFiltersType &
     PaginationFiltersType & {
+        view?: OrdersView;
+
         status?: OrderStatus | "all";
+
         createdById?: string;
         reviewedById?: string | null;
+        recipientUserId?: string;
+        fulfillmentTechnicianId?: string | null;
+
         ticketId?: string;
         productId?: string;
         orderId?: string;
@@ -35,7 +46,7 @@ export const useOrdersPageStore =
                 sortBy: "created_at",
                 sortDir: "desc",
                 searchValue: "",
-                status: "all"
+                status: "all",
             },
             itemsPerPage: 20
         },

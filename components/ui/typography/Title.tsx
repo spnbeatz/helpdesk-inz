@@ -11,8 +11,8 @@ export const Title = ({
     variant?: "site" | "section"
 }) => {
     return (
-        <Column StartCenter>
-            <Label className={`${variant === "site" ? "text-2xl" : "text-xl text-black/80"}`}>
+        <Column StartCenter className="gap-2">
+            <Label className={`${variant === "site" ? "text-4xl" : "text-xl text-black/80"}`}>
                 {title}
             </Label>
             <Description>

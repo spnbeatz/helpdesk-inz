@@ -9,11 +9,19 @@ import { OrdersList } from "@/components/features/logistics/components/orders/Or
 import { Select } from "@/components/ui/controls/inputs/Select";
 import { useOrdersPageStore } from "@/store/pages/orders.store";
 import { OrderStatus } from "@/data/orders_old";
+import { OrdersListTabs } from "@/components/ui/controls/TabSwitch";
+import { useAuth } from "@/providers/auth.provider";
+import { getOrdersRole } from "@/components/features/logistics/config/orderTabs.config";
+import { ordersPageTitle } from "@/components/features/logistics/config/title.config";
 
 export default function OrdersPage() {
 
     const { openModal } = useModalStore();
+    const { user } = useAuth();
     const { setFilters, filters } = useOrdersPageStore();
+
+    const role = getOrdersRole(user?.roleNames);
+    const pageTitleProps = ordersPageTitle[role];
 
     const handleOpenCreateOrderModal = () => {
         openModal("createOrder");
@@ -21,33 +29,22 @@ export default function OrdersPage() {
 
     return (
         <Column Start className="w-full h-full gap-4">
-            <Row CenterBetween className="w-full">
-                <Title title="Orders" />
-                <Row Center className="gap-2">
-                    <Select 
-                        className="w-[150px]"
-                        placeholder="Select status"
-                        options={[
-                            { id: "all", textValue: "All orders"},
-                            { id: "pending", textValue: "Pending"},
-                            { id: "declined", textValue: "Declined"},
-                            { id: "accepted", textValue: "Accepted"},
-                            { id: "in_progress", textValue: "In Progress"},
-                            { id: "completed", textValue: "Completed"}
-                        ]}
-                        defaultValue={filters.status}
-                        onChange={(value) => setFilters({status: value as OrderStatus | "all"})}
-                    />
-                    <IconButton 
-                        Icon={LuShoppingBag} 
-                        iconColor="#ffffffaa"
-                        onClick={handleOpenCreateOrderModal}
-                        className="bg-indigo-500/60 text-white/80"
-                    >
-                            Create order
-                    </IconButton>
-                </Row>
+            <Row CenterBetween className="w-full py-10">
+                <Title { ...pageTitleProps } />
+                <IconButton
+                    Icon={LuShoppingBag}
+                    iconColor="#ffffffaa"
+                    onClick={handleOpenCreateOrderModal}
+                    className="bg-indigo-500/60 text-white/80"
+                >
+                    Create order
+                </IconButton>
             </Row>
+            <Row CenterBetween className="w-full">
+                <OrdersListTabs />
+
+            </Row>
+
             <OrdersList />
         </Column>
     )

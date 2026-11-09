@@ -10,11 +10,18 @@ import { Row } from "@/components/ui/layout/flex/Row";
 import { ProductListSection } from "@/components/features/logistics/sections/ProductListSection";
 import { useAccess } from "@/providers/access.provider";
 import { SwitchLocation } from "@/components/features/logistics/components/SwitchLocation";
+import { useAuth } from "@/providers/auth.provider";
+import { useEffect } from "react";
 
 export default function InventoryPage() {
 
     const { setFilters } = useInventoryPageStore();
     const { hasPermission } = useAccess();
+    const { user } = useAuth();
+
+    useEffect(() => setFilters({ locationId: user?.location_id }), []);
+
+
 
     return (
         <Column Start className="w-full h-full relative">

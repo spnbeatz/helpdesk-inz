@@ -14,3 +14,7 @@ export const OrderViewModal = ({ data }: { data: OrderViewModalType }) => {
         </Modal>
     )
 }
+
+export const OrderStatusProgressBar = () => {
+    
+}

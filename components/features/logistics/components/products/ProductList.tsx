@@ -69,7 +69,7 @@ export const ProductList = () => {
                 });
             }}
             onRowClick={(product) => {
-                handleOpenItemModal("");
+                handleOpenItemModal(product.id);
             }}
         />
 

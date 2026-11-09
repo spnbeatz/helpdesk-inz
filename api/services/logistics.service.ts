@@ -165,6 +165,12 @@ export const getEquipmentList = (
     return result;
 };
 
+export const getEquipment = (eqId?: string) => {
+    if(!eqId) return null;
+    const equipment = getEquipmentList().find((eq) => eq.id === eqId);
+    return equipment;
+}
+
 export const getInventoryProduct = (productId?: string) => {
     if (!productId) return null;
     const product = equipmentList.find(
@@ -174,8 +180,11 @@ export const getInventoryProduct = (productId?: string) => {
     return product;
 };
 
+
+
 import { EquipmentType } from "@/data/equipments";
 import { UserMinType, usersList } from "@/data/users";
+import { equipmentAssignmentsList } from "@/data/orders/mock";
 
 export type ProductsFiltersType = {
     searchValue?: string;
@@ -221,3 +230,8 @@ export const getProductsList = (
 
     return result;
 };
+
+export const getEquipmentAssigmentsList = (eqId?: string) => {
+    if(!eqId) return;
+    return equipmentAssignmentsList.filter(eq => eq.equipment_id === eqId);
+}

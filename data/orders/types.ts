@@ -75,6 +75,7 @@ export type OrderHistoryType = {
     new_status: OrderStatus;
     comment: string | null;
     created_at: ISODateString;
+    changed_by?: UserMinType
 };
 
 /** Źródło realizacji konkretnej partii produktu. */
@@ -217,7 +218,7 @@ export type OrderListFiltersType = {
 // ============================================================================
 import type { ProductType } from "@/data/products";
 import type { TicketType } from "@/data/exampleTicketsList";
-import type { UserType } from "@/data/users";
+import type { UserMinType, UserType } from "@/data/users";
 
 /** Wynik tworzenia zamówienia: rekord orders + nowo utworzone pozycje. */
 export type OrderWithProductsType = OrderWithAssignmentType & {

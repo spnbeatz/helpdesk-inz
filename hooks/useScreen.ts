@@ -22,7 +22,7 @@ const getScreenType = (
     if (width < 640) return "mobile";
     if (width < 1024) return "tablet";
     if (width < 1440) return "laptop";
-    if (width < 1920) return "desktop";
+    if (width < 2400) return "desktop";
 
     return "widescreen";
 };
@@ -61,8 +61,8 @@ export const useScreen = () => {
         isMobile: width < 640,
         isTablet: width >= 640 && width < 1024,
         isLaptop: width >= 1024 && width < 1440,
-        isDesktop: width >= 1440 && width < 1920,
-        isWideScreen: width >= 1920,
+        isDesktop: width >= 1440 && width <= 2400,
+        isWideScreen: width > 2400,
 
         // Dodatkowe warunki wysokości
         isShortScreen: height > 0 && height < 800,

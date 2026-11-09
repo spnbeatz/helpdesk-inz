@@ -3,10 +3,11 @@
  * Korzysta z tych samych mutowalnych tablic co orders.mock.ts.
  * Docelowo operacje tworzenia i walidacja uprawnien musza byc na backendzie.
  */
-import { usersList, type UserType } from "@/data/users";
+import { UserMinType, usersList, type UserType } from "@/data/users";
 import type { OrdersPageFiltersType } from "@/store/pages/orders.store";
 import { ticketsList } from "@/data/exampleTicketsList";
 import { productsList } from "@/data/products";
+import { OrdersView, OrdersRole } from "@/components/features/logistics/components/types/orderTabs.types";
 import {
     ordersList,
     orderItemsList,
@@ -123,6 +124,15 @@ export const createOrder = async (
     }));
 
     const historyId = nextMockId("OH", orderHistoryList.map(h => h.id), 4);
+    const user = usersList.find((user) => user.id === created_by_id);
+
+    const changed_by: UserMinType | undefined = user
+        ? {
+            id: user.id,
+            name: `${user.firstName} ${user.lastName}`,
+            avatarUrl: user.avatarUrl
+        }
+        : undefined;
 
     // Mock: wszystkie trzy tablice muszą być aktualizowane razem.
     ordersList.push(order);
@@ -135,6 +145,7 @@ export const createOrder = async (
         new_status: "pending",
         comment: null,
         created_at: now,
+        changed_by
     });
 
     return { ...order, products: orderItems };
@@ -146,9 +157,16 @@ export const createOrder = async (
  * zamówienia dodane przez createOrder pojawiają się od razu.
  */
 export const getOrdersList = (
-    filter: ExtendedOrdersPageFiltersType = {}
+    filter: ExtendedOrdersPageFiltersType,
+    actor: OrdersActor
 ): OrderListViewType[] => {
     const {
+        view = actor.role === "Technician"
+            ? "my-orders"
+            : actor.role === "User"
+                ? "my-requests"
+                : "all",
+
         sortBy = "created_at",
         sortDir = "desc",
         status = "all",
@@ -178,6 +196,13 @@ export const getOrdersList = (
     }
 
     let result = ordersList.filter(order => {
+
+        // NOWE: filtrowanie na podstawie roli i zakładki
+        if (!matchesOrdersView(order, view, actor)) {
+            return false;
+        }
+
+        // Dotychczasowe filtry
         if (status !== "all" && order.status !== status) return false;
         if (orderId && order.id !== orderId) return false;
         if (createdById && order.created_by_id !== createdById) return false;
@@ -194,14 +219,24 @@ export const getOrdersList = (
         if (createdBefore && created > Date.parse(createdBefore)) return false;
 
         if (!searchValue?.trim()) return true;
+
         const query = searchValue.trim().toLowerCase();
         const ticket = ticketsMap.get(order.ticket_id);
+
         const itemMatches = (orderItemsMap.get(order.id) ?? []).some(item => {
             const product = productMap.get(item.item_id);
-            return [item.item_id, product?.name, product?.manufacturer,
-                product?.model, product?.type]
-                .some(value => (value ?? "").toLowerCase().includes(query));
+
+            return [
+                item.item_id,
+                product?.name,
+                product?.manufacturer,
+                product?.model,
+                product?.type
+            ].some(value =>
+                (value ?? "").toLowerCase().includes(query)
+            );
         });
+
         const userMatches = [
             order.created_by_id,
             order.reviewed_by_id,
@@ -209,50 +244,82 @@ export const getOrdersList = (
             order.fulfillment_technician_id,
         ].some(id => {
             const u = id ? usersMap.get(id) : null;
-            return u && `${u.firstName} ${u.lastName}`.toLowerCase().includes(query);
+
+            return u &&
+                `${u.firstName} ${u.lastName}`
+                    .toLowerCase()
+                    .includes(query);
         });
 
-        return [order.id, order.ticket_id, order.reason, order.status,
-            ticket?.title, order.feedback]
-            .some(value => (value ?? "").toLowerCase().includes(query)) ||
-            itemMatches || Boolean(userMatches);
+        return [
+            order.id,
+            order.ticket_id,
+            order.reason,
+            order.status,
+            ticket?.title,
+            order.feedback
+        ].some(value =>
+            (value ?? "").toLowerCase().includes(query)
+        ) || itemMatches || Boolean(userMatches);
     });
 
-    // Bezpieczny fallback, gdy UI poda nieobsługiwaną kolumnę.
+    // Sortowanie
     const sortable = new Set<keyof OrderWithAssignmentType>([
         "id", "ticket_id", "reason", "status", "feedback",
         "created_by_id", "reviewed_by_id", "created_at", "updated_at",
         "reviewed_at", "completed_at", "recipient_user_id",
         "fulfillment_technician_id",
     ]);
+
     const requestedSort = sortBy as keyof OrderWithAssignmentType;
+
     const sortKey: keyof OrderWithAssignmentType = sortable.has(requestedSort)
-        ? requestedSort : "created_at";
+        ? requestedSort
+        : "created_at";
+
     result = [...result].sort((a, b) => {
         const aValue = a[sortKey];
         const bValue = b[sortKey];
+
         if (aValue == null && bValue == null) return 0;
         if (aValue == null) return 1;
         if (bValue == null) return -1;
-        const comparison = String(aValue).localeCompare(String(bValue), undefined, {
-            numeric: true,
-            sensitivity: "base",
-        });
+
+        const comparison = String(aValue).localeCompare(
+            String(bValue),
+            undefined,
+            {
+                numeric: true,
+                sensitivity: "base",
+            }
+        );
+
         return sortDir === "asc" ? comparison : -comparison;
     });
 
-    // Offset przed limitem (nie zmienia zasad filtrowania).
-    const safeOffset = Number.isFinite(offset) ? Math.max(0, Math.floor(offset)) : 0;
+    // Paginacja
+    const safeOffset = Number.isFinite(offset)
+        ? Math.max(0, Math.floor(offset))
+        : 0;
+
     result = result.slice(safeOffset);
+
     if (limit !== undefined && Number.isFinite(limit)) {
         result = result.slice(0, Math.max(0, Math.floor(limit)));
     }
 
+    // Mapowanie danych
     return result.map(order => {
         const items = orderItemsMap.get(order.id) ?? [];
+
         const creator = usersMap.get(order.created_by_id);
-        const reviewer = order.reviewed_by_id ? usersMap.get(order.reviewed_by_id) : undefined;
+
+        const reviewer = order.reviewed_by_id
+            ? usersMap.get(order.reviewed_by_id)
+            : undefined;
+
         const recipient = usersMap.get(order.recipient_user_id);
+
         const technician = order.fulfillment_technician_id
             ? usersMap.get(order.fulfillment_technician_id)
             : undefined;
@@ -260,13 +327,18 @@ export const getOrdersList = (
         return {
             ...order,
             item_count: items.length,
-            total_quantity: items.reduce((total, item) => total + item.quantity, 0),
+            total_quantity: items.reduce(
+                (total, item) => total + item.quantity,
+                0
+            ),
             recipient_name: fullName(recipient),
             technician_name: fullName(technician),
+
             products: items.map(item => ({
                 ...item,
                 product: productMap.get(item.item_id) ?? null,
             })),
+
             ticket: ticketsMap.get(order.ticket_id) ?? null,
             createdBy: mapUser(creator),
             reviewedBy: mapUser(reviewer),
@@ -281,8 +353,8 @@ export const getOrdersList = (
  * konkretne urządzenia EQ-*, historia i checklista technika.
  * Nie korzysta ze statycznego orderListItems (wyliczonego przy imporcie).
  */
-export const getOrder = (id: string): OrderDetailViewType | null => {
-    const order = getOrdersList({ orderId: id, limit: 1 })[0];
+export const getOrder = (id: string, actor: OrdersActor): OrderDetailViewType | null => {
+    const order = getOrdersList({ orderId: id, limit: 1 }, actor)[0];
     if (!order) return null;
 
     const details = getOrderDetails(id);
@@ -294,4 +366,66 @@ export const getOrder = (id: string): OrderDetailViewType | null => {
         history: details.history,
         fulfillment_tasks: details.fulfillment_tasks,
     };
+};
+
+
+
+type OrdersActor = {
+    id: string;
+    role: OrdersRole;
+};
+
+const matchesOrdersView = (
+    order: OrderWithAssignmentType,
+    view: OrdersView,
+    actor: OrdersActor
+): boolean => {
+    const { id: userId, role } = actor;
+
+    const isManagement = role === "Administrator" || role === "Manager";
+
+    const responsibleTechnicianId =
+        order.fulfillment_technician_id ?? order.created_by_id;
+
+    switch (view) {
+        case "all":
+            return isManagement;
+
+        case "pending-approval":
+            return isManagement && order.status === "pending";
+
+        case "my-orders":
+            return role === "Technician" &&
+                order.created_by_id === userId;
+
+        case "to-process":
+            return role === "Technician" &&
+                responsibleTechnicianId === userId &&
+                order.status === "accepted";
+
+        case "in-progress":
+            return order.status === "in_progress" &&
+                (
+                    isManagement ||
+                    (role === "Technician" && responsibleTechnicianId === userId)
+                );
+
+        case "completed":
+            return order.status === "completed" &&
+                (
+                    isManagement ||
+                    (role === "Technician" && responsibleTechnicianId === userId)
+                );
+
+        case "declined":
+            return isManagement &&
+                order.status === "declined";
+
+        case "my-requests":
+            return role === "User" &&
+                order.recipient_user_id === userId;
+
+        default:
+            return false;
+    }
 };

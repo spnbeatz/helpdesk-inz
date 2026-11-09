@@ -9,8 +9,12 @@ import { ConfirmationModalProps } from "./ConfirmationModal";
 import { InventoryItemModal, InventoryItemModalType } from "../../features/logistics/modals/InventoryItemModal";
 import { TicketViewModal, TicketViewModalProps } from "@/components/features/tickets/modals/TicketViewModal";
 import { CustomerInfoModal, CustomerInfoModalType } from "@/components/features/customers/modals/CustomerInfoModal";
-import { CreateOrderModal, CreateOrderModalType} from "@/components/features/logistics/modals/CreateOrderModal";
+import { CreateOrderModal, CreateOrderModalType } from "@/components/features/logistics/modals/CreateOrderModal";
 import { OrderViewModal, OrderViewModalType } from "@/components/features/logistics/modals/OrderViewModal";
+import { ApproveOrderModal } from "@/components/features/logistics/modals/ApproveOrderModal";
+import { DeclineOrderModal } from "@/components/features/logistics/modals/DeclineOrderModal";
+import { ModalDataType } from "./types";
+
 
 export const ModalManager = () => {
     const { modals } = useModalStore();
@@ -64,19 +68,34 @@ export const ModalManager = () => {
                         )
                     case "viewOrder":
                         return (
-                            <OrderViewModal 
+                            <OrderViewModal
                                 key={modal.id}
                                 data={modal.data as OrderViewModalType}
                             />
                         )
 
-/*                     case "deleteTicket":
+                    case "approveOrder":
                         return (
-                            <DeleteTicketModal
+                            <ApproveOrderModal
                                 key={modal.id}
-                                data={modal.data}
+                                data={modal.data as ModalDataType}
                             />
-                        ); */
+                        )
+                    case "declineOrder":
+                        return (
+                            <DeclineOrderModal
+                                key={modal.id}
+                                data={modal.data as ModalDataType}
+                            />
+                        )
+
+                    /*                     case "deleteTicket":
+                                            return (
+                                                <DeleteTicketModal
+                                                    key={modal.id}
+                                                    data={modal.data}
+                                                />
+                                            ); */
 
                     default:
                         return null;
