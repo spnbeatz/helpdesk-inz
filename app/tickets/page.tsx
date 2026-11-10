@@ -6,7 +6,6 @@ import { TicketsStatsSection } from "@/components/features/tickets/sections/Tick
 import { Column } from "@/components/ui/layout/flex/Column";
 import { TicketsGrid } from "@/components/features/tickets/components/TicketsGrid";
 import { useTicketList } from "@/queries/tickets/tickets.query";
-import { useAuth } from "@/providers/auth.provider";
 import { useScreen } from "@/hooks/useScreen";
 
 export default function TicketsPage() {

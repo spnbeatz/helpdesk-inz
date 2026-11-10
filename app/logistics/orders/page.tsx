@@ -6,21 +6,18 @@ import { Title } from "@/components/ui/typography/Title";
 import { LuShoppingBag } from "react-icons/lu";
 import { useModalStore } from "@/store/modals";
 import { OrdersList } from "@/components/features/logistics/components/orders/OrdersList";
-import { Select } from "@/components/ui/controls/inputs/Select";
 import { useOrdersPageStore } from "@/store/pages/orders.store";
-import { OrderStatus } from "@/data/orders_old";
-import { OrdersListTabs } from "@/components/ui/controls/TabSwitch";
+import { OrdersListTabs } from "@/components/features/logistics/components/orders/OrderListTabs";
 import { useAuth } from "@/providers/auth.provider";
-import { getOrdersRole } from "@/components/features/logistics/config/orderTabs.config";
+import { getRoleName } from "@/components/features/users/helpers/getRoleName";
 import { ordersPageTitle } from "@/components/features/logistics/config/title.config";
 
 export default function OrdersPage() {
 
     const { openModal } = useModalStore();
     const { user } = useAuth();
-    const { setFilters, filters } = useOrdersPageStore();
 
-    const role = getOrdersRole(user?.roleNames);
+    const role = getRoleName(user?.roleNames);
     const pageTitleProps = ordersPageTitle[role];
 
     const handleOpenCreateOrderModal = () => {
@@ -42,7 +39,6 @@ export default function OrdersPage() {
             </Row>
             <Row CenterBetween className="w-full">
                 <OrdersListTabs />
-
             </Row>
 
             <OrdersList />

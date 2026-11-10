@@ -11,7 +11,9 @@ type ModalType =
     | "customerInfo"
     | "createOrder"
     | "productSelect"
-    | "viewOrder";
+    | "viewOrder"
+    | "approveOrder"
+    | "declineOrder";
 
 type Modal = {
     id: string;

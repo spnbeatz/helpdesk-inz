@@ -1,16 +1,16 @@
 "use client";
 
 import { useTicketsPageStore } from "@/store/pages/tickets.store";
-import { TabSwitch, Tabs } from "../../../ui/controls/TabSwitch";
+import { TabConfig, TabSwitch } from "../../../ui/controls/TabSwitch";
 
 export const TicketStatusTabSwitch = () => {
 
     const { filters, setFilters } = useTicketsPageStore();
 
-    const tabs: Tabs[] = [
-        { name: "All tickets", value: "all" },
-        { name: "New tickets", value: "new" },
-        { name: "Closed tickets", value: "closed" }
+    const tabs: TabConfig<string>[] = [
+        { label: "All tickets", id: "all" },
+        { label: "New tickets", id: "new" },
+        { label: "Closed tickets", id: "closed" }
     ]
 
     const handleChangeValue = (value: string) => {

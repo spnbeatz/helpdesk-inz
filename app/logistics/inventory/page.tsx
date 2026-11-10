@@ -21,8 +21,6 @@ export default function InventoryPage() {
 
     useEffect(() => setFilters({ locationId: user?.location_id }), []);
 
-
-
     return (
         <Column Start className="w-full h-full relative">
             <Row CenterBetween className="w-full">

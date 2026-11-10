@@ -20,7 +20,7 @@ export default function CustomerInfoPage() {
                 <Row Center className="gap-4">
                     <BackButton />
                     <Row Center className="gap-4">
-                        <Avatar className="w-[36px] h-[36px] rounded-lg">
+                        <Avatar className="w-9 h-9 rounded-lg">
                             <Avatar.Image src={"https://tse1.explicit.bing.net/th/id/OIP.UirWc-_agU3sLXPag8vCUQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"} alt={customer?.name.slice(0, 1)} />
                         </Avatar>
                         <Column StartCenter>

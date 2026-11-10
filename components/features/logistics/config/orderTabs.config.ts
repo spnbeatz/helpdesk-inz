@@ -1,5 +1,6 @@
 import { TabConfig } from "@/components/ui/controls/TabSwitch";
-import { OrdersView, OrdersRole, OrderDetailsView, OrdersTabConfig } from "../components/types/orderTabs.types";
+import { OrdersView, OrderDetailsView } from "../components/types/orderTabs.types";
+import { RoleNameType } from "../../users/types/role.types";
 
 export const ordersTabsByRole = {
     Administrator: [
@@ -27,9 +28,9 @@ export const ordersTabsByRole = {
     User: [
         { id: "my-requests", label: "My Requests" },
     ],
-} satisfies Record<OrdersRole, TabConfig<OrdersView>[]>;
+} satisfies Record<RoleNameType, TabConfig<OrdersView>[]>;
 
-export const orderDetailsTabConfig: Record<OrdersRole,TabConfig<OrderDetailsView>[]> = {
+export const orderDetailsTabConfig: Record<RoleNameType,TabConfig<OrderDetailsView>[]> = {
     Administrator: [
         { id: "overview", label: "Overview"},
         { id: "products-sourcing", label: "Products & sourcing"},
@@ -53,17 +54,3 @@ export const orderDetailsTabConfig: Record<OrdersRole,TabConfig<OrderDetailsView
         { id: "products", label: "Products"},
     ]
 }
-
-export const getOrdersRole = (
-    roleNames: string[] = []
-): OrdersRole => {
-    const priority: OrdersRole[] = [
-        "Administrator",
-        "Manager",
-        "Technician",
-        "User"
-    ];
-
-    return priority.find(role => roleNames.includes(role))
-        ?? "User";
-};

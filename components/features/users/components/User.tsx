@@ -12,7 +12,7 @@ export type UserComponentProps = {
 export const User = ({ source, description, name, size = "default" } : UserComponentProps) => {
     return (
         <Row Center className="gap-2">
-            {source && <Avatar size="sm" className={`rounded-lg ${size === "small" && "w-[18px] h-[18px]"}`}>
+            {source && <Avatar size="sm" className={`rounded-lg ${size === "small" && "w-4.5 h-4.5"}`}>
                 <Avatar.Image src={source} />
             </Avatar>}
             <Column className="justify-center">

@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import { ProductsFiltersType } from "@/api/services/logistics.service"
 import { getProductsList } from "@/api/services/logistics.service";
 import { useAuth } from "@/providers/auth.provider"
-import { getOrdersRole } from "@/components/features/logistics/config/orderTabs.config"
+import { getRoleName } from "@/components/features/users/helpers/getRoleName"
 
 export const useEquipmentList = (filter?: InventoryPageFiltersType) => {
     return useQuery({
@@ -46,7 +46,7 @@ export const useOrdersList = (
 ) => {
     const { user } = useAuth();
 
-    const role = getOrdersRole(user?.roleNames);
+    const role = getRoleName(user?.roleNames);
 
     return useQuery({
         queryKey: [
@@ -72,7 +72,7 @@ export const useOrdersList = (
 export const useOrder = (orderId: string) => {
     const { user } = useAuth();
 
-    const role = getOrdersRole(user?.roleNames);
+    const role = getRoleName(user?.roleNames);
     return useQuery({
         queryKey: ["order", orderId, user?.id, role],
         enabled: Boolean(orderId && user),
