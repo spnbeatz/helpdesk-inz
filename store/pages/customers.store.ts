@@ -1,18 +1,22 @@
 import { CustomerType } from "@/data/users";
-import { BaseFiltersType } from "@/types/filters.types";
+import { BaseFiltersType, PaginationFiltersType } from "@/types/filters.types";
 import { createPageStore } from "../factories/createPageStore";
 
 export type CustomersSortKey = keyof CustomerType;
 
 export type CustomersPageFilterType =
-    BaseFiltersType<CustomersSortKey>;
+    BaseFiltersType<CustomersSortKey> &
+    PaginationFiltersType;
+
+export const initialCustomersFilters: CustomersPageFilterType = {
+    sortBy: "name",
+    sortDir: "asc",
+    searchValue: "",
+    page: 1,
+    itemsPerPage: 22
+}
 
 export const useCustomersPageStore =
     createPageStore<CustomersPageFilterType>({
-        initialFilters: {
-            sortBy: "name",
-            sortDir: "asc",
-            searchValue: ""
-        },
-        itemsPerPage: 22
+        initialFilters: initialCustomersFilters
     });

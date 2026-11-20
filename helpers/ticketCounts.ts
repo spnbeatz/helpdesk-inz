@@ -1,6 +1,7 @@
 import { TicketListItemType } from "@/api/services/tickets.service";
+import { TicketType } from "@/data/exampleTicketsList";
 
-export const getTodayTicketsCount = (ticketsList?: TicketListItemType[]) => {
+export const getTodayTicketsCount = (ticketsList?: TicketListItemType[] | TicketType[]) => {
     return ticketsList?.filter(
         ticket =>
             new Date(ticket.created_at).toDateString() === new Date().toDateString()

@@ -23,11 +23,16 @@ type TableWithPaginationProps<T extends object> = {
     sortBy?: keyof T;
     sortDir?: "asc" | "desc";
     setSort?: (column: keyof T) => void;
+    sortKeys?: string[]
 
     selectable?: boolean;
     onRowClick?: (item: T) => void;
 
-    pagination?: boolean
+    pagination?: boolean,
+
+    page: number,
+    setPage: (page: number) => void,
+    totalItems: number
 };
 
 export const TableWithPagination = <T extends object>({
@@ -40,20 +45,14 @@ export const TableWithPagination = <T extends object>({
     setSort,
     selectable = false,
     onRowClick,
-    pagination = true
+    pagination = true,
+    page,
+    setPage,
+    totalItems,
+    sortKeys
 }: TableWithPaginationProps<T>) => {
 
-    const [page, setPage] = useState<number>(1);
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
-
-    const getPaginatedData = () => {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-
-        return data.slice(startIndex, endIndex);
-    };
-
-
 
     return (
         <Column className="w-full h-full min-h-0 gap-4">
@@ -78,39 +77,56 @@ export const TableWithPagination = <T extends object>({
                                 </Table.Column>
                             )}
 
-                            {columns.map((column, index) => (
-                                <Table.Column
-                                    key={String(column.id)}
-                                    allowsSorting={!!setSort}
-                                    className={`bg-indigo-200/60  text-black/60 py-3 ${index === columns.length - 1
-                                        ? "rounded-r-lg"
-                                        : ""
-                                        }`}
-                                    isRowHeader={index === 0}
-                                    onClick={() => {
-                                        if (setSort) {
-                                            setSort(column.id);
-                                        }
-                                    }}
-                                >
-                                    <Table.SortableColumnHeader
-                                        sortDirection={
-                                            sortBy === column.id
-                                                ? sortDir === "asc"
-                                                    ? "ascending"
-                                                    : "descending"
-                                                : "descending"
-                                        }
-                                    >
-                                        {column.name}
-                                    </Table.SortableColumnHeader>
-                                </Table.Column>
-                            ))}
+                            {columns.map((column, index) => {
+                                if (Array.isArray(sortKeys) && sortKeys.includes(column.id as string)) {
+                                    return (
+                                        <Table.Column
+                                            key={String(column.id)}
+                                            allowsSorting={!!setSort}
+                                            className={`bg-indigo-200/60  text-black/60 py-3 ${index === columns.length - 1
+                                                ? "rounded-r-lg"
+                                                : ""
+                                                }`}
+                                            isRowHeader={index === 0}
+                                            onClick={() => {
+                                                if (setSort) {
+                                                    setSort(column.id);
+                                                }
+                                            }}
+                                        >
+                                            <Table.SortableColumnHeader
+                                                sortDirection={
+                                                    sortBy === column.id
+                                                        ? sortDir === "asc"
+                                                            ? "ascending"
+                                                            : "descending"
+                                                        : "descending"
+                                                }
+                                            >
+                                                {column.name}
+                                            </Table.SortableColumnHeader>
+                                        </Table.Column>
+                                    )
+                                } else {
+                                    return (
+                                        <Table.Column
+                                            key={String(column.id)}
+                                            className={`bg-indigo-200/60  text-black/60 py-3 ${index === columns.length - 1
+                                                ? "rounded-r-lg"
+                                                : ""
+                                                }`}
+                                            isRowHeader={index === 0}
+                                        >
+                                            {column.name}
+                                        </Table.Column>
+                                    )
+                                }
+                            })}
                         </Table.Header>
 
                         <Table.Body
                             dependencies={[columns]}
-                            items={getPaginatedData()}
+                            items={data}
                             renderEmptyState={() => (
                                 <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center py-10">
                                     <LuInbox className="text-3xl text-black/40" />
@@ -164,8 +180,8 @@ export const TableWithPagination = <T extends object>({
                 <Table.Footer>
                     {pagination && data && data.length > 0 && <PaginationBasic
                         page={page}
-                        setPage={setPage}
-                        totalItems={data.length}
+                        setPage={(page) => setPage(page)}
+                        totalItems={totalItems}
                         itemsPerPage={itemsPerPage}
                     />}
                 </Table.Footer>

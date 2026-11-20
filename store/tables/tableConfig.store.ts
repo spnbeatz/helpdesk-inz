@@ -1,24 +1,24 @@
+"use client"
+
+import { ListLayoutType } from "@/components/composed/switch/ListLayoutSwitch";
 import { create } from "zustand";
-import { createTableConfig } from "@/hooks/createTableConfig";
-import { InventoryTableItemType } from "@/components/features/logistics/config/inventoryTableColumns";
-import { inventoryDefaultColumns, usersDefaultColumns } from "./tableDefaults";
-import { User } from "@/data/users";
 
 export type TableConfigType<T extends string = string> = {
     visibleColumns: T[];
+    layoutType: ListLayoutType
 };
 
 type TableConfigStore = {
     tables: Record<string, TableConfigType>;
-
     initializeTable: (
         tableId: string,
-        defaultColumns: string[]
+        defaultColumns: string[],
+        defaultType: ListLayoutType
     ) => void;
 
     setVisibleColumns: (
         tableId: string,
-        columns: string[]
+        columns: string[],
     ) => void;
 
     addColumn: (
@@ -40,12 +40,18 @@ type TableConfigStore = {
         tableId: string,
         defaultColumns: string[]
     ) => void;
+
+    changeType: (
+        tableId: string,
+        type: ListLayoutType,
+        defaultColumns: string[]
+    ) => void
 };
 
 export const useTableConfigStore = create<TableConfigStore>((set) => ({
     tables: {},
 
-    initializeTable: (tableId, defaultColumns) =>
+    initializeTable: (tableId, defaultColumns, defaultType) =>
         set(state => {
             if (state.tables[tableId]) return state;
 
@@ -53,22 +59,26 @@ export const useTableConfigStore = create<TableConfigStore>((set) => ({
                 tables: {
                     ...state.tables,
                     [tableId]: {
-                        visibleColumns: [...defaultColumns]
+                        visibleColumns: [...defaultColumns],
+                        layoutType: defaultType
                     }
                 }
             };
         }),
 
     setVisibleColumns: (tableId, columns) =>
-        set(state => ({
-            tables: {
-                ...state.tables,
-                [tableId]: {
-                    visibleColumns: [...columns]
+        set(state => {
+            const current = state.tables[tableId]
+            return {
+                tables: {
+                    ...state.tables,
+                    [tableId]: {
+                        visibleColumns: [...columns],
+                        layoutType: current.layoutType
+                    }
                 }
             }
-        })),
-
+        }),
     addColumn: (tableId, column) =>
         set(state => {
             const current = state.tables[tableId];
@@ -81,7 +91,8 @@ export const useTableConfigStore = create<TableConfigStore>((set) => ({
                 tables: {
                     ...state.tables,
                     [tableId]: {
-                        visibleColumns: [...current.visibleColumns, column]
+                        visibleColumns: [...current.visibleColumns, column],
+                        layoutType: current.layoutType
                     }
                 }
             };
@@ -101,7 +112,8 @@ export const useTableConfigStore = create<TableConfigStore>((set) => ({
                     [tableId]: {
                         visibleColumns: current.visibleColumns.filter(
                             item => item !== column
-                        )
+                        ),
+                        layoutType: current.layoutType
                     }
                 }
             };
@@ -121,31 +133,40 @@ export const useTableConfigStore = create<TableConfigStore>((set) => ({
                     [tableId]: {
                         visibleColumns: visible
                             ? current.visibleColumns.filter(item => item !== column)
-                            : [...current.visibleColumns, column]
+                            : [...current.visibleColumns, column],
+                        layoutType: current.layoutType
                     }
                 }
             };
         }),
 
     resetTable: (tableId, defaultColumns) =>
-        set(state => ({
-            tables: {
-                ...state.tables,
-                [tableId]: {
-                    visibleColumns: [...defaultColumns]
+        set(state => {
+            const current = state.tables[tableId]
+            return {
+                tables: {
+                    ...state.tables,
+                    [tableId]: {
+                        visibleColumns: [...defaultColumns],
+                        layoutType: current.layoutType
+                    }
                 }
             }
-        }))
+        }),
+    changeType: (tableId, type, defaultColumns) =>
+        set(state => {
+            const current = state.tables[tableId];
+
+            return {
+                tables: {
+                    ...state.tables,
+                    [tableId]: {
+                        ...(current ?? {
+                            visibleColumns: [...defaultColumns]
+                        }),
+                        layoutType: type
+                    }
+                }
+            };
+        }),
 }));
-
-export const useInventoryTableConfig =
-    createTableConfig<InventoryTableItemType>(
-        "inventory",
-        inventoryDefaultColumns
-    )
-
-export const useUsersSettingsTableConfig =
-    createTableConfig<User>(
-        "users.settings",
-        usersDefaultColumns
-    )

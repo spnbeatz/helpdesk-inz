@@ -9,6 +9,9 @@ import { IconButton } from "../../../ui/controls/buttons/iconButton"
 import { TicketStatusTabSwitch } from "./TicketStatusTabSwitch"
 import { TicketListFilterButton } from "./TicketListFilterButton";
 import { Row, Column } from "../../../ui/layout/flex"
+import { TicketsListLayoutSwitch } from "./TicketsListLayoutSwitch"
+import { TicketsSettingsPopover } from "./TicketsSettingsPopover"
+import { useCallback } from "react"
 
 export const TicketsScreenHeader = () => {
     const { setFilters } = useTicketsPageStore();
@@ -17,18 +20,23 @@ export const TicketsScreenHeader = () => {
     const handleCreateTicket = () => {
         openModal("ticketForm");
     }
+
+    const handleSearch = useCallback((value: string) => {
+        setFilters({ searchValue: value, page: 1 });
+    }, [setFilters]);
+
     return (
         <Column Center className="w-full pr-2">
             <Row StartBetween className="w-full">
-                <Title title={"Tickets"}  />
+                <Title title={"Tickets"} />
                 <Row StartBetween className="gap-2">
                     <TicketStatusTabSwitch />
-                    <Search onSearch={(v) => setFilters({ searchValue: v })} />
+                    <TicketsListLayoutSwitch />
+                    <Search onSearch={handleSearch} />
+                    
                     <TicketListFilterButton />
+                    <TicketsSettingsPopover />
                     <AddButton label="New Ticket" onClick={handleCreateTicket} />
-
-                    <IconButton Icon={LuSettings} />
-
                 </Row>
             </Row>
         </Column>

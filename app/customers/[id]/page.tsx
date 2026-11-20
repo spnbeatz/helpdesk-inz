@@ -33,7 +33,13 @@ export default function CustomerInfoPage() {
                 </Row>
                 <Row Center className="gap-4">
                     <Row CenterStart className="gap-2 text-sm rounded-lg shadow-sm px-3 py-1 bg-white/60"><LuBuilding />Department</Row>
-                    <Row CenterStart className="gap-2 text-sm rounded-lg shadow-sm px-3 py-1 bg-white/60"><LuMail />{customer.email}</Row>
+                    <a
+                        href={`mailto:${customer.email}`}
+                    >
+                        <Row CenterStart className="gap-2 text-sm rounded-lg shadow-sm px-3 py-1 bg-white/60">
+                            <LuMail />{customer.email}
+                        </Row>
+                    </a>
                     <Row CenterStart className="gap-2 text-sm rounded-lg shadow-sm px-3 py-1 bg-white/60" ><LuPhone />{customer.phone}</Row>
                 </Row>
             </Row>

@@ -15,7 +15,6 @@ export const CustomerInfoModal = ({ data }: { data: CustomerInfoModalType }) => 
 
     return (
         <Modal
-            isOpen
             size="cover"
             closeTrigger
             isDismissable={true}

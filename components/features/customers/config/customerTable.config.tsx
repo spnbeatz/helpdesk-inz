@@ -2,6 +2,7 @@ import { TableColumn } from "@/components/ui/data-display/TableWithPagination";
 import { CustomerType } from "@/data/users";
 import { Row } from "@/components/ui/layout/flex";
 import { Avatar } from "@heroui/react";
+import { LuMail } from "react-icons/lu";
 
 export const customerTableColumns: TableColumn<CustomerType>[] = [
     { id: "id", name: "ID" },

@@ -1,15 +1,13 @@
 "use client"
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Equipment } from "@/data/equipments";
 import { useEquipmentList } from "@/queries/logistics/logistics.query";
 import { Selection, Table } from "@heroui/react";
-import { InventorySortKey, useInventoryPageStore } from "@/store/pages/inventory.store";
+import { InventorySortKey, useInventoryPageStore, useInventoryTableConfig } from "@/store/pages/inventory.store";
 import { useModalStore } from "@/store/modals";
-import { Column } from "../../../../ui/layout/flex";
 import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
 import { inventoryTableColumns, mapInventoryTableItems } from "../../config/inventoryTableColumns";
-import { useInventoryTableConfig } from "@/store/tables/tableConfig.store";
 
 export type InventoryItem = Equipment & {
     quantity?: number;
@@ -23,40 +21,50 @@ export type InventoryColumn = {
 export const ProductList = () => {
 
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
-    const { filters, setFilters, itemsPerPage } = useInventoryPageStore();
+    const { filters, setFilters } = useInventoryPageStore();
     const { openModal } = useModalStore();
 
+    // znalezc problem z wydajnoscia!
+
     const { visibleColumns } = useInventoryTableConfig();
-    
-    const columns = useMemo(() => 
-        inventoryTableColumns().filter((col) => 
+
+    const columns = useMemo(() =>
+        inventoryTableColumns.filter((col) =>
             visibleColumns.includes(col.id)
         )
-    , [visibleColumns]);
+        , [visibleColumns]);
 
-    const { data: products } = useEquipmentList(filters);
+    const { data: productsResponse } = useEquipmentList(filters);
 
     const productList = useMemo(() => {
-        const items = mapInventoryTableItems(products);
-        console.log(items, "mapped items")
+        const items = mapInventoryTableItems(productsResponse?.items);
         return items;
-    }, [products]);
+    }, [productsResponse]);
 
 
     const handleOpenItemModal = (productId: string) => {
         openModal("inventoryItem", { productId });
         setSelectedKeys(new Set());
+
     }
+
+    const setPage = useCallback((page: number) => {
+        setFilters({page})
+    }, [setFilters])
 
     return (
         <TableWithPagination
             data={productList}
+            page={filters.page ?? 1}
+            totalItems={productsResponse?.totalItems ?? 0}
+            setPage={setPage}
             columns={columns}
-            itemsPerPage={itemsPerPage}
+            itemsPerPage={filters.itemsPerPage ?? 20}
             searchValue={filters.searchValue}
             sortBy={filters.sortBy}
             sortDir={filters.sortDir}
             selectable
+            sortKeys={["name", "model", "manufacturer"]}
             setSort={(column) => {
                 setFilters({
                     sortBy: column as InventorySortKey,

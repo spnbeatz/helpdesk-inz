@@ -1,6 +1,10 @@
 import { locations } from "@/data/locations";
 import { usersList, CustomerType, customersList, users } from "@/data/users";
 import { CustomersPageFilterType } from "@/store/pages/customers.store";
+import { PaginatedResponse } from "../types";
+import { createPaginatedData, searchResults, sortResults } from "../utils";
+import { UsersPageFiltersType } from "@/store/pages/settings/users.store";
+import { User } from "@/data/users";
 
 export const searchUserList = (searchValue: string) => {
     if (searchValue === "") return [];
@@ -19,81 +23,55 @@ export const searchUserList = (searchValue: string) => {
         return searchableText.includes(search);
     })
 
-    
+
 }
 
-export const adminSearchUserList = (searchValue: string) => {
-    if (searchValue === "") return users;
-    const search = searchValue.trim().toLowerCase();
+export const adminSearchUserList = (filters: UsersPageFiltersType): PaginatedResponse<User> => {
+    let result = [...users];
 
-    return users.filter(user => {
-        const searchableText = [
-            user.firstName,
-            user.lastName,
-            user.email
-        ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
+    result = searchResults<User>(
+        result,
+        filters.searchValue,
+        ["firstName", "lastName", "email"]
+    )
 
-        return searchableText.includes(search);
-    })
+    result = sortResults<User>(result, filters.sortBy, filters.sortDir);
+
+    const data = createPaginatedData<User>(
+        result,
+        { itemsPerPage: filters.itemsPerPage, page: filters.page }
+    );
+
+    return data;
+
 }
 
-export const searchCustomerList = (filters: CustomersPageFilterType): CustomerType[] => {
+export const searchCustomerList = (filters: CustomersPageFilterType): PaginatedResponse<CustomerType> => {
     let result = [...customersList];
 
-    if (filters?.searchValue?.trim()) {
-        const search = filters.searchValue.trim().toLowerCase();
+    result = searchResults<CustomerType>(
+        result,
+        filters.searchValue,
+        ["name", "email", "position"]
+    );
 
-        result = customersList.filter(customer => {
-            const searchableText = [
-                customer.name,
-                customer.email,
-                customer.position
-            ]
-                .filter(Boolean)
-                .join(" ")
-                .toLowerCase();
+    result = sortResults<CustomerType>(
+        result,
+        filters.sortBy,
+        filters.sortDir
+    );
 
-            return searchableText.includes(search);
-        })
+    const data = createPaginatedData<CustomerType>(
+        result,
+        { itemsPerPage: filters.itemsPerPage, page: filters.page }
+    )
 
-        if (filters?.sortBy) {
-            const { sortBy, sortDir = "asc" } = filters;
-
-            result.sort((a, b) => {
-                const aValue = a[sortBy];
-                const bValue = b[sortBy];
-
-                if (aValue == null && bValue == null) return 0;
-                if (aValue == null) return 1;
-                if (bValue == null) return -1;
-
-                const comparison = String(aValue).localeCompare(
-                    String(bValue),
-                    undefined,
-                    {
-                        numeric: true,
-                        sensitivity: "base"
-                    }
-                );
-
-                return sortDir === "desc"
-                    ? -comparison
-                    : comparison;
-            });
-        }
-
-
-    }
-
-    return result;
+    return data;
 
 
 }
 
 export const getCustomer = (customerId?: string | null) => {
-    if(!customerId) return null;
+    if (!customerId) return null;
     return customersList.find((customer) => customer.id === customerId);
 }

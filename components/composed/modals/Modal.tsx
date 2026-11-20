@@ -21,31 +21,29 @@ export const Modal = ({
     className?: string
 }) => {
 
-    const { closeModal } = useModalStore();
+    const closeModal = useModalStore(state => state.closeModal);
 
     const handleOpenChange = (open: boolean) => {
-        if(onOpenChange) {
+        if (onOpenChange) {
             onOpenChange(open);
             return;
         };
 
-        if(isDismissable){
+        if (isDismissable) {
             closeModal();
         }
     }
     return (
-        <HModal isOpen={isOpen} onOpenChange={handleOpenChange}>
-            <HModal.Backdrop isDismissable={isDismissable}>
-                <HModal.Container size={size} className={"h-auto"}>
-                    
-                    <HModal.Dialog className={`rounded-lg bg-white backdrop-blur-md p-10 ${className}`}>
-                        {closeTrigger && <HModal.CloseTrigger />}
-                        <HModal.Body>
-                            {children}
-                        </HModal.Body>
-                    </HModal.Dialog>
-                </HModal.Container>
-            </HModal.Backdrop>
-        </HModal>
+        <HModal.Backdrop isOpen={isOpen} onOpenChange={handleOpenChange} isDismissable={isDismissable}>
+            <HModal.Container size={size} className={"h-auto"}>
+
+                <HModal.Dialog className={`rounded-lg bg-white backdrop-blur-md p-10 ${className}`}>
+                    {closeTrigger && <HModal.CloseTrigger />}
+                    <HModal.Body>
+                        {children}
+                    </HModal.Body>
+                </HModal.Dialog>
+            </HModal.Container>
+        </HModal.Backdrop>
     )
 }

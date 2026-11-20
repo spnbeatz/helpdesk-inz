@@ -2,6 +2,7 @@ import { equipmentList, Equipment } from "@/data/equipments";
 import { InventoryPageFiltersType } from "@/store/pages/inventory.store";
 import { ProductType, productsList } from "@/data/products";
 import { LocationType, locations } from "@/data/locations";
+import { PaginatedResponse } from "../types";
 
 export type EquipmentListItemType = Equipment & {
     product: ProductType;
@@ -10,22 +11,22 @@ export type EquipmentListItemType = Equipment & {
     assignedUser: UserMinType | null
 };
 
+const productMap = new Map(
+    productsList.map(product => [product.id, product])
+);
 
+const locationMap = new Map(
+    locations.map(location => [location.id, location])
+);
+
+const usersMap = new Map(
+    usersList.map(user => [user.id, user])
+);
 
 export const getEquipmentList = (
     filters: InventoryPageFiltersType = {}
-): EquipmentListItemType[] => {
-    const productMap = new Map(
-        productsList.map(product => [product.id, product])
-    );
+): PaginatedResponse<EquipmentListItemType> => {
 
-    const locationMap = new Map(
-        locations.map(location => [location.id, location])
-    );
-
-    const usersMap = new Map(
-        usersList.map(user => [user.id, user])
-    );
 
     // Join Equipment + Product + Location + User
     let result: EquipmentListItemType[] = equipmentList.flatMap(
@@ -60,11 +61,17 @@ export const getEquipmentList = (
         );
     }
 
-    // Assigned user
-    if (filters.userId !== undefined) {
+    // Assigned users
+    if (filters.userIds && filters.userIds.length > 0) {
         result = result.filter(
-            item => item.assignedTo === filters.userId
+            item => item.assignedTo && filters.userIds?.includes(item.assignedTo)
         );
+    }
+
+    if (filters.userId !== undefined) {
+        result.filter(
+            item => item.assignedTo === filters.userId
+        )
     }
 
     // Product type
@@ -162,14 +169,42 @@ export const getEquipmentList = (
         });
     }
 
-    return result;
+    const data = createPaginatedData<EquipmentListItemType>(
+        result,
+        { itemsPerPage: filters.itemsPerPage, page: filters.page }
+    )
+
+    return data;
 };
 
-export const getEquipment = (eqId?: string) => {
-    if(!eqId) return null;
-    const equipment = getEquipmentList().find((eq) => eq.id === eqId);
-    return equipment;
-}
+export const getEquipment = (eqId?: string): EquipmentListItemType | null => {
+    if (!eqId) return null;
+
+    const equipment = equipmentList.find(eq => eq.id === eqId);
+
+    if (!equipment) return null;
+
+    const product = productMap.get(equipment.product_id);
+
+    if (!product) return null;
+
+    const user = equipment.assignedTo
+        ? usersMap.get(equipment.assignedTo)
+        : undefined;
+
+    return {
+        ...equipment,
+        product,
+        location: locationMap.get(equipment.location_id) ?? null,
+        assignedUser: user
+            ? {
+                id: user.id,
+                name: `${user.firstName} ${user.lastName}`,
+                avatarUrl: user.avatarUrl
+            }
+            : null
+    };
+};
 
 export const getInventoryProduct = (productId?: string) => {
     if (!productId) return null;
@@ -185,6 +220,7 @@ export const getInventoryProduct = (productId?: string) => {
 import { EquipmentType } from "@/data/equipments";
 import { UserMinType, usersList } from "@/data/users";
 import { equipmentAssignmentsList } from "@/data/orders/mock";
+import { createPaginatedData } from "../utils";
 
 export type ProductsFiltersType = {
     searchValue?: string;
@@ -232,6 +268,7 @@ export const getProductsList = (
 };
 
 export const getEquipmentAssigmentsList = (eqId?: string) => {
-    if(!eqId) return;
-    return equipmentAssignmentsList.filter(eq => eq.equipment_id === eqId);
+    if (!eqId) return [];
+    const assigments = equipmentAssignmentsList.filter(eq => eq.equipment_id === eqId);
+    return assigments;
 }

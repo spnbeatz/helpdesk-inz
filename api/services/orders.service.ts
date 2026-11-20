@@ -21,13 +21,16 @@ import type {
     OrderWithProductsType,
     OrderListViewType,
     OrderDetailViewType,
+    OrderDetailsType,
 } from "@/data/orders/types";
+import { createPaginatedData } from "../utils";
+import { PaginatedResponse } from "../types";
 
 /**
  * Rozszerza dotychczasowe filtry Zustand bez konieczności natychmiastowej
  * edycji orders.store.ts.
  */
-type ExtendedOrdersPageFiltersType = OrdersPageFiltersType & {
+export type ExtendedOrdersPageFiltersType = OrdersPageFiltersType & {
     recipientUserId?: string;
     fulfillmentTechnicianId?: string | null;
     offset?: number;
@@ -159,7 +162,7 @@ export const createOrder = async (
 export const getOrdersList = (
     filter: ExtendedOrdersPageFiltersType,
     actor: OrdersActor
-): OrderListViewType[] => {
+): PaginatedResponse<OrderListViewType> => {
     const {
         view = actor.role === "Technician"
             ? "my-orders"
@@ -182,6 +185,8 @@ export const getOrdersList = (
         recipientUserId,
         fulfillmentTechnicianId,
         offset = 0,
+        page,
+        itemsPerPage
     } = filter;
 
     const productMap = new Map(productsList.map(p => [p.id, p]));
@@ -309,7 +314,7 @@ export const getOrdersList = (
     }
 
     // Mapowanie danych
-    return result.map(order => {
+    result = result.map(order => {
         const items = orderItemsMap.get(order.id) ?? [];
 
         const creator = usersMap.get(order.created_by_id);
@@ -346,6 +351,10 @@ export const getOrdersList = (
             fulfillmentTechnician: mapUser(technician),
         };
     });
+
+    const data = createPaginatedData(result as OrderListViewType[], { page, itemsPerPage })
+
+    return data;
 };
 
 /**
@@ -353,24 +362,19 @@ export const getOrdersList = (
  * konkretne urządzenia EQ-*, historia i checklista technika.
  * Nie korzysta ze statycznego orderListItems (wyliczonego przy imporcie).
  */
-export const getOrder = (id: string, actor: OrdersActor): OrderDetailViewType | null => {
-    const order = getOrdersList({ orderId: id, limit: 1 }, actor)[0];
+export const getOrder = (id: string, actor: OrdersActor): OrderDetailsType | null => {
+    const order = getOrdersList({ orderId: id, limit: 1 }, actor).items[0];
     if (!order) return null;
 
     const details = getOrderDetails(id);
     if (!details) return null;
 
-    return {
-        ...order,
-        items: details.items,
-        history: details.history,
-        fulfillment_tasks: details.fulfillment_tasks,
-    };
+    return details;
 };
 
 
 
-type OrdersActor = {
+export type OrdersActor = {
     id: string;
     role: OrdersRole;
 };

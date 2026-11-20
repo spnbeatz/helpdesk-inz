@@ -6,5 +6,6 @@ import { getTicketActionsConfig } from "../config/ticketActions.config";
 
 export const TicketActionButton = createActionButton(
     useTicketActionsContext,
-    getTicketActionsConfig
+    getTicketActionsConfig,
+    "dropdown"
 );

@@ -21,7 +21,7 @@ export const Search = ({ onSearch }: SearchProps) => {
     };
 
     return (
-        <SearchField aria-label="search">
+        <SearchField aria-label="search" >
             <SearchField.Group className="rounded-lg bg-white/50">
                 <SearchField.SearchIcon />
 
@@ -32,7 +32,7 @@ export const Search = ({ onSearch }: SearchProps) => {
                     onInput={handleOnInput}
                 />
 
-                <SearchField.ClearButton />
+                <SearchField.ClearButton onClick={() => setSearchValue("")}/>
             </SearchField.Group>
         </SearchField>
     );

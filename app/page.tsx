@@ -37,9 +37,6 @@ export const AdminDashboardItems = () => {
   if (!hasRole("Administrator")) return null;
   return (
     <>
-      <TotalTicketsCard />
-      <OpenTicketsCard />
-      <UnassignedTicketsCard />
       <SLAComplianceCard />
       <ActiveTechniciansCard />
       <RequiresAttentionList />
@@ -50,119 +47,6 @@ export const AdminDashboardItems = () => {
 
 
     </>
-  )
-}
-
-export const TotalTicketsCard = ({
-  rightContent,
-  onClick
-}: {
-  rightContent?: React.ReactNode,
-  onClick?: () => void
-}) => {
-
-  const { data: tickets } = useTicketList({});
-
-  return (
-    <StatisticCard
-      title="Total tickets"
-      onClick={onClick}
-      rightContent={rightContent}
-      value={tickets?.length.toString()}
-      description={getTodayTicketsCount() > 0 ? `+${getTodayTicketsCount()} this day` : "No new tickets today"}
-    />
-  )
-}
-
-export const OpenTicketsCard = ({
-  rightContent,
-  onClick
-}: {
-  rightContent?: React.ReactNode,
-  onClick?: () => void
-}) => {
-
-  const { data: tickets } = useTicketList({ status: "new" });
-
-  return (
-    <StatisticCard
-      title="Open tickets"
-      onClick={onClick}
-      rightContent={rightContent}
-      value={tickets?.length.toString()}
-      description={`${getHighPriorityCount(tickets)} high priority`}
-    />
-  )
-}
-
-export const UnassignedTicketsCard = ({
-  rightContent,
-  onClick
-}: {
-  rightContent?: React.ReactNode,
-  onClick?: () => void
-}) => {
-  const { data: tickets } = useTicketList({ technicianId: null });
-
-  const today = getTodayTicketsCount(tickets);
-
-  return (
-    <StatisticCard
-      title="Unassigned tickets"
-      onClick={onClick}
-      rightContent={rightContent}
-      value={tickets?.length.toString()}
-      description={`${today} today's new tickets`}
-    />
-  )
-
-}
-
-export const AssignedToMeTicketsCard = ({
-  rightContent,
-  onClick
-}: {
-  rightContent?: React.ReactNode,
-  onClick?: () => void
-}) => {
-  const { user } = useAuth();
-  const { data: tickets } = useTicketList({ technicianId: user?.id });
-
-  const today = getTodayTicketsCount(tickets);
-
-  return (
-    <StatisticCard
-      title="Assigned to me"
-      onClick={onClick}
-      rightContent={rightContent}
-      value={tickets?.length.toString()}
-      description={`${today} assigned today`}
-    />
-  )
-}
-
-export const OverdueTicketsCard = ({
-  rightContent,
-  onClick
-}: {
-  rightContent?: React.ReactNode,
-  onClick?: () => void
-}) => {
-  const [dateBefore] = useState(() =>
-    new Date(
-      Date.now() - 15 * 24 * 60 * 60 * 1000
-    ).toISOString()
-  );
-  const { data: tickets } = useTicketList({ createdBefore: dateBefore, status: "new" })
-
-  return (
-    <StatisticCard
-      title="Overdue"
-      onClick={onClick}
-      value={tickets?.length.toString()}
-      rightContent={rightContent}
-      description={"Open tickets before " + new Date(dateBefore).toDateString()}
-    />
   )
 }
 
@@ -202,6 +86,7 @@ import { TableColumn, TableWithPagination } from "@/components/ui/data-display/T
 import { getTechnicianPerformance, getTechnicianWorkload, TechnicianPerformanceType } from "@/api/services/statistics.service";
 import { BasicChip } from "@/components/ui/data-display/BasicChip";
 import { PriorityChip } from "@/components/features/tickets/components/TicketInfoChips";
+import { useTicketsTechnicianStatistics } from "@/components/features/tickets/hooks/useTechnicianTicketsStatistics";
 
 ChartJS.register(
   CategoryScale,
@@ -214,7 +99,7 @@ ChartJS.register(
 
 export const TicketsByPriorityChart = () => {
   const { data: tickets } = useTicketList({});
-  const data = getTicketsByPriority(tickets || []);
+  const data = getTicketsByPriority(tickets?.items || []);
 
   const ticketsByPriorityChartOptions = {
     indexAxis: "x" as const,
@@ -295,11 +180,11 @@ export const TechnicianPerformanceTable = () => {
   return (
     <Panel className="col-span-3 row-span-2 h-full">
       <Label className="text-black/70 flex flex-row gap-2 items-center">Technician Performance</Label>
-      <TableWithPagination
+{/*       <TableWithPagination
         data={technicians || []}
         columns={technicianPerformanceColumns}
         itemsPerPage={5}
-      />
+      /> */}
     </Panel>
   )
 }
@@ -323,8 +208,8 @@ export const RequiresAttentionList = () => {
         Requires attention
       </Label>
 
-      <ScrollShadow className="flex-1 min-h-0 w-full max-h-[300px]">
-        {tickets?.map(ticket => (
+      <ScrollShadow className="flex-1 min-h-0 w-full max-h-75">
+        {tickets?.items.map(ticket => (
           <AttentionTicketItem
             key={ticket.id}
             ticket={ticket}
@@ -352,7 +237,7 @@ export const AttentionTicketItem = ({ ticket }: { ticket: TicketListItemType }) 
 export const TechnicianWorkload = () => {
   const { data: tickets } = useTicketList({})
 
-  const workload = getTechnicianWorkload(tickets || [])
+  const workload = getTechnicianWorkload(tickets?.items || [])
 
   return (
     <Panel className="col-span-2 row-span-2">

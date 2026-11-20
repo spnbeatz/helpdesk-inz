@@ -22,8 +22,8 @@ export const OrderDetails = () => {
                     <Column Start className="w-full gap-2">
                         <Label>Requested by</Label>
                         <User
-                            source={order?.createdBy?.avatarUrl}
-                            name={order?.createdBy?.name}
+                            source={order?.created_by?.avatarUrl ?? ""}
+                            name={order?.created_by?.name}
                             description={formatRelativeDate(order?.created_at || "")}
                         />
                     </Column>
@@ -32,8 +32,8 @@ export const OrderDetails = () => {
                         <Column Start className="w-full gap-2">
                             <Label>Revieved by</Label>
                             <User
-                                source={order?.reviewedBy?.avatarUrl}
-                                name={order?.reviewedBy?.name}
+                                source={order?.reviewed_by?.avatarUrl ?? ""}
+                                name={order?.reviewed_by?.name}
                                 description={formatRelativeDate(order.reviewed_at || "")}
                             />
                         </Column>
@@ -41,8 +41,8 @@ export const OrderDetails = () => {
                     <Column Start className="w-full gap-2">
                         <Label>Recipient</Label>
                         <User
-                            source={order?.recipientUser?.avatarUrl}
-                            name={order?.recipientUser?.name}
+                            source={order?.recipient?.avatarUrl ?? ""}
+                            name={order?.recipient?.name}
                             description="User"
                         />
                     </Column>
@@ -55,8 +55,9 @@ export const OrderDetails = () => {
                 <Column Start className="gap-2 w-full">
                     <Label>Required items</Label>
                     <Row Start className="w-full flex-wrap gap-2">
-                        {order?.products.map((product) => (
-                            <ProductChip product={product} />
+                        
+                        {order?.items.map((item) => (
+                            <ProductChip item={item} />
                         ))}
                     </Row>
 

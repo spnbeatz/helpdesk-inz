@@ -13,9 +13,12 @@ import { OrderStatusChip } from "./OrderStatusChip";
 import { useModalStore } from "@/store/modals";
 import { useRouter } from "next/navigation";
 import { useAccess } from "@/providers/access.provider";
+import { useOrdersPageStore } from "@/store/pages/orders.store";
+import { highlightText } from "@/helpers/highlightText";
 
 export const Order = ({ order }: { order: OrderListItemType }) => {
     const { openModal } = useModalStore();
+    const { searchValue } = useOrdersPageStore(state => state.filters);
     const router = useRouter();
 
     const { hasRole } = useAccess();
@@ -47,7 +50,7 @@ export const Order = ({ order }: { order: OrderListItemType }) => {
 
             </Row>
             <Row CenterBetween className="gap-4 w-full">
-                <Label className="font-normal text-black/80">{truncateText(order.reason, 80)}</Label>
+                <Label className="font-normal text-black/80">{highlightText(truncateText(order.reason, 80), searchValue)}</Label>
 
             </Row>
 
@@ -56,7 +59,7 @@ export const Order = ({ order }: { order: OrderListItemType }) => {
                 <Row Start className="flex-wrap gap-2 ml-auto">
                     <TicketChip ticketId={order.ticket_id} />
                     {order.products.map((product) => (
-                        <ProductChip product={product} />
+                        <ProductChip key={product.id} item={product} />
                     ))}
                 </Row>
             </Row>

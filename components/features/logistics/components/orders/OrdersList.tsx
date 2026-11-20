@@ -13,14 +13,14 @@ export const OrdersList = () => {
     useEffect(() => {
         console.log(filters, "filters")
     }, [filters])
-    const { data: ordersList } = useOrdersList(filters);
+    const { data: ordersData } = useOrdersList(filters);
     const { screenType } = useScreen();
 
     return (
         <ScrollShadow className="flex-1 w-full">
             <Grid cols={screenType === "widescreen" ? 3 : 1} gap={4} className="w-full">
-                {ordersList?.map((order) => {
-                    return <Order order={order} />
+                {ordersData?.items?.map((order) => {
+                    return <Order key={order.id} order={order} />
                 })}
             </Grid>
         </ScrollShadow>

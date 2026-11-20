@@ -1,8 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { TicketFormDataType } from "@/components/modals/tickets/TicketFormModal";
+import { TicketFormDataType } from "@/components/features/tickets/modals/TicketFormModal";
 import { useQueryClient } from "@tanstack/react-query";
 import { ticketKeys } from "./tickets.keys";
 import { createTicket, updateTicket } from "@/api/services/tickets.service";
+import { ticketsService } from "@/api";
 
 type SaveTicketDataType = {
     formData: TicketFormDataType;
@@ -18,7 +19,7 @@ export const useSaveTicket = () => {
                 return updateTicket(formData, files);
             }
 
-            return createTicket(formData, files);
+            return ticketsService.createTicket(formData, files);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({

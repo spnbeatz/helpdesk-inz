@@ -1,20 +1,22 @@
-import { OrderItemType } from "@/data/orders/types";
+import { OrderItemDetailsType, OrderItemType, OrderProductRefType } from "@/data/orders/types";
 import { ProductType } from "@/data/products"
 import { equipmentTypeIcons } from "@/data/equipments";
 import { BasicChip } from "@/components/ui/data-display/BasicChip";
 import { Description } from "@heroui/react";
 
-export const ProductChip = ({ product }: {
-    product: OrderItemType & { product: ProductType | null }
+export const ProductChip = ({ item }: {
+    item: OrderItemDetailsType | OrderItemType & {
+        product: ProductType | null;
+    } | null
 }) => {
 
-    const Icon = equipmentTypeIcons[product.product?.type || "accessory"]
+    const Icon = equipmentTypeIcons[item?.product?.type || "accessory"]
 
     return (
         <BasicChip color="normal" className="cursor-pointer text-black/60">
             <Icon className="mr-1 text-black/60 text-[14px]" />
-            {product.product?.name}
-            <Description>x {product.quantity}</Description>
+            {item?.product?.name}
+            <Description>x {item?.quantity}</Description>
         </BasicChip>
     )
 }

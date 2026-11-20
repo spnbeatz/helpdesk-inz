@@ -1,7 +1,6 @@
 "use client";
 
 import { Pagination } from "@heroui/react";
-import { Dispatch, SetStateAction } from "react";
 
 export function PaginationBasic({
     page,
@@ -10,7 +9,7 @@ export function PaginationBasic({
     itemsPerPage
 }: {
     page: number,
-    setPage: Dispatch<SetStateAction<number>>,
+    setPage: (page: number) => void,
     totalItems: number,
     itemsPerPage: number
 }) {
@@ -52,7 +51,7 @@ export function PaginationBasic({
             </Pagination.Summary>
             <Pagination.Content>
                 <Pagination.Item>
-                    <Pagination.Previous isDisabled={page === 1} onPress={() => setPage((p) => p - 1)}>
+                    <Pagination.Previous isDisabled={page === 1} onPress={() => setPage(page - 1)}>
                         <Pagination.PreviousIcon />
                         <span>Previous</span>
                     </Pagination.Previous>
@@ -71,7 +70,7 @@ export function PaginationBasic({
                     ),
                 )}
                 <Pagination.Item>
-                    <Pagination.Next isDisabled={page === totalPages} onPress={() => setPage((p) => p + 1)}>
+                    <Pagination.Next isDisabled={page === totalPages} onPress={() => setPage(page + 1)}>
                         <span>Next</span>
                         <Pagination.NextIcon />
                     </Pagination.Next>

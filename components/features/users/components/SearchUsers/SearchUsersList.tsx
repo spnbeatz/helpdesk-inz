@@ -12,7 +12,7 @@ export const SearchUsersList = ({ searchValue } : { searchValue: string}) => {
                 <EmptyState>No results found</EmptyState>
             )}
         >
-            {users?.map((user) => <SearchUsersListItem user={user} />)}
+            {users?.map((user) => <SearchUsersListItem key={`searchuserslist-${user.id}`} user={user} />)}
         </ListBox>
     )
 }

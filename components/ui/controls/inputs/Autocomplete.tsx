@@ -60,11 +60,18 @@ export const Autocomplete = <T,>({
             onChange={(keys) => onChange(keys as Key[] & (Key | null))}
         >
             <HAutocomplete.Trigger>
-                {triggerComponent ?? (
+                {triggerComponent ? (
                     <Row Start className="gap-2">
                         <LuSearch />
                         <Description>{triggerText}</Description>
                     </Row>
+                ) : (
+                    <>
+                        <HAutocomplete.Value />
+                        <HAutocomplete.ClearButton />
+                        <HAutocomplete.Indicator />
+                    </>
+
                 )}
             </HAutocomplete.Trigger>
 

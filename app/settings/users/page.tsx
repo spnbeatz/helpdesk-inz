@@ -4,41 +4,28 @@ import { IconButton } from "@/components/ui/controls/buttons/iconButton";
 import { Search } from "@/components/ui/controls/inputs/Search";
 import { Column, Row } from "@/components/ui/layout/flex";
 import { Title } from "@/components/ui/typography/Title";
-import { useState } from "react";
 import { LuUserPlus } from "react-icons/lu";
-import { useAdminSearchUserList } from "@/queries/admin/admin.query";
-import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
-import { userTableColumns } from "@/components/features/settings/users/config/userTableColumns";
-import { SettingsPopover } from "@/components/features/settings/users/components/SettingsPopover";
-import { useUsersSettingsTableConfig } from "@/store/tables/tableConfig.store";
+import { UsersListSettingsPopover } from "@/components/features/settings/users/components/UsersListSettingsPopover";
+import { useSettingsUserPageStore } from "@/store/pages/settings/users.store";
+import { UsersFilterButton } from "@/components/features/settings/users/components/UsersFilterButton";
+import { UsersList } from "@/components/features/settings/users/components/UsersList";
 
 export default function UsersSettingsPage() {
 
-    const [searchValue, setSearchValue] = useState<string>("");
-    const { data: userList } = useAdminSearchUserList(searchValue);
-    const { visibleColumns } = useUsersSettingsTableConfig();
-
-    const columns = userTableColumns.filter((column) =>
-        visibleColumns.includes(column.id)
-    );
+    const setFilters = useSettingsUserPageStore(state => state.setFilters);
 
     return (
         <Column Start className="w-full h-full gap-4">
             <Row CenterBetween className="w-full">
                 <Title title="Users" />
                 <Row Center className="gap-2">
-                    <Search onSearch={setSearchValue} />
-                    <SettingsPopover />
+                    <Search onSearch={(v) => setFilters({ searchValue: v })} />
+                    <UsersFilterButton />
+                    <UsersListSettingsPopover />
                     <IconButton Icon={LuUserPlus} className="bg-indigo-400/80 text-white" iconColor="white">Create user</IconButton>
-
                 </Row>
             </Row>
-            <TableWithPagination
-                data={userList || []}
-                columns={columns}
-                itemsPerPage={22}
-                selectable
-            />
+            <UsersList/>
         </Column>
     )
 }

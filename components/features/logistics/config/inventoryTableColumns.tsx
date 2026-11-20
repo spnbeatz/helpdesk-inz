@@ -1,5 +1,5 @@
 import { TableColumn } from "@/components/ui/data-display/TableWithPagination";
-import { InventoryItem } from "../components/products/ProductList";
+import { InventoryItem } from "../components/inventory/ProductList";
 import { useInventoryPageStore } from "@/store/pages/inventory.store";
 import { EquipmentListItemType } from "@/api/services/logistics.service";
 import { EquipmentStatus, EquipmentType } from "@/data/equipments";
@@ -23,20 +23,17 @@ export type InventoryTableItemType = {
     location?: string
 }
 
-export const inventoryTableColumns = (): TableColumn<InventoryTableItemType>[] => {
-
-    return [
+export const inventoryTableColumns: TableColumn<InventoryTableItemType>[] =  [
         { id: "id", name: "ID" },
         { id: "assetTag", name: "Asset Tag" },
-        { id: "serialNumber", name: "Serial"},
+        { id: "serialNumber", name: "Serial" },
         { id: "name", name: "Name" },
         { id: "type", name: "Type" },
         { id: "model", name: "Model" },
         { id: "manufacturer", name: "Manufacturer" },
         {
             id: "assignedTo", name: "Assigned To", customValue: (item) => {
-                console.log(item.assignedTo, "assigned to");
-                if(!item.assignedUser) return <Description>No assignment</Description>
+                if (!item.assignedUser) return <Description>No assignment</Description>
                 return (
                     <Row CenterStart className="gap-2 group">
                         <Avatar className="w-[22px] h-[22px] rounded-lg">
@@ -48,18 +45,42 @@ export const inventoryTableColumns = (): TableColumn<InventoryTableItemType>[] =
                 )
             }
         },
-        { id: "location", name: "Location"},
+        { id: "location", name: "Location" },
         { id: "status", name: "Status" },
-        { id: "purchaseDate", name: "Purchase Date"},
-        { id: "warrantyUntil", name: "Warranty Until"}
+        { id: "purchaseDate", name: "Purchase Date" },
+        { id: "warrantyUntil", name: "Warranty Until" }
 
     ];
-}
+
+
+export const inventoryDefaultColumns: (keyof InventoryTableItemType)[] = [
+    "id",
+    "assetTag",
+    "name",
+    "model",
+    "manufacturer",
+    "serialNumber",
+    "assignedTo",
+];
+
+export const customerPageInventoryTableColumns: TableColumn<InventoryTableItemType>[] = [
+    { id: "id", name: "ID" },
+    { id: "assetTag", name: "Asset Tag" },
+    { id: "name", name: "Name" },
+    { id: "type", name: "Type" },
+    { id: "model", name: "Model" },
+    { id: "serialNumber", name: "Serial Number" },
+    { id: "status", name: "Status" },
+    { id: "manufacturer", name: "Manufacturer" },
+    { id: "purchaseDate", name: "Purchase Date" },
+    { id: "warrantyUntil", name: "Warranty until" }
+];
+
+
 
 export const mapInventoryTableItems = (items: EquipmentListItemType[] | undefined): InventoryTableItemType[] => {
     if (!items) return [];
     return items.map((item) => {
-        console.log(item.assignedTo)
         return {
             id: item.id,
             assetTag: item.assetTag,

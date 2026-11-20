@@ -3,7 +3,7 @@
  * oraz istniejącym EquipmentAssignmentType w equipments.ts.
  * Daty przesyłane do UI to ciągi ISO 8601.
  */
-import type { EquipmentAssignmentType } from "@/data/equipments";
+import type { EquipmentAssignmentType, EquipmentType } from "@/data/equipments";
 export type { EquipmentAssignmentType } from "@/data/equipments";
 export type { LocationType } from "@/data/locations";
 
@@ -144,6 +144,7 @@ export type OrderProductRefType = {
     name: string;
     manufacturer?: string | null;
     model?: string | null;
+    type: EquipmentType
 };
 
 /** Podstawowe dane konkretnego egzemplarza EQ-*. */
@@ -177,7 +178,7 @@ export type OrderItemDetailsType = OrderItemType & {
     equipment: OrderEquipmentRefType[];
 };
 
-export type OrderUserSummaryType = { id: ID; firstName: string; lastName: string };
+export type OrderUserSummaryType = { id: ID; name: string; avatarUrl: string | null };
 export type OrderTicketSummaryType = { id: ID; title: string; customer_id: ID };
 
 export type OrderDetailsType = OrderWithAssignmentType & {

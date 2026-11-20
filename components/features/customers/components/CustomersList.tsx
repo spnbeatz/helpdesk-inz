@@ -3,7 +3,7 @@ import { useCustomersPageStore } from "@/store/pages/customers.store";
 import { useSearchCustomers } from "@/queries/customers/customers.query";
 import { CustomerType } from "@/data/users";
 import { useRouter } from "next/navigation";
-import { customerTableColumns } from "../config/customerTableColumns";
+import { customerTableColumns } from "../config/customerTable.config";
 
 export const CustomersList = () => {
     const { filters, setFilters, itemsPerPage } =
@@ -11,7 +11,7 @@ export const CustomersList = () => {
     
     const router = useRouter();
 
-    const { data: customersList } =
+    const { data: customersData } =
         useSearchCustomers(filters);
 
     const goToCustomerPage = (customer: CustomerType) => {
@@ -20,13 +20,17 @@ export const CustomersList = () => {
 
     return (
         <TableWithPagination
-            data={customersList ?? []}
+            data={customersData?.items ?? []}
+            totalItems={customersData?.totalItems || 0}
+            page={filters.page || 1}
+            setPage={(page) => setFilters({page})}
             onRowClick={goToCustomerPage}
             columns={customerTableColumns}
-            itemsPerPage={itemsPerPage}
+            itemsPerPage={filters.itemsPerPage || 22}
             searchValue={filters.searchValue}
             sortBy={filters.sortBy}
             sortDir={filters.sortDir}
+            sortKeys={["email", "name"]}
             setSort={(column) => {
                 setFilters({
                     sortBy: column,

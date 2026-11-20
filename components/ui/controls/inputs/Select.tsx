@@ -1,3 +1,4 @@
+import { FilterOption } from "@/components/composed/filters/types";
 import {
     Select as HSelect,
     Key,
@@ -12,12 +13,13 @@ export type SelectOptionsType = {
 
 type SelectProps = {
     label?: string;
-    options?: SelectOptionsType[];
+    options?: FilterOption[];
     isRequired?: boolean;
-    defaultValue?: string;
+    defaultValue?: string | string[] | null;
     placeholder?: string;
-    onChange?: (value: string | null) => void;
-    className?: string
+    onChange?: (value: string | string[] | null) => void;
+    className?: string,
+    mode?: "single" | "multiple"
 };
 
 export const Select = ({
@@ -27,38 +29,46 @@ export const Select = ({
     defaultValue,
     placeholder,
     onChange,
-    className
+    className,
+    mode = "single"
 }: SelectProps) => {
     return (
         <HSelect
-        
+
             aria-label="select"
             isRequired={isRequired}
             value={defaultValue}
             placeholder={placeholder}
             className={`${className}`}
-            onChange={(key: Key | null) => {
-                onChange?.(key ? String(key) : null);
+            selectionMode={mode}
+            onChange={(key: Key | Key[] | null) => {
+                onChange?.(
+                    key
+                        ? Array.isArray(key)
+                            ? key.map(String)
+                            : String(key)
+                        : null
+                );
             }}
         >
             {label && <Label>{label}</Label>}
 
             <HSelect.Trigger className="rounded-lg bg-white/70 text-xs">
-                <HSelect.Value className={"text-xs text-black/60"}/>
-                <HSelect.Indicator className="w-[14px] h-[14px]"/>
+                <HSelect.Value className={"text-xs text-black/60"} />
+                <HSelect.Indicator className="w-[14px] h-[14px]" />
             </HSelect.Trigger>
 
             <HSelect.Popover className={"rounded-lg"}>
                 <ListBox className="w-auto">
                     {options.map((opt) => (
                         <ListBox.Item
-                            key={opt.id}
-                            id={opt.id}
-                            textValue={opt.textValue}
-                            value={opt.id}
+                            key={opt.value}
+                            id={opt.value}
+                            textValue={opt.label}
+                            value={opt.value}
                             className="text-xs text-black/70 rounded-md"
                         >
-                            {opt.textValue}
+                            {opt.label}
                             <ListBox.ItemIndicator />
                         </ListBox.Item>
                     ))}

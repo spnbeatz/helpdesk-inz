@@ -3,7 +3,7 @@
 import { useInventoryPageStore } from "@/store/pages/inventory.store";
 import { Row } from "@/components/ui/layout/flex/Row";
 import { useAuth } from "@/providers/auth.provider";
-import { useInventoryTableConfig } from "@/store/tables/tableConfig.store";
+import { useInventoryTableConfig } from "@/store/pages/inventory.store";
 import { Button } from "@/components/ui/controls/buttons/Button";
 
 export const SwitchLocation = () => {

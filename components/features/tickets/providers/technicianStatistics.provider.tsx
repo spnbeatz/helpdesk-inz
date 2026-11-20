@@ -1,0 +1,90 @@
+"use client";
+
+import { ReactNode, useCallback, useMemo } from "react";
+
+import { useTicketsPageStore } from "@/store/pages/tickets.store";
+import { useAuth } from "@/providers/auth.provider";
+
+import { useTicketsCountStatistics } from "@/queries/statistics/statistics.query";
+
+import { initialTicketsFilters, TicketsPageFiltersType } from "@/store/pages/tickets.store";
+import { TicketsTechnicianStatisticsContext } from "../context/technicianStatistics.context";
+
+interface Props {
+    children: ReactNode;
+}
+
+export const TicketsTechnicianStatisticsProvider = ({
+    children
+}: Props) => {
+
+    const { setFilters } = useTicketsPageStore();
+    const { user } = useAuth();
+
+    const {
+        data: statistics,
+        isLoading,
+        isError
+    } = useTicketsCountStatistics(user?.id);
+
+    const filter = useCallback((
+        filters?: Partial<TicketsPageFiltersType>
+    ) => {
+        setFilters({
+            ...initialTicketsFilters,
+            ...filters
+        });
+    }, [setFilters]);
+
+    const filterAllTickets = useCallback(() => {
+        filter();
+    }, [filter]);
+
+    const filterOpenTickets = useCallback(() => {
+        filter({ status: "new" });
+    }, [filter]);
+
+    const filterUnassignedTickets = useCallback(() => {
+        filter({ technicianId: null });
+    }, [filter]);
+
+    const filterAssignedTickets = useCallback(() => {
+        if (!user?.id) return;
+
+        filter({ technicianId: user.id });
+    }, [filter, user?.id]);
+
+    const filterOverdueTickets = useCallback(() => {
+        const dateBefore = new Date(
+            Date.now() - 15 * 24 * 60 * 60 * 1000
+        ).toISOString();
+
+        filter({ createdBefore: dateBefore, status: "new" });
+    }, [filter]);
+
+    const value = useMemo(() => ({
+        ...(statistics ?? {}),
+        isLoading,
+        isError,
+        filterAllTickets,
+        filterOpenTickets,
+        filterUnassignedTickets,
+        filterAssignedTickets,
+        filterOverdueTickets
+    }), [
+        statistics,
+        isLoading,
+        isError,
+        filterAllTickets,
+        filterOpenTickets,
+        filterUnassignedTickets,
+        filterAssignedTickets,
+        filterOverdueTickets
+    ]);
+
+    return (
+        <TicketsTechnicianStatisticsContext.Provider value={value}>
+            {children}
+        </TicketsTechnicianStatisticsContext.Provider>
+    );
+};

@@ -331,7 +331,7 @@ export const orderFulfillmentTasksList: OrderFulfillmentTaskType[] = ordersList
 const summary = (id: string | null): OrderUserSummaryType | null => {
     if (!id) return null;
     const u = userMap.get(id);
-    return u ? { id: u.id, firstName: u.firstName, lastName: u.lastName } : null;
+    return u ? { id: u.id, name: u.firstName + " " + u.lastName, avatarUrl: u.avatarUrl } : null;
 };
 const fullName = (id: string | null): string | null => {
     const u = id ? userMap.get(id) : null;
@@ -379,7 +379,7 @@ export const getOrderDetails = (orderId: string): OrderDetailsType | null => {
             });
             return {
                 ...item,
-                product: p ? { id: p.id, name: p.name, manufacturer: p.manufacturer, model: p.model } : null,
+                product: p ? { id: p.id, name: p.name, manufacturer: p.manufacturer, model: p.model, type: p.type } : null,
                 fulfillments: f, equipment,
             };
         }),

@@ -13,4 +13,6 @@ export type DateRangeFiltersType = {
 
 export type PaginationFiltersType = {
     limit?: number;
+    page?: number;
+    itemsPerPage?: number
 };

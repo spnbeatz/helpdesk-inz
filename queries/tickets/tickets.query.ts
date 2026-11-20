@@ -1,17 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-
-import { getTicket, getTicketList } from "@/api/services/tickets.service";
 import { TicketsPageFiltersType } from "@/store/pages/tickets.store";
 import { ticketKeys } from "./tickets.keys";
-import { useAccess } from "@/providers/access.provider";
-import { useAuth } from "@/providers/auth.provider";
+import { ticketsService } from "@/api";
 
 export const useTicket = (id?: string) => {
     return useQuery({
         queryKey: id
             ? ticketKeys.detail(id)
             : ticketKeys.detail(""),
-        queryFn: () => getTicket(id),
+        queryFn: () => ticketsService.getTicket(id),
         enabled: !!id
     });
 };
@@ -19,6 +16,6 @@ export const useTicket = (id?: string) => {
 export const useTicketList = (filter?: TicketsPageFiltersType) => {
     return useQuery({
         queryKey: ticketKeys.list(filter),
-        queryFn: () => getTicketList(filter || {})
+        queryFn: () => ticketsService.getTicketList(filter || {})
     });
 };

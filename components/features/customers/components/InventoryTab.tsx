@@ -1,51 +1,34 @@
 import { Tab } from "@/components/ui/controls/tabs/Tabs"
 import { useParams } from "next/navigation";
 import { useEquipmentList } from "@/queries/logistics/logistics.query";
-import { InventoryColumn } from "../../logistics/components/products/ProductList";
 import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
 import { useModalStore } from "@/store/modals";
-import { Section } from "@/components/ui/surfaces/Section";
 import { Column, Row } from "@/components/ui/layout/flex";
-import { Select, SelectOptionsType } from "@/components/ui/controls/inputs/Select";
+import { Select } from "@/components/ui/controls/inputs/Select";
 import { IconButton } from "@/components/ui/controls/buttons/iconButton";
 import { LuArrowRightLeft, LuTrash } from "react-icons/lu";
-import { useMemo } from "react";
-import { mapInventoryTableItems } from "../../logistics/config/inventoryTableColumns";
-import { TableColumn } from "@/components/ui/data-display/TableWithPagination";4
-import { InventoryTableItemType } from "../../logistics/config/inventoryTableColumns";
+import { useMemo, useState } from "react";
+import { customerPageInventoryTableColumns, mapInventoryTableItems } from "../../logistics/config/inventoryTableColumns";
+import { FilterOption } from "@/components/composed/filters/types";
 
 export const InventoryTab = () => {
 
     const params = useParams<{ id: string }>();
     const { data: products } = useEquipmentList({ userId: params.id });
+    const [ page, setPage ] = useState<number>();
     const { openModal } = useModalStore();
 
     const inventoryList = useMemo(() => {
-        return mapInventoryTableItems(products)
+        return mapInventoryTableItems(products?.items)
     }, [products]);
-
-    const columns: TableColumn<InventoryTableItemType>[] = [
-        { id: "id", name: "ID" },
-        { id: "assetTag", name: "Asset Tag" },
-        { id: "name", name: "Name" },
-        { id: "type", name: "Type" },
-        { id: "model", name: "Model" },
-        { id: "serialNumber", name: "Serial Number" },
-        { id: "status", name: "Status" },
-        { id: "manufacturer", name: "Manufacturer" },
-        { id: "purchaseDate", name: "Purchase Date" },
-        { id: "warrantyUntil", name: "Warranty until" }
-    ];
-
-    if (!inventoryList) return null;
 
     const handleOpenItemModal = (productId: string) => {
         openModal("inventoryItem", { productId });;
     }
 
-    const options: SelectOptionsType[] = [
-        { id: "owned", textValue: "Owned items"},
-        { id: "ordered", textValue: "Ordered items"}
+    const options: FilterOption[] = [
+        { value: "owned", label: "Owned items"},
+        { value: "ordered", label: "Ordered items"}
     ]
 
     return (
@@ -63,7 +46,10 @@ export const InventoryTab = () => {
                 </Row>
                 <TableWithPagination
                     data={inventoryList ?? []}
-                    columns={columns}
+                    page={page || 1}
+                    setPage={(page) => setPage(page)}
+                    totalItems={products?.totalItems || 0}
+                    columns={customerPageInventoryTableColumns}
                     itemsPerPage={15}
                     sortBy="purchaseDate"
                     selectable

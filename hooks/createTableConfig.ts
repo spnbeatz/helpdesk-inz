@@ -1,9 +1,11 @@
+import { ListLayoutType } from "@/components/composed/switch/ListLayoutSwitch";
 import { useTableConfigStore } from "@/store/tables/tableConfig.store";
 import { useEffect } from "react";
 
 export const createTableConfig = <T extends object>(
     tableId: string,
-    defaultColumns: (keyof T)[]
+    defaultColumns: (keyof T)[],
+    defaultType: ListLayoutType = "list"
 ) => {
     return function useTableConfig() {
         const config = useTableConfigStore(
@@ -34,15 +36,26 @@ export const createTableConfig = <T extends object>(
             state => state.resetTable
         );
 
+        const changeType = useTableConfigStore(
+            state => state.changeType
+        );
+
         useEffect(() => {
-            initializeTable(tableId, defaultColumns.map(String));
+            initializeTable(
+                tableId,
+                defaultColumns.map(String),
+                defaultType
+            );
         }, [initializeTable]);
 
         const visibleColumns =
             (config?.visibleColumns ?? defaultColumns) as (keyof T)[];
 
+        const layoutType = config?.layoutType ?? defaultType;
+
         return {
             visibleColumns,
+            layoutType,
 
             setVisibleColumns: (columns: (keyof T)[]) =>
                 setVisible(tableId, columns.map(String)),
@@ -57,7 +70,10 @@ export const createTableConfig = <T extends object>(
                 toggle(tableId, String(column)),
 
             resetTableConfig: () =>
-                reset(tableId, defaultColumns.map(String))
+                reset(tableId, defaultColumns.map(String)),
+
+            changeType: (type: ListLayoutType) =>
+                changeType(tableId, type, defaultColumns.map(String))
         };
     };
 };

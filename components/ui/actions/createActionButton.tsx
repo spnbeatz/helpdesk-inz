@@ -1,6 +1,6 @@
 "use client";
 
-import { ActionButton, type ActionConfig } from "./ActionButton";
+import { ActionButton, ActionButtonType, type ActionConfig } from "./ActionButton";
 
 export const createActionButton = <
     TAction extends string,
@@ -13,7 +13,8 @@ export const createActionButton = <
     },
     getConfig: (
         permissions: TPermissions
-    ) => Record<TAction, ActionConfig>
+    ) => Record<TAction, ActionConfig>,
+    type?: ActionButtonType
 ) => {
     return function GeneratedActionButton({
         action
@@ -28,6 +29,7 @@ export const createActionButton = <
             <ActionButton
                 {...config}
                 onClick={handlers[action]}
+                type={type}
             />
         );
     };

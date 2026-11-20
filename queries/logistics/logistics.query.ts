@@ -1,18 +1,17 @@
-import { getEquipment, getEquipmentAssigmentsList, getEquipmentList, getInventoryProduct, getProduct } from "@/api/services/logistics.service"
-import { getOrder, getOrdersList } from "@/api/services/orders.service"
+import { getEquipmentAssigmentsList, getInventoryProduct } from "@/api/services/logistics.service"
 import { InventoryPageFiltersType } from "@/store/pages/inventory.store"
 import { OrdersPageFiltersType } from "@/store/pages/orders.store"
 import { useQuery } from "@tanstack/react-query"
 import { ProductsFiltersType } from "@/api/services/logistics.service"
-import { getProductsList } from "@/api/services/logistics.service";
 import { useAuth } from "@/providers/auth.provider"
 import { getRoleName } from "@/components/features/users/helpers/getRoleName"
+import { logisticsService, ordersService } from "@/api"
 
 export const useEquipmentList = (filter?: InventoryPageFiltersType) => {
     return useQuery({
         queryKey: ["equipments", filter],
         queryFn: () => {
-            return getEquipmentList(filter)
+            return logisticsService.getEquipmentList(filter)
         }
     })
 }
@@ -20,7 +19,7 @@ export const useEquipmentList = (filter?: InventoryPageFiltersType) => {
 export const useEquipment = (productId?: string) => {
     return useQuery({
         queryKey: ["equipment", productId],
-        queryFn: () => getEquipment(productId),
+        queryFn: () => logisticsService.getEquipment(productId),
         enabled: !!productId
     })
 }
@@ -28,7 +27,7 @@ export const useEquipment = (productId?: string) => {
 export const useProduct = (productId: string) => {
     return useQuery({
         queryKey: ["product", productId],
-        queryFn: () => getProduct(productId),
+        queryFn: () => logisticsService.getProduct(productId),
         enabled: !!productId
     })
 }
@@ -61,10 +60,12 @@ export const useOrdersList = (
         queryFn: () => {
             if (!user) throw new Error("Unauthorized");
 
-            return getOrdersList(filter, {
+             const orders = ordersService.getOrderList(filter, {
                 id: user.id,
                 role
             });
+
+            return orders;
         }
     });
 };
@@ -78,7 +79,7 @@ export const useOrder = (orderId: string) => {
         enabled: Boolean(orderId && user),
         queryFn: () => {
             if (!user) throw new Error("Unauthorized");
-            return getOrder(orderId, { id: user.id, role})
+            return ordersService.getOrder(orderId, { id: user.id, role})
         },
         
     })
@@ -89,7 +90,7 @@ export const useProductsList = (
 ) => {
     return useQuery({
         queryKey: ["products", filters],
-        queryFn: () => getProductsList(filters)
+        queryFn: () => logisticsService.getProductsList(filters)
     });
 };
 

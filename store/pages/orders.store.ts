@@ -1,7 +1,8 @@
 import {
     OrderCreateType,
     OrderWithAssignmentType,
-    OrderStatus
+    OrderStatus,
+    OrderListViewType
 } from "@/data/orders/types";
 
 import { OrdersView } from "@/components/features/logistics/components/types/orderTabs.types";
@@ -13,8 +14,10 @@ import {
 } from "@/types/filters.types";
 
 import { createPageStore } from "../factories/createPageStore";
+import { createTableConfig } from "@/hooks/createTableConfig";
+import { ordersDefaultColumns } from "@/components/features/logistics/config/ordersTableColumns.config";
 
-type OrdersSortKey = keyof OrderWithAssignmentType;
+export type OrdersSortKey = keyof OrderWithAssignmentType;
 
 export type OrdersPageFiltersType =
     BaseFiltersType<OrdersSortKey> &
@@ -39,17 +42,18 @@ type OrdersExtraState = {
     setCreateData: (data: Partial<OrderCreateType>) => void;
 };
 
+export const initialOrdersFilters: OrdersPageFiltersType = {
+    sortBy: "created_at",
+    sortDir: "desc",
+    searchValue: "",
+    status: "all",
+    itemsPerPage: 25,
+    page: 1
+}
+
 export const useOrdersPageStore =
     createPageStore<OrdersPageFiltersType, OrdersExtraState>(
-        {
-            initialFilters: {
-                sortBy: "created_at",
-                sortDir: "desc",
-                searchValue: "",
-                status: "all",
-            },
-            itemsPerPage: 20
-        },
+        { initialFilters: initialOrdersFilters },
         (set) => ({
             createData: {
                 products: [],
@@ -67,3 +71,10 @@ export const useOrdersPageStore =
                 }))
         })
     );
+
+export const useOrdersTableConfig =
+    createTableConfig<OrderListViewType>(
+        "orders",
+        ordersDefaultColumns,
+        "list"
+    )

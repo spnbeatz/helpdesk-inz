@@ -2,22 +2,65 @@
 
 import { useModalStore } from "@/store/modals";
 
-import { ConfirmationModal } from "./ConfirmationModal";
-import { TicketFormModal, TicketFormModalProps } from "@/components/features/tickets/modals/TicketFormModal";
+import dynamic from "next/dynamic";
+
+export const ConfirmationModal = dynamic(() =>
+    import("./ConfirmationModal").then(mod => mod.ConfirmationModal)
+);
+
+export const TicketFormModal = dynamic(() =>
+    import("@/components/features/tickets/modals/TicketFormModal")
+        .then(mod => mod.TicketFormModal)
+);
+
+export const InventoryItemModal = dynamic(() =>
+    import("../../features/logistics/modals/InventoryItemModal")
+        .then(mod => mod.InventoryItemModal)
+);
+
+export const TicketViewModal = dynamic(() =>
+    import("@/components/features/tickets/modals/TicketViewModal")
+        .then(mod => mod.TicketViewModal)
+);
+
+export const CustomerInfoModal = dynamic(() =>
+    import("@/components/features/customers/modals/CustomerInfoModal")
+        .then(mod => mod.CustomerInfoModal)
+);
+
+export const CreateOrderModal = dynamic(() =>
+    import("@/components/features/logistics/modals/CreateOrderModal")
+        .then(mod => mod.CreateOrderModal)
+);
+
+export const OrderViewModal = dynamic(() =>
+    import("@/components/features/logistics/modals/OrderViewModal")
+        .then(mod => mod.OrderViewModal)
+);
+
+export const ApproveOrderModal = dynamic(() =>
+    import("@/components/features/logistics/modals/ApproveOrderModal")
+        .then(mod => mod.ApproveOrderModal)
+);
+
+export const DeclineOrderModal = dynamic(() =>
+    import("@/components/features/logistics/modals/DeclineOrderModal")
+        .then(mod => mod.DeclineOrderModal)
+);
+
+import { TicketFormModalProps } from "@/components/features/tickets/modals/TicketFormModal";
 
 import { ConfirmationModalProps } from "./ConfirmationModal";
-import { InventoryItemModal, InventoryItemModalType } from "../../features/logistics/modals/InventoryItemModal";
-import { TicketViewModal, TicketViewModalProps } from "@/components/features/tickets/modals/TicketViewModal";
-import { CustomerInfoModal, CustomerInfoModalType } from "@/components/features/customers/modals/CustomerInfoModal";
-import { CreateOrderModal, CreateOrderModalType } from "@/components/features/logistics/modals/CreateOrderModal";
-import { OrderViewModal, OrderViewModalType } from "@/components/features/logistics/modals/OrderViewModal";
-import { ApproveOrderModal } from "@/components/features/logistics/modals/ApproveOrderModal";
-import { DeclineOrderModal } from "@/components/features/logistics/modals/DeclineOrderModal";
+import { InventoryItemModalType } from "../../features/logistics/modals/InventoryItemModal";
+import { TicketViewModalProps } from "@/components/features/tickets/modals/TicketViewModal";
+import { CustomerInfoModalType } from "@/components/features/customers/modals/CustomerInfoModal";
+import { CreateOrderModalType } from "@/components/features/logistics/modals/CreateOrderModal";
+import { OrderViewModalType } from "@/components/features/logistics/modals/OrderViewModal";
 import { ModalDataType } from "./types";
 
 
 export const ModalManager = () => {
-    const { modals } = useModalStore();
+    const modals = useModalStore(state => state.modals);
 
     return (
         <>

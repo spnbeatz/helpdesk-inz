@@ -11,10 +11,18 @@ import { OrdersListTabs } from "@/components/features/logistics/components/order
 import { useAuth } from "@/providers/auth.provider";
 import { getRoleName } from "@/components/features/users/helpers/getRoleName";
 import { ordersPageTitle } from "@/components/features/logistics/config/title.config";
+import { Search } from "@/components/ui/controls/inputs/Search";
+import { useCallback, useEffect } from "react";
+import { OrdersTable } from "@/components/features/logistics/components/orders/OrdersTable";
+import { OrdersListControl } from "@/components/features/logistics/components/orders/OrdersListControl";
+import { OrdersListLayoutSwitch } from "@/components/features/logistics/components/orders/OrdersListLayoutSwitch";
+import { OrdersFilterButton } from "@/components/features/logistics/components/orders/OrdersFilterButton";
+import { OrdersSettingsPopover } from "@/components/features/logistics/components/orders/OrdersSettingsPopover";
 
 export default function OrdersPage() {
 
     const { openModal } = useModalStore();
+    const setFilters = useOrdersPageStore(state => state.setFilters);
     const { user } = useAuth();
 
     const role = getRoleName(user?.roleNames);
@@ -24,24 +32,37 @@ export default function OrdersPage() {
         openModal("createOrder");
     }
 
+    const handleSearch = useCallback((value: string) => {
+        setFilters({ searchValue: value, page: 1 });
+    }, [setFilters]);
+
     return (
         <Column Start className="w-full h-full gap-4">
-            <Row CenterBetween className="w-full py-10">
-                <Title { ...pageTitleProps } />
-                <IconButton
-                    Icon={LuShoppingBag}
-                    iconColor="#ffffffaa"
-                    onClick={handleOpenCreateOrderModal}
-                    className="bg-indigo-500/60 text-white/80"
-                >
-                    Create order
-                </IconButton>
+            <Row CenterBetween className="w-full">
+                <Title {...pageTitleProps} />
+                
+                <Row Center className="gap-2">
+                    <OrdersListLayoutSwitch />
+                    <Search onSearch={handleSearch} />
+                    
+                    <OrdersFilterButton />
+                    <OrdersSettingsPopover/>
+                    <IconButton
+                        Icon={LuShoppingBag}
+                        iconColor="#ffffffaa"
+                        onClick={handleOpenCreateOrderModal}
+                        className="bg-indigo-500/60 text-white/80"
+                    >
+                        Create order
+                    </IconButton>
+                </Row>
+
             </Row>
             <Row CenterBetween className="w-full">
                 <OrdersListTabs />
-            </Row>
 
-            <OrdersList />
+            </Row>
+            <OrdersListControl />
         </Column>
     )
 }

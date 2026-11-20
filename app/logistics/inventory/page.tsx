@@ -3,15 +3,17 @@
 import { AddButton } from "@/components/ui/controls/buttons/addButton";
 import { Search } from "@/components/ui/controls/inputs/Search";
 import { Title } from "@/components/ui/typography/Title";
-import { ProductListFilterButton } from "@/components/features/logistics/components/products/ProductListFilterButton";
 import { useInventoryPageStore } from "@/store/pages/inventory.store";
 import { Column } from "@/components/ui/layout/flex/Column";
 import { Row } from "@/components/ui/layout/flex/Row";
-import { ProductListSection } from "@/components/features/logistics/sections/ProductListSection";
 import { useAccess } from "@/providers/access.provider";
 import { SwitchLocation } from "@/components/features/logistics/components/SwitchLocation";
 import { useAuth } from "@/providers/auth.provider";
 import { useEffect } from "react";
+import { ProductList } from "@/components/features/logistics/components/inventory/ProductList";
+import { ProductsListSettingsPopover } from "@/components/features/logistics/components/inventory/ProductsListSettingsPopover";
+import { ProductsFilterButton } from "@/components/features/logistics/components/inventory/ProductsFilterButton";
+import { useCallback } from "react";
 
 export default function InventoryPage() {
 
@@ -20,6 +22,10 @@ export default function InventoryPage() {
     const { user } = useAuth();
 
     useEffect(() => setFilters({ locationId: user?.location_id }), []);
+
+    const handleSearch = useCallback((value: string) => {
+        setFilters({ searchValue: value, page: 1 });
+    }, [setFilters]);
 
     return (
         <Column Start className="w-full h-full relative">
@@ -30,12 +36,13 @@ export default function InventoryPage() {
                 />
                 <Row Center className="gap-2">
                     <SwitchLocation />
-                    <Search onSearch={(v) => setFilters({ searchValue: v })} />
-                    <ProductListFilterButton />
+                    <Search onSearch={handleSearch} />
+                    <ProductsFilterButton />
+                    <ProductsListSettingsPopover />
                     {hasPermission("equipment.create") && <AddButton label="Add new product" />}
                 </Row>
             </Row>
-            <ProductListSection />
+            <ProductList />
         </Column>
     )
 }

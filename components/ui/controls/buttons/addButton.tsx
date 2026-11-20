@@ -11,10 +11,10 @@ export const AddButton = ({
     label: string
 }) => {
     return (
-        <Button className={"rounded-lg shadow-sm p-0 overflow-hidden"} onClick={onClick}>
-            <div className={`w-full h-full ${background.bluepurplegradient}`}>
-                <Row Center className="w-full h-full bg-white/30 px-4 gap-2 rounded-lg ">
-                    {label} <LuPlus />
+        <Button variant="ghost" className={"rounded-lg shadow-sm p-0 overflow-hidden"} onClick={onClick}>
+            <div className={`w-full h-full bg-indigo-400/60`}>
+                <Row Center className="w-full h-full px-4 gap-2 rounded-lg text-xs text-white text-shadow-sm">
+                    <LuPlus /> {label} 
                 </Row>
             </div>
 

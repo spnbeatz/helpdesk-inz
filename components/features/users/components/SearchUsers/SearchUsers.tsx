@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { Key, Autocomplete, SearchField } from "@heroui/react";
 import { SearchUsersList } from "./SearchUsersList";
+import { Column } from "@/components/ui/layout/flex";
 
 type SearchUserProps = {
-    onSelect: (userId: string | null) => void;
+    onSelect: (userIds: string[] | null) => void;
     placeholder?: string
 };
 
@@ -14,45 +15,60 @@ export const SearchUser = ({
     onSelect,
 }: SearchUserProps) => {
     const [searchValue, setSearchValue] = useState("");
-    const [selectedKey, setSelectedKey] = useState<Key | null>(null);
+    const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
 
-    const handleChange = (key: Key | null) => {
-        setSelectedKey(key);
-        onSelect(key ? String(key) : null);
+    const handleChange = (keys: Key[] | null) => {
+        setSelectedKeys(keys ?? []);
+
+        onSelect(
+            keys?.map(String) ?? null
+        );
     };
 
+
+
     return (
-        <Autocomplete
-            value={selectedKey}
-            onChange={handleChange}
-            placeholder={placeholder || "Select User"}
-            variant="primary"
-            fullWidth
-            allowsEmptyCollection
-        >
-            <Autocomplete.Trigger>
-                <Autocomplete.Value />
-                <Autocomplete.ClearButton />
-                <Autocomplete.Indicator />
-            </Autocomplete.Trigger>
+        <Column Start className="w-full gap-2">
+            <h4 className="mb-2 font-medium">
+                Users
+            </h4>
 
-            <Autocomplete.Popover>
-                <Autocomplete.Filter
-                    inputValue={searchValue}
-                    onInputChange={setSearchValue}
-                >
-                    <SearchField autoFocus>
-                        <SearchField.Group>
-                            <SearchField.SearchIcon />
-                            <SearchField.Input placeholder="Search users..." />
-                            <SearchField.ClearButton />
-                        </SearchField.Group>
-                    </SearchField>
+            <Autocomplete
+                aria-label="search-users"
+                value={selectedKeys}
+                selectionMode="multiple"
+                onChange={handleChange}
+                placeholder={placeholder || "Select User"}
+                variant="primary"
+                fullWidth
+                allowsEmptyCollection
 
-                    <SearchUsersList searchValue={searchValue} />
+            >
+                <Autocomplete.Trigger className={"rounded-lg"}>
+                    <Autocomplete.Value className={"text-xs"} />
+                    <Autocomplete.ClearButton />
+                    <Autocomplete.Indicator />
+                </Autocomplete.Trigger>
 
-                </Autocomplete.Filter>
-            </Autocomplete.Popover>
-        </Autocomplete>
+                <Autocomplete.Popover>
+                    <Autocomplete.Filter
+                        inputValue={searchValue}
+                        onInputChange={setSearchValue}
+                    >
+                        <SearchField autoFocus aria-label="search">
+                            <SearchField.Group>
+                                <SearchField.SearchIcon />
+                                <SearchField.Input placeholder="Search users..." />
+                                <SearchField.ClearButton />
+                            </SearchField.Group>
+                        </SearchField>
+
+                        <SearchUsersList searchValue={searchValue} />
+
+                    </Autocomplete.Filter>
+                </Autocomplete.Popover>
+            </Autocomplete>
+        </Column>
+
     );
 };

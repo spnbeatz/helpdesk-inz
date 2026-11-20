@@ -19,5 +19,19 @@ technician workload
 
 uspójnić nazwy inventory/product/item
 
+userslistsettingspopover - zrobic jakis komponent zeby mozna bylo uzywac tez w innych tabelach i tez tam mozna dac ustawianie itemsPerPage
+
+
+inventorypage:
+    dodac mozliwosc usuwania (przycisk delete na zaznaczone elementy listy)
+    wiecej filtrow
+    zmienic przycisk add new product
+    zwiekszyc padding headera
+
+tablewithpagination
+    zmienic propsy na opcjonalne zeby wewnatrz podac wartosci domyslne a nie za kazdym razem
+
+
+
 
 

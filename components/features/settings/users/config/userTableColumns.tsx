@@ -3,20 +3,16 @@ import { User } from "@/data/users";
 import { Avatar } from "@heroui/react";
 import { Row } from "@/components/ui/layout/flex";
 import { formatRelativeDate } from "@/utils/date..util";
+import { TableUserEmail } from "@/components/composed/table/TableUserEmail";
 
 export const userTableColumns: TableColumn<User>[] = [
     { id: "id", name: "ID" },
-    {
-        id: "email", name: "Email", customValue: (item) => (
-            <Row CenterStart className="gap-2 group">
-                <Avatar className="w-[22px] h-[22px] rounded-lg">
-                    <Avatar.Image src={item.avatarUrl || undefined} />
-                    <Avatar.Fallback className="text-black/50">{item.email.slice(0, 2).toUpperCase()}</Avatar.Fallback>
-                </Avatar>
-                {item.email}
-            </Row>
-        )
-    },
+    { id: "email", name: "Email", customValue: (user) => (
+        <TableUserEmail 
+            name={user.email}
+            avatarUrl={user.avatarUrl}
+        />
+    )},
     { id: "firstName", name: "First name" },
     { id: "lastName", name: "Last Name" },
     { id: "locationName", name: "Location", customValue: (item) => item.locationName},
@@ -39,4 +35,17 @@ export const userTableColumns: TableColumn<User>[] = [
     { id: "roleNames", name: "Roles" },
     { id: "phone", name: "Phone" },
     { id: "department", name: "Department" },
+];
+
+
+export const usersDefaultColumns: (keyof User)[] = [
+    "id",
+    "firstName",
+    "lastName",
+    "email",
+    "locationName",
+    "position",
+    "createdAt",
+    "lastLoginAt",
+    "roleNames"
 ];

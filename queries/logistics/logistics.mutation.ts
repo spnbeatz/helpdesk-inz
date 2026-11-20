@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createOrder } from "@/api/services/orders.service";
-import { OrderCreateType, OrderWithProductsType } from "@/data/orders/types";
+
+import { OrderCreateType, OrderWithProductsType } from "@/data/orders/types"
+import { ordersService } from "@/api";
 
 export const useCreateOrder = () => {
     const queryClient = useQueryClient();
 
     return useMutation<OrderWithProductsType, Error, OrderCreateType>({
-        mutationFn: createOrder,
+        mutationFn: ordersService.createOrder,
 
         onSuccess: () => {
             queryClient.invalidateQueries({

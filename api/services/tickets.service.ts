@@ -4,6 +4,8 @@ import { priorityList } from "@/data/priorityList";
 import { TicketsPageFiltersType } from "@/store/pages/tickets.store";
 import { TicketFormDataType } from "@/components/features/tickets/modals/TicketFormModal";
 import { usersList } from "@/data/users";
+import { PaginatedResponse } from "../types";
+import { createPaginatedData, searchResults, sortResults } from "../utils";
 
 type UserMiniType = {
     id: string,
@@ -51,7 +53,7 @@ export const getTicket = (id?: string): TicketListItemType | undefined => {
 
 export const getTicketList = (
     filter: TicketsPageFiltersType = {}
-): TicketListItemType[] => {
+): PaginatedResponse<TicketListItemType> => {
     const {
         sortBy = "created_at",
         sortDir = "desc",
@@ -63,7 +65,9 @@ export const getTicketList = (
         technicianId,
         createdBefore,
         createdAfter,
-        limit
+        limit,
+        page,
+        itemsPerPage
     } = filter;
 
     let result = [...ticketsList];
@@ -76,16 +80,16 @@ export const getTicketList = (
     }
 
     // Priority
-    if (priorityId) {
+    if (priorityId && priorityId.length > 0) {
         result = result.filter(
-            ticket => ticket.priorityId === priorityId
+            ticket => priorityId.includes(ticket.priorityId)
         );
     }
 
     // Category
-    if (categoryId) {
+    if (categoryId && categoryId.length > 0) {
         result = result.filter(
-            ticket => ticket.categoryId === categoryId
+            ticket => categoryId.includes(ticket.categoryId)
         );
     }
 
@@ -121,37 +125,16 @@ export const getTicketList = (
         );
     }
 
-    // Search
-    if (searchValue?.trim()) {
-        const search = searchValue.trim().toLowerCase();
+    result = searchResults<TicketType>(
+        result,
+        searchValue,
+        ["title", "description"]
+    )
 
-        result = result.filter(ticket =>
-            ticket.id.toLowerCase().includes(search) ||
-            ticket.title.toLowerCase().includes(search) ||
-            ticket.description.toLowerCase().includes(search)
-        );
-    }
-
-    // Sort
-    result.sort((a, b) => {
-        const valueA = a[sortBy];
-        const valueB = b[sortBy];
-
-        if (valueA === valueB) return 0;
-
-        const comparison = String(valueA).localeCompare(
-            String(valueB),
-            undefined,
-            {
-                numeric: true,
-                sensitivity: "base"
-            }
-        );
-
-        return sortDir === "asc"
-            ? comparison
-            : -comparison;
-    });
+    result = sortResults<TicketType>(
+        result,
+        sortBy, sortDir
+    )
 
     // Limit
     if (limit !== undefined && Number.isFinite(limit)) {
@@ -162,7 +145,7 @@ export const getTicketList = (
     }
 
     // Map
-    return result.map(ticket => {
+    const mapped = result.map(ticket => {
         const user = usersList.find(
             user => user.id === ticket.customer_id
         );
@@ -192,6 +175,13 @@ export const getTicketList = (
             }
         };
     });
+
+    const data = createPaginatedData<TicketListItemType>(
+        mapped,
+        { page, itemsPerPage }
+    )
+
+    return data;
 };
 
 
