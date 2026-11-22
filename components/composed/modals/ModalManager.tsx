@@ -14,7 +14,7 @@ export const TicketFormModal = dynamic(() =>
 );
 
 export const InventoryItemModal = dynamic(() =>
-    import("../../features/logistics/modals/InventoryItemModal")
+    import("../../features/logistics/inventory/modals/InventoryItemModal")
         .then(mod => mod.InventoryItemModal)
 );
 
@@ -29,33 +29,33 @@ export const CustomerInfoModal = dynamic(() =>
 );
 
 export const CreateOrderModal = dynamic(() =>
-    import("@/components/features/logistics/modals/CreateOrderModal")
+    import("@/components/features/logistics/orders/modals/CreateOrderModal")
         .then(mod => mod.CreateOrderModal)
 );
 
 export const OrderViewModal = dynamic(() =>
-    import("@/components/features/logistics/modals/OrderViewModal")
+    import("@/components/features/logistics/orders/modals/OrderViewModal")
         .then(mod => mod.OrderViewModal)
 );
 
 export const ApproveOrderModal = dynamic(() =>
-    import("@/components/features/logistics/modals/ApproveOrderModal")
+    import("@/components/features/logistics/orders/modals/ApproveOrderModal")
         .then(mod => mod.ApproveOrderModal)
 );
 
 export const DeclineOrderModal = dynamic(() =>
-    import("@/components/features/logistics/modals/DeclineOrderModal")
+    import("@/components/features/logistics/orders/modals/DeclineOrderModal")
         .then(mod => mod.DeclineOrderModal)
 );
 
 import { TicketFormModalProps } from "@/components/features/tickets/modals/TicketFormModal";
 
 import { ConfirmationModalProps } from "./ConfirmationModal";
-import { InventoryItemModalType } from "../../features/logistics/modals/InventoryItemModal";
+import { InventoryItemModalType } from "../../features/logistics/inventory/modals/InventoryItemModal";
 import { TicketViewModalProps } from "@/components/features/tickets/modals/TicketViewModal";
 import { CustomerInfoModalType } from "@/components/features/customers/modals/CustomerInfoModal";
-import { CreateOrderModalType } from "@/components/features/logistics/modals/CreateOrderModal";
-import { OrderViewModalType } from "@/components/features/logistics/modals/OrderViewModal";
+import { CreateOrderModalType } from "@/components/features/logistics/orders/modals/CreateOrderModal";
+import { OrderViewModalType } from "@/components/features/logistics/orders/modals/OrderViewModal";
 import { ModalDataType } from "./types";
 
 

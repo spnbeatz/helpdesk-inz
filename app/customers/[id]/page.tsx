@@ -2,7 +2,7 @@
 
 import { Row, Column } from "@/components/ui/layout/flex";
 import { Avatar, Description } from "@heroui/react";
-import { useCustomer } from "@/queries/customers/customers.query";
+import { useCustomer } from "@/components/features/customers/queries/query";
 import { BackButton } from "@/components/ui/controls/buttons/BackButton";
 import { useParams } from "next/navigation";
 import { Section } from "@/components/ui/surfaces/Section";

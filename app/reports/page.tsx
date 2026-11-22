@@ -1,6 +1,5 @@
 "use client"
 
-import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
 import { Column, Row } from "@/components/ui/layout/flex";
 import { Section } from "@/components/ui/surfaces/Section";
 import { Title } from "@/components/ui/typography/Title";
@@ -44,7 +43,8 @@ export default function ReportsPage() {
                             </Row>
                         )}
                     >
-                        <TableWithPagination
+                        <div></div>
+{/*                         <TableWithPagination
                             data={[]}
                             columns={[
                                 { id: "id", name: "ID" },
@@ -53,7 +53,7 @@ export default function ReportsPage() {
                                 { id: "createdAt", name: "Creation date" },
                             ]}
                             itemsPerPage={5}
-                        />
+                        /> */}
                     </Section>
                 </Column>
 

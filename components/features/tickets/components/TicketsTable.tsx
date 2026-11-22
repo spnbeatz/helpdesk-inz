@@ -1,6 +1,7 @@
-import { useTicketList } from "@/queries/tickets/tickets.query";
-import { useTicketsPageStore, useTicketsSettingsTableConfig } from "@/store/pages/tickets.store"
-import { ticketsTableColumns } from "../config/ticketsTableColumns.config";
+import { useTicketList } from "../queries/query";
+import { useTicketsPageStore } from "../store/page.store";
+import { useTicketsSettingsTableConfig } from "../store/table.store";
+import { ticketsTableColumns } from "../config/table.config";
 import { useModalStore } from "@/store/modals";
 import { PaginatedTable } from "@/components/ui/data-display/paginated-table/PaginatedTable";
 

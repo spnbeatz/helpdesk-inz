@@ -1,7 +1,8 @@
-import { FilterPopover } from "@/components/composed/filters/FilterPopover"
-import { CustomersPageFilterType, CustomersSortKey, useCustomersPageStore } from "@/store/pages/customers.store"
-import { customersFiltersConfig } from "../config/customersFilters.config";
-import { initialCustomersFilters } from "@/store/pages/customers.store";
+import { FilterPopover } from "@/components/composed/filters/FilterPopover";
+import { CustomersPageFilterType, CustomersSortKey } from "../types/filters.types";
+import { useCustomersPageStore } from "../store/page.store";
+import { customersFiltersConfig } from "../config/filters.config";
+import { initialCustomersFilters } from "../constants/filters.const";
 
 export const CustomersFilterButton = () => {
 

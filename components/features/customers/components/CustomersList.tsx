@@ -1,8 +1,8 @@
 
-import { useCustomersPageStore } from "@/store/pages/customers.store";
-import { useSearchCustomers } from "@/queries/customers/customers.query";
+import { useCustomersPageStore } from "../store/page.store";
+import { useSearchCustomers } from "../queries/query";
 import { useRouter } from "next/navigation";
-import { customerTableColumns } from "../config/customerTable.config";
+import { customerTableColumns } from "../config/table.config";
 import { PaginatedTable } from "@/components/ui/data-display/paginated-table/PaginatedTable";
 
 export const CustomersList = () => {

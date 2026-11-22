@@ -2,9 +2,9 @@
 
 import { Column, Row } from "@/components/ui/layout/flex";
 import { BackButton } from "@/components/ui/controls/buttons/BackButton";
-import { OrderDetailsTabs } from "@/components/features/logistics/components/orders/order-details-tabs/OrderDetailsTabs";
-import { OrderDetailsHeader } from "@/components/features/logistics/components/orders/OrderDetailsHeader";
-import { OrderDetailsProvider } from "@/components/features/logistics/context/OrderDetailsProvider";
+import { OrderDetailsTabs } from "@/components/features/logistics/orders/components/order-details-tabs/OrderDetailsTabs";
+import { OrderDetailsHeader } from "@/components/features/logistics/orders/components/OrderDetailsHeader";
+import { OrderDetailsProvider } from "@/components/features/logistics/orders/context/details.provider";
 
 
 

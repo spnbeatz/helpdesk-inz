@@ -2,7 +2,7 @@
 
 import { Modal } from "@/components/composed/modals/Modal";
 import { Column } from "@/components/ui/layout/flex";
-import { useTicket } from "@/queries/tickets/tickets.query";
+import { useTicket } from "../queries/query";
 import { TicketHeaderSection } from "../sections/TicketHeaderSection";
 import { TicketMainSection } from "../sections/TicketMainSection";
 import { TicketAttachmentsSection } from "../sections/TicketAttachmentsSection";

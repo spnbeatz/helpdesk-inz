@@ -1,8 +1,8 @@
 
-import { userTableColumns } from "../config/userTableColumns";
-import { useUsersSettingsTableConfig } from "@/store/pages/settings/users.store";
+import { userTableColumns } from "../config/table.config";
+import { useUsersSettingsTableConfig } from "../store/table.store";
 import { createSettingsPopover } from "@/components/composed/settings/createSettingsPopover";
-import { useSettingsUserPageStore } from "@/store/pages/settings/users.store";
+import { useSettingsUserPageStore } from "../store/page.store";
 
 export const UsersListSettingsPopover = createSettingsPopover(
     useSettingsUserPageStore,

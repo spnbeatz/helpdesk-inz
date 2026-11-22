@@ -1,6 +1,6 @@
 import { Modal } from "@/components/composed/modals/Modal";
 import { useModalStore } from "@/store/modals";
-import { useCustomer } from "@/queries/customers/customers.query";
+import { useCustomer } from "../queries/query";
 import { Column, Row } from "@/components/ui/layout/flex";
 import { Avatar } from "@heroui/react";
 

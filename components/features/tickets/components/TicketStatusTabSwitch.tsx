@@ -1,6 +1,6 @@
 "use client";
 
-import { useTicketsPageStore } from "@/store/pages/tickets.store";
+import { useTicketsPageStore } from "../store/page.store";
 import { TabConfig, TabSwitch } from "../../../ui/controls/TabSwitch";
 
 export const TicketStatusTabSwitch = () => {

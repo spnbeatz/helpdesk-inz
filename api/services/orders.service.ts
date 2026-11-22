@@ -7,7 +7,7 @@ import { UserMinType, usersList, type UserType } from "@/data/users";
 import type { OrdersPageFiltersType } from "@/store/pages/orders.store";
 import { ticketsList } from "@/data/exampleTicketsList";
 import { productsList } from "@/data/products";
-import { OrdersView, OrdersRole } from "@/components/features/logistics/components/types/orderTabs.types";
+import { OrdersView, OrdersRole } from "@/components/features/logistics/orders/types/tabs.types";
 import {
     ordersList,
     orderItemsList,

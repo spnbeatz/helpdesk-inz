@@ -2,19 +2,19 @@
 
 import { Column, Row } from "@/components/ui/layout/flex";
 import { Title } from "@/components/ui/typography/Title";
-import { OrdersList } from "@/components/features/logistics/components/orders/OrdersList";
-import { useOrdersPageStore } from "@/store/pages/orders.store";
-import { OrdersListTabs } from "@/components/features/logistics/components/orders/OrderListTabs";
+import { OrdersList } from "@/components/features/logistics/orders/components/OrdersList";
+import { useOrdersPageStore } from "@/components/features/logistics/orders/store/page.store";
+import { OrdersListTabs } from "@/components/features/logistics/orders/components/OrderListTabs";
 import { useAuth } from "@/providers/auth.provider";
 import { getRoleName } from "@/components/features/users/helpers/getRoleName";
-import { ordersPageTitle } from "@/components/features/logistics/config/title.config";
+import { ordersPageTitle } from "@/components/features/logistics/orders/config/title.config";
 import { useCallback, useEffect } from "react";
-import { OrdersTable } from "@/components/features/logistics/components/orders/OrdersTable";
-import { OrdersFilterButton } from "@/components/features/logistics/components/orders/OrdersFilterButton";
-import { OrdersSettingsPopover } from "@/components/features/logistics/components/orders/OrdersSettingsPopover";
+import { OrdersTable } from "@/components/features/logistics/orders/components/OrdersTable";
+import { OrdersFilterButton } from "@/components/features/logistics/orders/components/OrdersFilterButton";
+import { OrdersSettingsPopover } from "@/components/features/logistics/orders/components/OrdersSettingsPopover";
 import { TableView } from "@/components/composed/table/TableView";
-import { ordersTableId } from "@/components/features/logistics/config/ordersTableColumns.config";
-import { OrderAddButton } from "@/components/features/logistics/components/orders/OrderAddButton";
+import { ordersTableId } from "@/components/features/logistics/orders/config/table.config";
+import { OrderAddButton } from "@/components/features/logistics/orders/components/OrderAddButton";
 
 export default function OrdersPage() {
 

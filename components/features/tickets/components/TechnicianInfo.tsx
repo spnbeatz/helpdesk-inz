@@ -1,4 +1,4 @@
-import { useCustomer } from "@/queries/customers/customers.query";
+import { useCustomer } from "../../customers/queries/query";
 import { Description } from "@heroui/react";
 import { Column } from "@/components/ui/layout/flex";
 import { User } from "../../users/components/User";

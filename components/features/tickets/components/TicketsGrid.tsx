@@ -4,8 +4,9 @@ import { PaginationBasic } from "../../../ui/data-display/PaginationBasic";
 import { Ticket } from "./Ticket";
 import { ScrollShadow } from "@heroui/react";
 import { Column } from "../../../ui/layout/flex";
-import { TicketsPageFiltersType, useTicketsPageStore } from "@/store/pages/tickets.store";
-import { useTicketList } from "@/queries/tickets/tickets.query";
+import { TicketsPageFiltersType } from "../types/filters.types";
+import { useTicketsPageStore } from "../store/page.store";
+import { useTicketList } from "../queries/query";
 import { useCallback } from "react";
 
 export const TicketsGrid = ({

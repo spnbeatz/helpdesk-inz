@@ -2,12 +2,12 @@
 
 import { ReactNode, useCallback, useMemo } from "react";
 
-import { useTicketsPageStore } from "@/store/pages/tickets.store";
+import { useTicketsPageStore } from "../store/page.store";
 import { useAuth } from "@/providers/auth.provider";
 
 import { useTicketsCountStatistics } from "@/queries/statistics/statistics.query";
-
-import { initialTicketsFilters, TicketsPageFiltersType } from "@/store/pages/tickets.store";
+import { initialTicketsFilters } from "../constants/filters.const";
+import { TicketsPageFiltersType } from "../types/filters.types";
 import { TicketsTechnicianStatisticsContext } from "../context/technicianStatistics.context";
 
 interface Props {

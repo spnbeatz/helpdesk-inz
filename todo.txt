@@ -28,10 +28,15 @@ inventorypage:
     zmienic przycisk add new product
     zwiekszyc padding headera
 
-tablewithpagination
-    zmienic propsy na opcjonalne zeby wewnatrz podac wartosci domyslne a nie za kazdym razem
+zrobic bardziej feature based:
+- poprzenosic typy 
+- przeniesc i rozdzielic store
 
 
 
+w OrderStatusProgress są jeszcze constants variables, trzeba je przeniesc
 
+TechnicianInfo - nie powinien pobieraz z query tylko dostac w view
+
+TicketFormModal uaktualnic typy (zmapowac)
 

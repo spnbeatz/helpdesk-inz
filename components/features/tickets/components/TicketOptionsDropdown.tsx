@@ -1,5 +1,5 @@
 import { Dropdown } from "@/components/ui/data-display/Dropdown";
-import { TicketActionsProvider } from "../context/ticketActions.context";
+import { TicketActionsProvider } from "../context/actions.context";
 import { LuEllipsisVertical } from "react-icons/lu";
 import { TicketListItemType } from "@/api/services/tickets.service";
 import { TicketActionButton } from "./TicketActionButton";

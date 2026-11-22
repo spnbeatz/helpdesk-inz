@@ -2,7 +2,7 @@
 import { Button, Fieldset, FieldGroup, Form } from "@heroui/react";
 import { useModalStore } from "@/store/modals";
 import { useState, useEffect } from "react";
-import { useTicket } from "@/queries/tickets/tickets.query";
+import { useTicket } from "../queries/query";
 import { Input } from "@/components/ui/controls/inputs/Input";
 import { Select } from "@/components/ui/controls/inputs/Select";
 import { usePriorityList } from "@/queries/priorities/priorities.query";
@@ -10,7 +10,7 @@ import { useCategotyList } from "@/queries/categories/categories.query";
 import { FileInput } from "@/components/ui/controls/inputs/FileInput";
 import { MdAttachFile } from "react-icons/md";
 import { LuPlus } from "react-icons/lu";
-import { useSaveTicket } from "@/queries/tickets/tickets.mutation";
+import { useSaveTicket } from "../queries/mutation";
 import { FormErrorMessage } from "@/components/ui/feedback/FormErrorMessage";
 import { Modal } from "@/components/composed/modals/Modal";
 import { AttachmentsList } from "@/components/ui/data-display/attachments/AttachmentsList";

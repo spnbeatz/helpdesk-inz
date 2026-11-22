@@ -1,8 +1,10 @@
-import { initialTicketsFilters, useTicketsPageStore } from "@/store/pages/tickets.store";
+
+import { initialTicketsFilters } from "../constants/filters.const";
+import { useTicketsPageStore } from "../store/page.store";
+import { TicketsPageFiltersType, TicketsSortKey } from "../types/filters.types";
 import { useCategotyList } from "@/queries/categories/categories.query";
-import { ticketsFiltersConfig } from "../config/ticketsFilters.config";
+import { ticketsFiltersConfig } from "../config/filters.config";
 import { FilterPopover } from "@/components/composed/filters/FilterPopover";
-import { TicketsPageFiltersType, TicketsSortKey } from "@/store/pages/tickets.store";
 import { usePriorityList } from "@/queries/priorities/priorities.query";
 
 export const TicketListFilterButton = () => {

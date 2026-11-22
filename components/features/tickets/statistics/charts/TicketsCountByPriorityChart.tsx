@@ -14,7 +14,7 @@ import { Card, Label } from "@heroui/react";
 import { getTicketsByPriority } from "@/helpers/tickets";
 import { TicketListItemType } from "@/api/services/tickets.service";
 import { ticketsCountByPriorityChartOptions } from "@/config/charts";
-import { useTicketList } from "@/queries/tickets/tickets.query";
+import { useTicketList } from "../../queries/query";
 
 ChartJS.register(
     CategoryScale,
@@ -26,9 +26,9 @@ ChartJS.register(
 
 export const TicketsCountByPriorityChart = ({ className } : { className?: string}) => {
 
-    const { data: ticketList } = useTicketList({})
+    const { data: ticketData } = useTicketList({})
 
-    const data = getTicketsByPriority(ticketList || []);
+    const data = getTicketsByPriority(ticketData?.items || []);
 
     return (
         <Card className={`bg-white/60 rounded-lg h-full p-6 flex flex-col items-start justify-center gap-2 max-w-[400px] w-full ${className}`}>

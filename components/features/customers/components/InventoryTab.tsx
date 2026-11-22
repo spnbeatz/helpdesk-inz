@@ -1,16 +1,16 @@
 import { Tab } from "@/components/ui/controls/tabs/Tabs"
 import { useParams } from "next/navigation";
-import { useEquipmentList } from "@/queries/logistics/logistics.query";
+import { useEquipmentList } from "../../logistics/inventory/queries/query";
 import { useModalStore } from "@/store/modals";
 import { Column, Row } from "@/components/ui/layout/flex";
 import { Select } from "@/components/ui/controls/inputs/Select";
 import { IconButton } from "@/components/ui/controls/buttons/iconButton";
 import { LuArrowRightLeft, LuTrash } from "react-icons/lu";
 import { useMemo, useState } from "react";
-import { customerPageInventoryTableColumns, mapInventoryTableItems } from "../../logistics/config/inventoryTableColumns";
+import { customerPageInventoryTableColumns, mapInventoryTableItems } from "../../logistics/inventory/config/table.config";
 import { FilterOption } from "@/components/composed/filters/types";
 import { PaginatedTable } from "@/components/ui/data-display/paginated-table/PaginatedTable";
-import { useInventoryPageStore } from "@/store/pages/inventory.store";
+import { useInventoryPageStore } from "../../logistics/inventory/store/page.store";
 
 export const InventoryTab = () => {
 

@@ -1,0 +1,29 @@
+"use client";
+
+import { useOrdersPageStore } from "../store/page.store";
+import { ScrollShadow } from "@heroui/react";
+import { Grid } from "@/components/ui/layout/Grid";
+import { useOrdersList } from "../queries/query";
+import { Order } from "./Order";
+import { useEffect } from "react";
+import { useScreen } from "@/hooks/useScreen";
+
+export const OrdersList = () => {
+    const { filters } = useOrdersPageStore();
+    useEffect(() => {
+        console.log(filters, "filters")
+    }, [filters])
+    const { data: ordersData } = useOrdersList(filters);
+    const { screenType } = useScreen();
+
+    return (
+        <ScrollShadow className="flex-1 w-full">
+            <Grid cols={screenType === "widescreen" ? 3 : 1} gap={4} className="w-full">
+                {ordersData?.items?.map((order) => {
+                    return <Order key={order.id} order={order} />
+                })}
+            </Grid>
+        </ScrollShadow>
+
+    )
+}

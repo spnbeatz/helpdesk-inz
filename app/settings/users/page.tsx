@@ -3,11 +3,11 @@
 import { Column, Row } from "@/components/ui/layout/flex";
 import { Title } from "@/components/ui/typography/Title";
 import { UsersListSettingsPopover } from "@/components/features/settings/users/components/UsersListSettingsPopover";
-import { useSettingsUserPageStore } from "@/store/pages/settings/users.store";
+import { useSettingsUserPageStore } from "@/components/features/settings/users/store/page.store";
 import { UsersFilterButton } from "@/components/features/settings/users/components/UsersFilterButton";
 import { UsersList } from "@/components/features/settings/users/components/UsersList";
 import { TableView } from "@/components/composed/table/TableView";
-import { usersSettingsTableId } from "@/components/features/settings/users/config/userTableColumns";
+import { usersSettingsTableId } from "@/components/features/settings/users/config/table.config";
 import { useCallback } from "react";
 import { UserAddButton } from "@/components/features/settings/users/components/UserAddButton";
 

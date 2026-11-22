@@ -1,11 +1,8 @@
 import { FilterPopover } from "@/components/composed/filters/FilterPopover";
-import { usersFiltersConfig } from "../config/usersFilters.config";
-import {
-    UsersPageFiltersType,
-    UsersSortKey,
-    useSettingsUserPageStore,
-    initialUsersFilters
-} from "@/store/pages/settings/users.store";
+import { usersFiltersConfig } from "../config/filters.config";
+import { UsersPageFiltersType, UsersSortKey } from "../types/filters.types";
+import { useSettingsUserPageStore } from "../store/page.store";
+import { initialUsersFilters } from "../constants/filters.const";
 
 export const UsersFilterButton = () => {
 

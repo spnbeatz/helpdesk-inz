@@ -1,5 +1,5 @@
 import { Dropdown } from "@heroui/react"
-import { TicketAction } from "../config/ticketActions.config"
+import { TicketAction } from "../config/actions.config"
 import { TicketActionButton } from "./TicketActionButton"
 
 export const TicketOptionsDropdownItem = ({ action } : { action: TicketAction}) => {

@@ -3,11 +3,11 @@
 import { Column, Row } from "@/components/ui/layout/flex";
 import { Title } from "@/components/ui/typography/Title";
 import { CustomersList } from "@/components/features/customers/components/CustomersList";
-import { useCustomersPageStore } from "@/store/pages/customers.store";
+import { useCustomersPageStore } from "@/components/features/customers/store/page.store";
 import { CustomersFilterButton } from "@/components/features/customers/components/CustomersFilterButton";
 import { CustomersSettingsPopover } from "@/components/features/customers/components/CustomersSettingsPopover";
 import { TableView } from "@/components/composed/table/TableView";
-import { customersTableId } from "@/components/features/customers/config/customerTable.config";
+import { customersTableId } from "@/components/features/customers/config/table.config";
 import { useCallback } from "react";
 
 export default function CustomersPage() {

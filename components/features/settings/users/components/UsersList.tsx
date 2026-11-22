@@ -1,9 +1,9 @@
 
-import { useAdminSearchUserList } from "@/queries/admin/admin.query";
-import { useSettingsUserPageStore, useUsersSettingsTableConfig } from "@/store/pages/settings/users.store";
-import { userTableColumns } from "../config/userTableColumns";
+import { useAdminSearchUserList } from "../queries/query";
+import { useSettingsUserPageStore } from "../store/page.store";
+import { useUsersSettingsTableConfig } from "../store/table.store";
+import { userTableColumns } from "../config/table.config";
 import { PaginatedTable } from "@/components/ui/data-display/paginated-table/PaginatedTable";
-
 
 export const UsersList = () => {
     const { filters, setFilters } = useSettingsUserPageStore();

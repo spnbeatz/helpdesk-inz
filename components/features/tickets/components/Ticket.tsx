@@ -4,12 +4,12 @@ import { BasicChip } from "../../../ui/data-display/BasicChip";
 import { TicketListItemType } from "@/api/services/tickets.service";
 import { useModalStore } from "@/store/modals";
 import { RiAttachment2 } from "react-icons/ri";
-import { useTicketsPageStore } from "@/store/pages/tickets.store";
+import { useTicketsPageStore } from "../store/page.store";
 import { highlightText } from "@/helpers/highlightText";
 import { Row, Column } from "../../../ui/layout/flex";
 import { TicketUser } from "./TicketUser";
 import { TicketInfoChips } from "./TicketInfoChips";
-import { useCustomer } from "@/queries/customers/customers.query";
+import { useCustomer } from "../../customers/queries/query";
 
 export const Ticket = ({ ticket }: { ticket: TicketListItemType }) => {
 

@@ -1,8 +1,8 @@
 "use client";
 
 import { createActionButton } from "@/components/ui/actions/createActionButton";
-import { useTicketActionsContext } from "../context/ticketActions.context";
-import { getTicketActionsConfig } from "../config/ticketActions.config";
+import { useTicketActionsContext } from "../context/actions.context";
+import { getTicketActionsConfig } from "../config/actions.config";
 
 export const TicketActionButton = createActionButton(
     useTicketActionsContext,

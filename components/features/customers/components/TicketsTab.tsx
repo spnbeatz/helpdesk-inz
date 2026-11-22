@@ -1,5 +1,5 @@
 import { Tab } from "@/components/ui/controls/tabs/Tabs";
-import { useTicketList } from "@/queries/tickets/tickets.query";
+import { useTicketList } from "../../tickets/queries/query";
 import { useParams } from "next/navigation";
 import { TicketsGrid } from "../../tickets/components/TicketsGrid";
 

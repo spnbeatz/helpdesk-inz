@@ -1,18 +1,18 @@
 "use client"
 
 import { Title } from "@/components/ui/typography/Title";
-import { useInventoryPageStore } from "@/store/pages/inventory.store";
+import { useInventoryPageStore } from "@/components/features/logistics/inventory/store/page.store";
 import { Column } from "@/components/ui/layout/flex/Column";
-import { SwitchLocation } from "@/components/features/logistics/components/SwitchLocation";
+import { SwitchLocation } from "@/components/features/logistics/inventory/components/SwitchLocation";
 import { useAuth } from "@/providers/auth.provider";
 import { useEffect } from "react";
-import { ProductList } from "@/components/features/logistics/components/inventory/ProductList";
-import { ProductsListSettingsPopover } from "@/components/features/logistics/components/inventory/ProductsListSettingsPopover";
-import { ProductsFilterButton } from "@/components/features/logistics/components/inventory/ProductsFilterButton";
+import { ProductList } from "@/components/features/logistics/inventory/components/ProductList";
+import { ProductsListSettingsPopover } from "@/components/features/logistics/inventory/components/ProductsListSettingsPopover";
+import { ProductsFilterButton } from "@/components/features/logistics/inventory/components/ProductsFilterButton";
 import { useCallback } from "react";
 import { TableView } from "@/components/composed/table/TableView";
-import { inventoryTableId } from "@/components/features/logistics/config/inventoryTableColumns";
-import { ProductAddButton } from "@/components/features/logistics/components/inventory/ProductAddButton";
+import { inventoryTableId } from "@/components/features/logistics/inventory/config/table.config";
+import { ProductAddButton } from "@/components/features/logistics/inventory/components/ProductAddButton";
 
 export default function InventoryPage() {
 
