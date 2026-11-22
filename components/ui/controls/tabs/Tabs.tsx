@@ -20,7 +20,7 @@ export type TabProps = {
 
 export const Tabs = (props : TabsProps) => {
     return (
-        <HTabs className="w-full h-full" orientation={props.orientation || "horizontal"} variant="primary">
+        <HTabs className="w-full h-full min-h-0" orientation={props.orientation || "horizontal"} variant="primary">
             <HTabs.ListContainer className={`${props.orientation === "vertical" ? "bg-transparent" : "bg-white/60"} max-w-100 max-h-auto`}>
                 <HTabs.List>
                     {props.tabs.map((tab) => {

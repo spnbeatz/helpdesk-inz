@@ -102,7 +102,7 @@ export const Autocomplete = <T,>({
                         <EmptyState>No results found</EmptyState>
                     )}
                 >
-                    {items.map((item) => {
+                    {items && Array.isArray(items) && items.map((item) => {
                         const id = getItemId(item);
 
                         return (

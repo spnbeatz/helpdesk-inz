@@ -44,11 +44,12 @@ type TableConfigStore = {
     changeType: (
         tableId: string,
         type: ListLayoutType,
-        defaultColumns: string[]
-    ) => void
+    ) => void,
+
+    getType: (tableId: string) => ListLayoutType;
 };
 
-export const useTableConfigStore = create<TableConfigStore>((set) => ({
+export const useTableConfigStore = create<TableConfigStore>((set, get) => ({
     tables: {},
 
     initializeTable: (tableId, defaultColumns, defaultType) =>
@@ -153,7 +154,7 @@ export const useTableConfigStore = create<TableConfigStore>((set) => ({
                 }
             }
         }),
-    changeType: (tableId, type, defaultColumns) =>
+    changeType: (tableId, type) =>
         set(state => {
             const current = state.tables[tableId];
 
@@ -161,12 +162,14 @@ export const useTableConfigStore = create<TableConfigStore>((set) => ({
                 tables: {
                     ...state.tables,
                     [tableId]: {
-                        ...(current ?? {
-                            visibleColumns: [...defaultColumns]
-                        }),
+                        visibleColumns: current.visibleColumns,
                         layoutType: type
                     }
                 }
             };
         }),
+
+    getType: (tableId: string) => {
+        return get().tables[tableId]?.layoutType ?? "list";
+    }
 }));

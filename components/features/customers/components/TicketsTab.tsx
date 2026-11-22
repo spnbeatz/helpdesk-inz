@@ -13,7 +13,7 @@ export const TicketsTab = () => {
 
     return (
         <Tab id="tickets">
-            <TicketsGrid ticketsList={ticketList} itemsPerPage={9}/>
+            <TicketsGrid additionalFilters={{userId: params.id}}/>
         </Tab>
     )
 }

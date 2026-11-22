@@ -1,9 +1,8 @@
 import { useTicketList } from "@/queries/tickets/tickets.query";
 import { useTicketsPageStore, useTicketsSettingsTableConfig } from "@/store/pages/tickets.store"
 import { ticketsTableColumns } from "../config/ticketsTableColumns.config";
-import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
 import { useModalStore } from "@/store/modals";
-import { useEffect } from "react";
+import { PaginatedTable } from "@/components/ui/data-display/paginated-table/PaginatedTable";
 
 export const TicketsTable = () => {
 
@@ -24,17 +23,12 @@ export const TicketsTable = () => {
     }
 
     return (
-        <TableWithPagination
-            data={ticketsData?.items || []}
-            totalItems={ticketsData?.totalItems || 0}
+        <PaginatedTable 
+            data={ticketsData?.items}
+            totalItems={ticketsData?.totalItems}
             columns={columns}
-            searchValue={filters.searchValue}
-            sortBy={filters.sortBy}
-            sortDir={filters.sortDir}
-            sortKeys={["title", "description"]}
-            itemsPerPage={filters.itemsPerPage || 22}
-            page={filters.page || 1}
-            setPage={(page) => setFilters({ page })}
+            filters={filters}
+            setFilters={setFilters}
             onRowClick={(item) => handleOpenViewModal(item.id)}
         />
     )

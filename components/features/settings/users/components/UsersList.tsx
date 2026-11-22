@@ -1,7 +1,8 @@
-import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination"
+
 import { useAdminSearchUserList } from "@/queries/admin/admin.query";
 import { useSettingsUserPageStore, useUsersSettingsTableConfig } from "@/store/pages/settings/users.store";
 import { userTableColumns } from "../config/userTableColumns";
+import { PaginatedTable } from "@/components/ui/data-display/paginated-table/PaginatedTable";
 
 
 export const UsersList = () => {
@@ -16,13 +17,12 @@ export const UsersList = () => {
     );
 
     return (
-        <TableWithPagination
-            data={userData?.items || []}
-            totalItems={userData?.totalItems || 0}
+        <PaginatedTable 
+            data={userData?.items}
+            totalItems={userData?.totalItems}
             columns={columns}
-            itemsPerPage={filters.itemsPerPage || 22}
-            page={filters.page || 1}
-            setPage={(page) => setFilters({ page })}
+            filters={filters}
+            setFilters={setFilters}
             selectable
         />
     )

@@ -7,7 +7,7 @@ import {
 import { createPageStore } from "../factories/createPageStore";
 import { createTableConfig } from "@/hooks/createTableConfig";
 import { TicketListItemType } from "@/api/services/tickets.service";
-import { ticketsDefaultColumns } from "@/components/features/tickets/config/ticketsTableColumns.config";
+import { ticketsDefaultColumns, ticketTableId } from "@/components/features/tickets/config/ticketsTableColumns.config";
 
 export type TicketsSortKey = keyof TicketType;
 
@@ -45,7 +45,7 @@ export const useTicketsPageStore =
 
 export const useTicketsSettingsTableConfig =
     createTableConfig<TicketListItemType>(
-        "tickets",
+        ticketTableId,
         ticketsDefaultColumns,
         "list"
     )

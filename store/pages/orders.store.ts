@@ -15,7 +15,7 @@ import {
 
 import { createPageStore } from "../factories/createPageStore";
 import { createTableConfig } from "@/hooks/createTableConfig";
-import { ordersDefaultColumns } from "@/components/features/logistics/config/ordersTableColumns.config";
+import { ordersDefaultColumns, ordersTableId } from "@/components/features/logistics/config/ordersTableColumns.config";
 
 export type OrdersSortKey = keyof OrderWithAssignmentType;
 
@@ -74,7 +74,7 @@ export const useOrdersPageStore =
 
 export const useOrdersTableConfig =
     createTableConfig<OrderListViewType>(
-        "orders",
+        ordersTableId,
         ordersDefaultColumns,
         "list"
     )

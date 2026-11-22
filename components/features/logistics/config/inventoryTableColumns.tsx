@@ -1,6 +1,4 @@
-import { TableColumn } from "@/components/ui/data-display/TableWithPagination";
-import { InventoryItem } from "../components/inventory/ProductList";
-import { useInventoryPageStore } from "@/store/pages/inventory.store";
+import { TableColumn } from "@/components/ui/data-display/paginated-table/types";
 import { EquipmentListItemType } from "@/api/services/logistics.service";
 import { EquipmentStatus, EquipmentType } from "@/data/equipments";
 import { Row } from "@/components/ui/layout/flex";
@@ -22,6 +20,8 @@ export type InventoryTableItemType = {
     warrantyUntil: string | null,
     location?: string
 }
+
+export const inventoryTableId = "inventory.table";
 
 export const inventoryTableColumns: TableColumn<InventoryTableItemType>[] =  [
         { id: "id", name: "ID" },

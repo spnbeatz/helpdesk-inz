@@ -16,12 +16,12 @@ export const ListLayoutSwitch = ({ value, setValue }: ListLayoutSwitchProps) => 
             <Row Center className="h-full p-1">
                 <IconButton Icon={LuList}
                     iconColor={value === "list" ? "white" : undefined}
-                    className={`rounded-r-none h-full border-none w-full shadow-none ${value === "list" ? "bg-indigo-400/60" : ""}`}
+                    className={` rounded-md rounded-r-none h-full border-none w-full shadow-none ${value === "list" ? "bg-indigo-400/60" : ""}`}
                     onClick={() => setValue("list")}
                 />
                 <IconButton Icon={LuLayoutGrid}
                     iconColor={value === "grid" ? "white" : undefined}
-                    className={`px-2 h-full w-full border-none rounded-l-none shadow-none ${value === "grid" ? "bg-indigo-400/60" : ""}`}
+                    className={`px-2 h-full w-full border-none rounded-md rounded-l-none shadow-none ${value === "grid" ? "bg-indigo-400/60" : ""}`}
                     onClick={() => setValue("grid")}
                 />
 

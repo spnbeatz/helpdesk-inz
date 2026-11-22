@@ -82,11 +82,9 @@ import {
 } from "chart.js";
 
 import { Bar } from "react-chartjs-2";
-import { TableColumn, TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
+import { TableColumn } from "@/components/ui/data-display/paginated-table/types";
 import { getTechnicianPerformance, getTechnicianWorkload, TechnicianPerformanceType } from "@/api/services/statistics.service";
-import { BasicChip } from "@/components/ui/data-display/BasicChip";
 import { PriorityChip } from "@/components/features/tickets/components/TicketInfoChips";
-import { useTicketsTechnicianStatistics } from "@/components/features/tickets/hooks/useTechnicianTicketsStatistics";
 
 ChartJS.register(
   CategoryScale,

@@ -1,8 +1,10 @@
 import { TicketListItemType } from "@/api/services/tickets.service";
-import { TableColumn } from "@/components/ui/data-display/TableWithPagination";
+import { TableColumn } from "@/components/ui/data-display/paginated-table/types";
 import { TableUserEmail } from "@/components/composed/table/TableUserEmail";
 import { truncateText } from "@/utils/string.util";
 import { PriorityChip } from "../components/TicketInfoChips";
+
+export const ticketTableId = "tickets.table";
 
 export const ticketsTableColumns:TableColumn<TicketListItemType>[] = [
     { id: "id", name: "ID" },

@@ -4,12 +4,21 @@ import { PaginationBasic } from "../../../ui/data-display/PaginationBasic";
 import { Ticket } from "./Ticket";
 import { ScrollShadow } from "@heroui/react";
 import { Column } from "../../../ui/layout/flex";
-import { useTicketsPageStore } from "@/store/pages/tickets.store";
+import { TicketsPageFiltersType, useTicketsPageStore } from "@/store/pages/tickets.store";
 import { useTicketList } from "@/queries/tickets/tickets.query";
+import { useCallback } from "react";
 
-export const TicketsGrid = () => {
+export const TicketsGrid = ({
+    additionalFilters
+} : {
+    additionalFilters?: Partial<TicketsPageFiltersType>
+}) => {
     const { filters, setFilters } = useTicketsPageStore();
-    const { data: ticketData, isLoading } = useTicketList(filters)
+    const { data: ticketData } = useTicketList({...filters, ...additionalFilters});
+
+    const setPage = useCallback((page: number) => {
+        setFilters({ page })
+    },[setFilters])
 
     return (
         <Column
@@ -32,7 +41,7 @@ export const TicketsGrid = () => {
             <div className="shrink-0">
                 <PaginationBasic
                     page={filters.page || 1}
-                    setPage={(page) => setFilters({ page })}
+                    setPage={setPage}
                     totalItems={ticketData?.totalItems || 0}
                     itemsPerPage={filters.itemsPerPage || 15}
                 />

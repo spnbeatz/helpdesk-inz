@@ -1,9 +1,11 @@
-import { TableColumn } from "@/components/ui/data-display/TableWithPagination";
+import { TableColumn } from "@/components/ui/data-display/paginated-table/types";
 import { User } from "@/data/users";
 import { Avatar } from "@heroui/react";
 import { Row } from "@/components/ui/layout/flex";
 import { formatRelativeDate } from "@/utils/date..util";
 import { TableUserEmail } from "@/components/composed/table/TableUserEmail";
+
+export const usersSettingsTableId = "users.settings.table"
 
 export const userTableColumns: TableColumn<User>[] = [
     { id: "id", name: "ID" },

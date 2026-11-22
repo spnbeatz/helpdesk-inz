@@ -1,10 +1,12 @@
 import { TableUserEmail } from "@/components/composed/table/TableUserEmail";
-import { TableColumn } from "@/components/ui/data-display/TableWithPagination";
+import { TableColumn } from "@/components/ui/data-display/paginated-table/types";
 import { OrderListViewType } from "@/data/orders/types";
 import { truncateText } from "@/utils/string.util";
 import { OrderStatusChip } from "../components/orders/OrderStatusChip";
 import { Description } from "@heroui/react";
 import { formatRelativeDate } from "@/utils/date..util";
+
+export const ordersTableId = "orders.table"
 
 export const ordersTableColumns: TableColumn<OrderListViewType>[] = [
     { id: "id", name: "ID" },

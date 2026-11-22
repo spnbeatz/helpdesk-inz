@@ -1,13 +1,13 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Equipment } from "@/data/equipments";
 import { useEquipmentList } from "@/queries/logistics/logistics.query";
-import { Selection, Table } from "@heroui/react";
-import { InventorySortKey, useInventoryPageStore, useInventoryTableConfig } from "@/store/pages/inventory.store";
+import { Selection } from "@heroui/react";
+import { useInventoryPageStore, useInventoryTableConfig } from "@/store/pages/inventory.store";
 import { useModalStore } from "@/store/modals";
-import { TableWithPagination } from "@/components/ui/data-display/TableWithPagination";
 import { inventoryTableColumns, mapInventoryTableItems } from "../../config/inventoryTableColumns";
+import { PaginatedTable } from "@/components/ui/data-display/paginated-table/PaginatedTable";
 
 export type InventoryItem = Equipment & {
     quantity?: number;
@@ -48,38 +48,15 @@ export const ProductList = () => {
 
     }
 
-    const setPage = useCallback((page: number) => {
-        setFilters({page})
-    }, [setFilters])
-
     return (
-        <TableWithPagination
+        <PaginatedTable 
             data={productList}
-            page={filters.page ?? 1}
-            totalItems={productsResponse?.totalItems ?? 0}
-            setPage={setPage}
-            columns={columns}
-            itemsPerPage={filters.itemsPerPage ?? 20}
-            searchValue={filters.searchValue}
-            sortBy={filters.sortBy}
-            sortDir={filters.sortDir}
+            totalItems={productsResponse?.totalItems}
+            filters={filters}
+            setFilters={setFilters}
             selectable
-            sortKeys={["name", "model", "manufacturer"]}
-            setSort={(column) => {
-                setFilters({
-                    sortBy: column as InventorySortKey,
-                    sortDir:
-                        filters.sortBy === column
-                            ? filters.sortDir === "asc"
-                                ? "desc"
-                                : "asc"
-                            : "asc",
-                });
-            }}
-            onRowClick={(product) => {
-                handleOpenItemModal(product.id);
-            }}
+            onRowClick={(item) => handleOpenItemModal(item.id)}
+            columns={columns}
         />
-
     )
 }

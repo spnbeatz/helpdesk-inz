@@ -1,4 +1,4 @@
-import { InventoryTableItemType } from "@/components/features/logistics/config/inventoryTableColumns";
+import { inventoryTableId, InventoryTableItemType } from "@/components/features/logistics/config/inventoryTableColumns";
 import { BaseFiltersType, PaginationFiltersType } from "@/types/filters.types";
 import { EquipmentStatus, EquipmentType } from "@/data/equipments";
 import { createPageStore } from "../factories/createPageStore";
@@ -37,6 +37,6 @@ export const useInventoryPageStore =
 
 export const useInventoryTableConfig =
     createTableConfig<InventoryTableItemType>(
-        "inventory",
+        inventoryTableId,
         inventoryDefaultColumns
     )

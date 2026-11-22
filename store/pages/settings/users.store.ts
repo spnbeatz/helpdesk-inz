@@ -2,7 +2,7 @@ import { User, UserType } from "@/data/users";
 import { BaseFiltersType, PaginationFiltersType } from "@/types/filters.types";
 import { createPageStore } from "@/store/factories/createPageStore";
 import { createTableConfig } from "@/hooks/createTableConfig";
-import { usersDefaultColumns } from "@/components/features/settings/users/config/userTableColumns";
+import { usersDefaultColumns, usersSettingsTableId } from "@/components/features/settings/users/config/userTableColumns";
 
 export type UsersSortKey = keyof User;
 
@@ -36,6 +36,6 @@ export const useSettingsUserPageStore =
 
 export const useUsersSettingsTableConfig =
     createTableConfig<User>(
-        "users.settings",
+        usersSettingsTableId,
         usersDefaultColumns
     )

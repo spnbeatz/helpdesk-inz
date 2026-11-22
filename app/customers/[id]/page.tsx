@@ -15,7 +15,7 @@ export default function CustomerInfoPage() {
 
     if (!customer) return null;
     return (
-        <Column Start className="w-full gap-4">
+        <Column Start className="w-full h-full gap-4">
             <Row CenterBetween className="w-full">
                 <Row Center className="gap-4">
                     <BackButton />

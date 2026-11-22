@@ -73,7 +73,7 @@ export const createTableConfig = <T extends object>(
                 reset(tableId, defaultColumns.map(String)),
 
             changeType: (type: ListLayoutType) =>
-                changeType(tableId, type, defaultColumns.map(String))
+                changeType(tableId, type)
         };
     };
 };
