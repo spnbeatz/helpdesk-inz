@@ -1,5 +1,5 @@
 import { equipmentList, Equipment } from "@/data/equipments";
-import { InventoryPageFiltersType } from "@/store/pages/inventory.store";
+import { InventoryPageFiltersType } from "@/components/features/logistics/inventory/types/filters.types";
 import { ProductType, productsList } from "@/data/products";
 import { LocationType, locations } from "@/data/locations";
 import { PaginatedResponse } from "../types";
@@ -26,7 +26,7 @@ const usersMap = new Map(
 export const getEquipmentList = (
     filters: InventoryPageFiltersType = {}
 ): PaginatedResponse<EquipmentListItemType> => {
-
+    console.log(filters, "filters")
 
     // Join Equipment + Product + Location + User
     let result: EquipmentListItemType[] = equipmentList.flatMap(
@@ -69,7 +69,7 @@ export const getEquipmentList = (
     }
 
     if (filters.userId !== undefined) {
-        result.filter(
+        result = result.filter(
             item => item.assignedTo === filters.userId
         )
     }

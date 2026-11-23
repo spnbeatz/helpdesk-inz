@@ -1,4 +1,4 @@
-import { InventoryPageFiltersType } from "@/store/pages/inventory.store";
+import { InventoryPageFiltersType } from "@/components/features/logistics/inventory/types/filters.types";
 import { IApiClient } from "../interfaces/config/apiClient.interface";
 import { ILogisticsService } from "../interfaces/services/logistics.interface";
 import { EquipmentListItemType, ProductsFiltersType } from "../services/logistics.service";

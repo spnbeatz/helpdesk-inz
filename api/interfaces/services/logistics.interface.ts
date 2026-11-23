@@ -1,7 +1,7 @@
 import { EquipmentListItemType, ProductsFiltersType } from "@/api/services/logistics.service";
 import { PaginatedResponse } from "@/api/types";
 import { ProductType } from "@/data/products";
-import { InventoryPageFiltersType } from "@/store/pages/inventory.store";
+import { InventoryPageFiltersType } from "@/components/features/logistics/inventory/types/filters.types";
 
 export interface ILogisticsService {
     getEquipment(id?: string): Promise<EquipmentListItemType | null>,

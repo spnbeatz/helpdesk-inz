@@ -10,14 +10,10 @@ import { createReportCards } from "@/config/reports";
 import { Grid } from "@/components/ui/layout/Grid";
 import { LuChevronRight, LuDot } from "react-icons/lu";
 import { useRouter } from "next/navigation";
+import { ReportsTableView } from "@/components/features/reports/components/ReportsTableView";
 
 export default function ReportsPage() {
 
-    const [searchValue, setSearchValue] = useState<string>("");
-
-    const handleOnSearch = (value: string) => {
-        setSearchValue(value)
-    }
     return (
         <Column StartBetween className="gap-4 h-full">
             <Row CenterBetween>
@@ -32,29 +28,8 @@ export default function ReportsPage() {
                     </Grid>
                 </Section>
 
-                <Column Start className="w-full gap-2">
-                    <Section
-                        title="Your last reports"
-                        rightContent={(
-                            <Row Center>
-                                <Search
-                                    onSearch={handleOnSearch}
-                                />
-                            </Row>
-                        )}
-                    >
-                        <div></div>
-{/*                         <TableWithPagination
-                            data={[]}
-                            columns={[
-                                { id: "id", name: "ID" },
-                                { id: "title", name: "Report Title" },
-                                { id: "type", name: "Report Type" },
-                                { id: "createdAt", name: "Creation date" },
-                            ]}
-                            itemsPerPage={5}
-                        /> */}
-                    </Section>
+                <Column Start className="w-full gap-2 h-[300px]">
+                    <ReportsTableView/>
                 </Column>
 
             </Column>

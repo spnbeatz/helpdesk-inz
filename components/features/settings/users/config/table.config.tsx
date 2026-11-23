@@ -1,7 +1,5 @@
 import { TableColumn } from "@/components/ui/data-display/paginated-table/types";
 import { User } from "@/data/users";
-import { Avatar } from "@heroui/react";
-import { Row } from "@/components/ui/layout/flex";
 import { formatRelativeDate } from "@/utils/date..util";
 import { TableUserEmail } from "@/components/composed/table/TableUserEmail";
 

@@ -40,3 +40,15 @@ TechnicianInfo - nie powinien pobieraz z query tylko dostac w view
 
 TicketFormModal uaktualnic typy (zmapowac)
 
+Tickets - CreateModal:
+ - dać możliwość dodawania attachmentów
+ - odnośnik do usera
+ - obsługa komentarzy
+ - mutations do akcji
+
+Tickets - EditModal
+
+Orders - klikniecie w tabele zeby odniesc do order
+Inventory - modal dodawania produktu
+
+

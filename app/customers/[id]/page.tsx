@@ -8,10 +8,19 @@ import { useParams } from "next/navigation";
 import { Section } from "@/components/ui/surfaces/Section";
 import { LuBuilding, LuDot, LuMail, LuPhone } from "react-icons/lu";
 import { CustomerTabs } from "@/components/features/customers/components/CustomerTabs";
+import { useEffect } from "react";
+import { useInventoryOwnedPageStore } from "@/components/features/logistics/owned/store/page.store";
+import { initialInventoryFilters } from "@/components/features/logistics/inventory/constants/filters.const";
 
 export default function CustomerInfoPage() {
     const params = useParams<{ id: string }>();
     const { data: customer } = useCustomer(params.id);
+
+    const setFilters = useInventoryOwnedPageStore(state => state.setFilters);
+
+    useEffect(() => {
+        setFilters({ ...initialInventoryFilters, userId: params.id })
+    }, [params]);
 
     if (!customer) return null;
     return (

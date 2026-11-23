@@ -1,7 +1,7 @@
 import { ticketsList, TicketType } from "@/data/exampleTicketsList";
 import { categoryList } from "@/data/categoryList";
 import { priorityList } from "@/data/priorityList";
-import { TicketsPageFiltersType } from "@/store/pages/tickets.store";
+import { TicketsPageFiltersType } from "@/components/features/tickets/types/filters.types";
 import { TicketFormDataType } from "@/components/features/tickets/modals/TicketFormModal";
 import { usersList } from "@/data/users";
 import { PaginatedResponse } from "../types";
