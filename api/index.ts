@@ -3,6 +3,7 @@ import { apiConfig } from "./config/config";
 
 import { AuthService } from "./services_new/auth.service";
 import { CategoriesService } from "./services_new/categories.service";
+import { LocationsService } from "./services_new/locations.service";
 import { LogisticsService } from "./services_new/logistics.service";
 import { OrdersService } from "./services_new/orders.service";
 import { ReportsService } from "./services_new/reports.service";
@@ -20,4 +21,5 @@ export const ticketsService = new TicketsService(api);
 export const usersService = new UsersService(api);
 export const statisticsService = new StatisticsService(api);
 export const reportsService = new ReportsService(api);
+export const locationsService = new LocationsService(api);
 

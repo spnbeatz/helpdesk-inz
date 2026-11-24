@@ -3,6 +3,7 @@ import { ValidationError } from "next/dist/compiled/amphtml-validator"
 
 export const Input = ({
     isRequired,
+    inputType = "text",
     name,
     label,
     placeholder,
@@ -14,18 +15,20 @@ export const Input = ({
 }: {
     isRequired?: boolean,
     name?: string,
+    inputType?: string,
     label?: string,
     placeholder?: string,
     validate?: ((value: string) => true | ValidationError | null | undefined) | undefined,
     type?: "input" | "textarea",
-    value: string,
+    value?: string,
     rows?: number,
-    onInput: (value: string, key: string) => void
+    onInput?: (value: string, key: string) => void
 }) => {
     return (
         <TextField
             isRequired={isRequired || false}
             name={name}
+            type={inputType}
             validate={validate}
             className={"w-full"}
         >
@@ -38,14 +41,14 @@ export const Input = ({
                         className={"rounded-lg bg-white/50 w-full"}
                         value={value}
                         onInput={(e) =>
-                            onInput((e.target as HTMLInputElement).value, name || "")
+                            onInput?.((e.target as HTMLInputElement).value, name || "")
                         }
                     />
                 ) : (
                     <TextArea fullWidth className={"rounded-lg bg-white/50"}
                         placeholder={placeholder} value={value} rows={rows}
                         onInput={(e) =>
-                            onInput((e.target as HTMLTextAreaElement).value, name || "")
+                            onInput?.((e.target as HTMLTextAreaElement).value, name || "")
                         }
                     />
                 )}

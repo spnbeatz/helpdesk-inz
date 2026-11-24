@@ -9,7 +9,7 @@ import { UsersList } from "@/components/features/settings/users/components/Users
 import { TableView } from "@/components/composed/table/TableView";
 import { usersSettingsTableId } from "@/components/features/settings/users/config/table.config";
 import { useCallback } from "react";
-import { UserAddButton } from "@/components/features/settings/users/components/UserAddButton";
+import { UserCreateButton } from "@/components/features/settings/users/components/UserCreateButton";
 
 export default function UsersSettingsPage() {
 
@@ -28,7 +28,7 @@ export default function UsersSettingsPage() {
                 filterButton={<UsersFilterButton/>}
                 settingsButton={<UsersListSettingsPopover/>}
                 table={<UsersList/>}
-                createButton={<UserAddButton />}
+                createButton={<UserCreateButton />}
             />
         </Column>
     )

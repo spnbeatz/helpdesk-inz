@@ -28,7 +28,7 @@ export const ActionButton = ({
 
     if(type === "dropdown") {
         return (
-            <Dropdown.Item>
+            <Dropdown.Item onPress={onClick}>
                 <Icon />
                 {label}
             </Dropdown.Item>

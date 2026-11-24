@@ -13,6 +13,8 @@ import { useCurrentUser, UserData } from "@/hooks/auth/useCurrentUser";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
+import { Column } from "@/components/ui/layout/flex";
+import { Label } from "@heroui/react";
 
 type AuthContextType = {
   user: User | null;
@@ -80,8 +82,11 @@ export function useAuth() {
 
 function LoadingScreen() {
   return (
-    <div>
-      <h1>Loading...</h1>
-    </div>
+    <Column Center className="w-full h-full">
+
+      <Column Center className="p-10 rounded-lg bg-white/80 shadow-sm">
+        <Label>Loading</Label>
+      </Column>
+    </Column>
   );
 }

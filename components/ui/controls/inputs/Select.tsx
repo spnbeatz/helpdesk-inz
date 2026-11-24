@@ -5,6 +5,7 @@ import {
     Label,
     ListBox,
 } from "@heroui/react";
+import { useState } from "react";
 
 export type SelectOptionsType = {
     id: string;
@@ -19,7 +20,8 @@ type SelectProps = {
     placeholder?: string;
     onChange?: (value: string | string[] | null) => void;
     className?: string,
-    mode?: "single" | "multiple"
+    mode?: "single" | "multiple",
+    name?: string
 };
 
 export const Select = ({
@@ -30,11 +32,17 @@ export const Select = ({
     placeholder,
     onChange,
     className,
-    mode = "single"
+    mode = "single",
+    name
 }: SelectProps) => {
+
+    const [selectedValue, setSelectedValue] = useState<string | string[] | null>(
+        defaultValue ?? null
+    );
+
     return (
         <HSelect
-
+            name={name}
             aria-label="select"
             isRequired={isRequired}
             value={defaultValue}
@@ -42,15 +50,25 @@ export const Select = ({
             className={`${className}`}
             selectionMode={mode}
             onChange={(key: Key | Key[] | null) => {
-                onChange?.(
-                    key
-                        ? Array.isArray(key)
-                            ? key.map(String)
-                            : String(key)
-                        : null
-                );
+                const value = key
+                    ? Array.isArray(key)
+                        ? key.map(String)
+                        : String(key)
+                    : null;
+
+                setSelectedValue(value);
+                onChange?.(value);
             }}
         >
+            <input
+                type="hidden"
+                name={name}
+                value={
+                    Array.isArray(selectedValue)
+                        ? selectedValue.join(",")
+                        : selectedValue ?? ""
+                }
+            />
             {label && <Label>{label}</Label>}
 
             <HSelect.Trigger className="rounded-lg bg-white/70 text-xs">

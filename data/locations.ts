@@ -1,8 +1,10 @@
+export type LocationCategoryType = "branch" | "warehouse"
+
 export type LocationType = {
     id: string;
     name: string;
     city: string;
-    type: "branch" | "warehouse";
+    type: LocationCategoryType;
     parent_id: string | null;
 };
 

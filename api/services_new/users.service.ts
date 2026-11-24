@@ -1,14 +1,14 @@
-import { CustomerType, User } from "@/data/users";
+import { CustomerType, rolesList, RoleType, User } from "@/data/users";
 import { IApiClient } from "../interfaces/config/apiClient.interface";
 import { IUsersService } from "../interfaces/services/users.interface";
-import { CustomersPageFilterType } from "@/store/pages/customers.store";
+import { CustomersPageFilterType } from "@/components/features/customers/types/filters.types";
 import { PaginatedResponse } from "../types";
 
 import { 
     getCustomer as getCustomer_old,
     searchCustomerList, adminSearchUserList
 } from "../services/users.service";
-import { UsersPageFiltersType } from "@/store/pages/settings/users.store";
+import { UsersPageFiltersType } from "@/components/features/settings/users/types/filters.types";
 
 export class UsersService implements IUsersService {
 
@@ -28,6 +28,10 @@ export class UsersService implements IUsersService {
 
     async getSettingsUsersList(filter: UsersPageFiltersType): Promise<PaginatedResponse<User>> {
         return adminSearchUserList(filter)
+    }
+
+    async getRoleList(): Promise<RoleType[]> {
+        return rolesList;
     }
 
 }

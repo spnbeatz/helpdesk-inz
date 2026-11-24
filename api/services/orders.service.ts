@@ -4,7 +4,7 @@
  * Docelowo operacje tworzenia i walidacja uprawnien musza byc na backendzie.
  */
 import { UserMinType, usersList, type UserType } from "@/data/users";
-import type { OrdersPageFiltersType } from "@/store/pages/orders.store";
+import type { OrdersPageFiltersType } from "@/components/features/logistics/orders/types/filters.types";
 import { ticketsList } from "@/data/exampleTicketsList";
 import { productsList } from "@/data/products";
 import { OrdersView, OrdersRole } from "@/components/features/logistics/orders/types/tabs.types";

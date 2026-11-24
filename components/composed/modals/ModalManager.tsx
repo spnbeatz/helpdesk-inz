@@ -48,6 +48,11 @@ export const DeclineOrderModal = dynamic(() =>
         .then(mod => mod.DeclineOrderModal)
 );
 
+export const CreateUserModal = dynamic(() =>
+    import("@/components/features/settings/users/modals/CreateUserModal")
+        .then(mod => mod.CreateUserModal)
+);
+
 import { TicketFormModalProps } from "@/components/features/tickets/modals/TicketFormModal";
 
 import { ConfirmationModalProps } from "./ConfirmationModal";
@@ -130,6 +135,10 @@ export const ModalManager = () => {
                                 key={modal.id}
                                 data={modal.data as ModalDataType}
                             />
+                        )
+                    case "createUser":
+                        return (
+                            <CreateUserModal key={modal.id} />
                         )
 
                     /*                     case "deleteTicket":

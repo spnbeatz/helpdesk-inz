@@ -9,3 +9,10 @@ export const useAdminSearchUserList = (filters: UsersPageFiltersType) => {
         queryFn: () => usersService.getSettingsUsersList(filters)
     })
 }
+
+export const useRoleList = () => {
+    return useQuery({
+        queryKey: ["roles"],
+        queryFn: () => usersService.getRoleList()
+    })
+}
