@@ -1,7 +1,9 @@
 import { background } from "@/styles"
 import { Row } from "../layout/flex";
 
-export const BasicChip = ({children, className, onClick, color = "normal"} : {children: React.ReactNode | string, className?: string,  color?: "normal" | "danger" | "green" | "yellow" | "white", onClick?: ()=> void}) => {
+export type BasicChipColorType = "normal" | "danger" | "green" | "yellow" | "white"
+
+export const BasicChip = ({children, className, onClick, color = "normal"} : {children: React.ReactNode | string, className?: string,  color?: BasicChipColorType, onClick?: ()=> void}) => {
     const getColorClass = () => {
         switch(color){
             case "normal":

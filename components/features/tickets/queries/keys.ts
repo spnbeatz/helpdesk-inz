@@ -12,4 +12,6 @@ export const ticketKeys = {
 
     detail: (id: string) =>
         [...ticketKeys.details(), id] as const,
+    comments: (id: string) =>
+        ["comments", id]
 };

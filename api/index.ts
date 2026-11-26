@@ -5,6 +5,7 @@ import { AuthService } from "./services_new/auth.service";
 import { CategoriesService } from "./services_new/categories.service";
 import { LocationsService } from "./services_new/locations.service";
 import { LogisticsService } from "./services_new/logistics.service";
+import { NotificationsService } from "./services_new/notifications.service";
 import { OrdersService } from "./services_new/orders.service";
 import { ReportsService } from "./services_new/reports.service";
 import { StatisticsService } from "./services_new/statistics.service";
@@ -22,4 +23,5 @@ export const usersService = new UsersService(api);
 export const statisticsService = new StatisticsService(api);
 export const reportsService = new ReportsService(api);
 export const locationsService = new LocationsService(api);
+export const notificationsService = new NotificationsService(api)
 

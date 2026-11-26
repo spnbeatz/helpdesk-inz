@@ -1,11 +1,13 @@
-import { ticketsList, TicketType } from "@/data/exampleTicketsList";
+import { TicketType } from "@/data/exampleTicketsList";
 import { categoryList } from "@/data/categoryList";
 import { priorityList } from "@/data/priorityList";
 import { TicketsPageFiltersType } from "@/components/features/tickets/types/filters.types";
-import { TicketFormDataType } from "@/components/features/tickets/modals/TicketFormModal";
+import { TicketFormDataType } from "@/components/features/tickets/types/form.types";
 import { usersList } from "@/data/users";
 import { PaginatedResponse } from "../types";
 import { createPaginatedData, searchResults, sortResults } from "../utils";
+import { mapTickets } from "../map/tickets.map";
+import { useTicketDataStore } from "@/store/data/tickets.store";
 
 type UserMiniType = {
     id: string,
@@ -23,7 +25,8 @@ export type TicketListItemType = TicketType & {
 
 
 export const getTicket = (id?: string): TicketListItemType | undefined => {
-    const ticket = ticketsList.find(ticket => ticket.id === id);
+    if (!id) return undefined;
+    const ticket = useTicketDataStore.getState().getById(id);
 
     if (!ticket) return undefined;
 
@@ -70,6 +73,7 @@ export const getTicketList = (
         itemsPerPage
     } = filter;
 
+    const ticketsList = useTicketDataStore.getState().data;
     let result = [...ticketsList];
 
     // Status
@@ -145,36 +149,7 @@ export const getTicketList = (
     }
 
     // Map
-    const mapped = result.map(ticket => {
-        const user = usersList.find(
-            user => user.id === ticket.customer_id
-        );
-
-        if (!user) {
-            throw new Error(
-                `Customer not found for ticket ${ticket.id}`
-            );
-        }
-
-        return {
-            ...ticket,
-
-            priority: priorityList.find(
-                priority => priority.id === ticket.priorityId
-            )?.name,
-
-            category: categoryList.find(
-                category => category.id === ticket.categoryId
-            )?.name,
-
-            customer: {
-                id: user.id,
-                email: user.email,
-                avatarUrl: user.avatarUrl ?? "",
-                name: `${user.firstName} ${user.lastName}`
-            }
-        };
-    });
+    const mapped = mapTickets(result);
 
     const data = createPaginatedData<TicketListItemType>(
         mapped,
@@ -187,22 +162,41 @@ export const getTicketList = (
 
 export const createTicket = async (
     formData: TicketFormDataType,
-    files: File[]
 ) => {
     const body = new FormData();
 
-    body.append("title", formData.title);
+/*     body.append("title", formData.title);
     body.append("description", formData.description);
     body.append("categoryId", formData.categoryId);
-    body.append("priorityId", formData.priorityId);
+    body.append("priorityId", formData.priorityId); */
 
-    files.forEach(file => {
-        body.append("files", file);
-    });
+    if (Array.isArray(formData.files)) {
+        formData.files.forEach(file => {
+            body.append("files", file);
+        });
+    }
+
 
     console.log("create ticket", body);
 
-    return {}
+    const createTicket = useTicketDataStore.getState().add;
+    const updateTicket = useTicketDataStore.getState().update;
+
+    console.log(formData, "formdata id")
+
+    if (formData.id) {
+        const result = updateTicket(formData.id, formData);
+
+        return {
+            message: result
+        }
+    } else {
+        const result = createTicket(formData)
+        return {
+            message: result
+        }
+    }
+
 
     /*     return fetch("/api/tickets", {
             method: "POST",
@@ -216,10 +210,10 @@ export const updateTicket = async (
 ) => {
     const body = new FormData();
 
-    body.append("title", formData.title);
+/*     body.append("title", formData.title);
     body.append("description", formData.description);
     body.append("categoryId", formData.categoryId);
-    body.append("priorityId", formData.priorityId);
+    body.append("priorityId", formData.priorityId); */
 
     files.forEach(file => {
         body.append("files", file);

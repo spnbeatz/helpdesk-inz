@@ -2,19 +2,21 @@
 
 import { useTicketsPageStore } from "../store/page.store";
 import { TabConfig, TabSwitch } from "../../../ui/controls/TabSwitch";
+import { TicketStatusType } from "@/data/exampleTicketsList";
 
 export const TicketStatusTabSwitch = () => {
 
     const { filters, setFilters } = useTicketsPageStore();
 
-    const tabs: TabConfig<string>[] = [
+    const tabs: TabConfig<TicketStatusType | "all">[] = [
         { label: "All tickets", id: "all" },
-        { label: "New tickets", id: "new" },
-        { label: "Closed tickets", id: "closed" }
+        { label: "Pending tickets", id: "pending" },
+        { label: "In progress tickets", id: "in_progress"},
+        { label: "Resolved tickets", id: "resolved" }
     ]
 
     const handleChangeValue = (value: string) => {
-        setFilters({ status: value as "all" | "new" | "closed" })
+        setFilters({ status: value === "all" ? undefined : value as TicketStatusType })
     }
 
     return <TabSwitch

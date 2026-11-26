@@ -13,6 +13,11 @@ export const TicketFormModal = dynamic(() =>
         .then(mod => mod.TicketFormModal)
 );
 
+export const TicketAssignModal = dynamic(() =>
+    import("@/components/features/tickets/modals/TicketAssignModal")
+        .then(mod => mod.TicketAssignModal)
+);
+
 export const InventoryItemModal = dynamic(() =>
     import("../../features/logistics/inventory/modals/InventoryItemModal")
         .then(mod => mod.InventoryItemModal)
@@ -62,6 +67,8 @@ import { CustomerInfoModalType } from "@/components/features/customers/modals/Cu
 import { CreateOrderModalType } from "@/components/features/logistics/orders/modals/CreateOrderModal";
 import { OrderViewModalType } from "@/components/features/logistics/orders/modals/OrderViewModal";
 import { ModalDataType } from "./types";
+import { TicketAttachmentsModal, TicketAttachmentsModalProps } from "@/components/features/tickets/modals/TicketAttachmentsModal";
+import { TicketAssignModalProps } from "@/components/features/tickets/modals/TicketAssignModal";
 
 
 export const ModalManager = () => {
@@ -139,6 +146,21 @@ export const ModalManager = () => {
                     case "createUser":
                         return (
                             <CreateUserModal key={modal.id} />
+                        )
+                    case "ticketAttachments":
+                        return (
+                            <TicketAttachmentsModal 
+                                key={modal.id}
+                                data={modal.data as TicketAttachmentsModalProps}
+                            />
+                        )
+
+                    case "assignTechnician":
+                        return (
+                            <TicketAssignModal 
+                                key={modal.id}
+                                data={modal.data as TicketAssignModalProps}
+                            />
                         )
 
                     /*                     case "deleteTicket":

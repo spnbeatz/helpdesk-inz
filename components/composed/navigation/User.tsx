@@ -2,25 +2,35 @@
 
 import { Avatar, Card, Description, Label, Button } from "@heroui/react";
 import { useAuth } from "@/providers/auth.provider";
-import { LuLogOut } from "react-icons/lu";
+import { LuChevronDown, LuLogOut } from "react-icons/lu";
 import { Column, Row } from "@/components/ui/layout/flex";
+import { Dropdown } from "@/components/ui/data-display/Dropdown";
 
 export const UserPanel = () => {
-    const { user } = useAuth();
+
     return (
-        <Card className="mt-auto w-full flex flex-col items-center justify-between bg-white/30 rounded-lg p-2">
-            <Row CenterStart className="gap-2 w-full">
-                <Avatar className="rounded-lg">
-                    <Avatar.Image src={user?.avatarUrl || ""} />
-                </Avatar>
-                <Column StartCenter>
-                    <Label className="text-xs">{user?.firstName + " " + user?.lastName}</Label>
-                    <Description>{user?.roleNames[0]}</Description>
+        <div className="w-10 h-10 mt-auto ml-auto">
+            <Dropdown trigger={(
+                <UserPanelTrigger />
+            )}>
+                <Column Start>
+                    options
                 </Column>
+            </Dropdown>
+        </div>
 
-            </Row>
+    )
+}
 
-            <Button variant="tertiary" className={"rounded-lg w-full text-xs"}><LuLogOut /> Logout </Button>
-        </Card>
+export const UserPanelTrigger = () => {
+
+    const { user } = useAuth();
+
+    if (!user) return null;
+
+    return (
+        <Avatar className={`rounded-lg w-10 h-10 shadow-sm`}>
+            <Avatar.Image src={user.avatarUrl || ""} />
+        </Avatar>
     )
 }

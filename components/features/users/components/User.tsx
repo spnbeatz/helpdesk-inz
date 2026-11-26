@@ -15,7 +15,7 @@ export const User = ({ source, description, name, size = "default" } : UserCompo
             {source && <Avatar size="sm" className={`rounded-lg ${size === "small" && "w-4.5 h-4.5"}`}>
                 <Avatar.Image src={source} />
             </Avatar>}
-            <Column className="justify-center">
+            <Column Start className="justify-center">
                 <Label className={`text-black/70 ${size === "small" && "text-xs"}`}>{name}</Label>
                 <Description>{description}</Description>
             </Column>

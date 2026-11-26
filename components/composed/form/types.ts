@@ -27,5 +27,5 @@ export type FormConfig<T> = {
 export type FormProps<T extends object> = {
     config: FormConfig<T>,
     children?: React.ReactNode,
-    onSubmit: (formData: T) => void
+    onSubmit: (formData: T) => void,
 }

@@ -41,7 +41,7 @@ export const TicketsTechnicianStatisticsProvider = ({
     }, [filter]);
 
     const filterOpenTickets = useCallback(() => {
-        filter({ status: "new" });
+        filter({ status: "pending" });
     }, [filter]);
 
     const filterUnassignedTickets = useCallback(() => {
@@ -59,7 +59,7 @@ export const TicketsTechnicianStatisticsProvider = ({
             Date.now() - 15 * 24 * 60 * 60 * 1000
         ).toISOString();
 
-        filter({ createdBefore: dateBefore, status: "new" });
+        filter({ createdBefore: dateBefore, status: "pending" });
     }, [filter]);
 
     const value = useMemo(() => ({

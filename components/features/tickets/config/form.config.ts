@@ -21,6 +21,12 @@ export const ticketCreateFormConfig: FormConfig<TicketFormDataType> = {
             isRequired: true
         },
         {
+            name: "priorityId",
+            label: "Select priority",
+            type: "select",
+            isRequired: true
+        },
+        {
             name: "categoryId",
             label: "Select category",
             type: "select",
@@ -34,4 +40,15 @@ export const ticketCreateFormConfig: FormConfig<TicketFormDataType> = {
             accept: "image/*,text/*,video/*,.zip,.rar,.7z,.tar,.gz"
         }
     ]
+}
+
+
+export const ticketAttachmentFormConfig: FormConfig<{files: File[]}> = {
+    title: "Select attachments",
+    description: "Accept files: images, text files, videos, archives",
+    fields: [{
+        name: "files",
+        type: "file",
+        accept: "image/*,text/*,video/*,.zip,.rar,.7z,.tar,.gz"
+    }]
 }

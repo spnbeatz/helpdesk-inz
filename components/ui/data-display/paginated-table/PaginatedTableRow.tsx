@@ -14,6 +14,7 @@ export const PaginatedTableRow = <
     onRowClick,
     filters
 }: PaginatedTableRowProps<T, TFilters>) => {
+
     return (
         <Table.Row
             id={String((item as { id: string }).id)}
@@ -28,28 +29,26 @@ export const PaginatedTableRow = <
                     <Checkbox slot="selection" aria-label="Select Row" />
                 </Table.Cell>
             )}
-
-            <Table.Collection items={columns}>
-                {(column) => (
-                    <Table.Cell
-                        onPointerDown={(e) => e.stopPropagation()}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onRowClick?.(item);
-                        }}
-                    >
-                        {Array.isArray(item[column.id])
-                            ? (item[column.id] as string[]).join(" ")
-                            : column.customValue
-                                ? column.customValue(item)
-                                : highlightText(
-                                    String(item[column.id] ?? ""),
-                                    filters.searchValue
-                                )
-                        }
-                    </Table.Cell>
-                )}
-            </Table.Collection>
+            {columns.map((column) => (
+                <Table.Cell
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onRowClick?.(item);
+                    }}
+                    key={`${column.id, column.name}`}
+                >
+                    {Array.isArray(item[column.id])
+                        ? (item[column.id] as string[]).join(" ")
+                        : column.customValue
+                            ? column.customValue(item)
+                            : highlightText(
+                                String(item[column.id] ?? ""),
+                                filters.searchValue
+                            )
+                    }
+                </Table.Cell>
+            ))}
         </Table.Row>
     )
 }

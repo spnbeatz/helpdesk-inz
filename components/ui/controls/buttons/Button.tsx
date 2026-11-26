@@ -5,7 +5,7 @@ type ButtonProps = ComponentProps<typeof HButton>;
 
 export const Button = ({ children, className, ...props }: ButtonProps) => {
     return (
-        <HButton {...props} className={`rounded-lg ${className}`}>
+        <HButton {...props} className={`rounded-lg shadow-sm ${className}`}>
             {children}
         </HButton>
     );

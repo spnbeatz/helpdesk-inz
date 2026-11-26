@@ -54,13 +54,14 @@ export const Autocomplete = <T,>({
     return (
         <HAutocomplete
             className="w-full"
+            allowsEmptyCollection
             selectionMode={selectionMode}
             value={value}
             placeholder={placeholder}
             onChange={(keys) => onChange(keys as Key[] & (Key | null))}
         >
             <HAutocomplete.Trigger>
-                {triggerComponent ? (
+                {triggerText ? (
                     <Row Start className="gap-2">
                         <LuSearch />
                         <Description>{triggerText}</Description>
@@ -75,48 +76,51 @@ export const Autocomplete = <T,>({
                 )}
             </HAutocomplete.Trigger>
 
-            <HAutocomplete.Popover>
-                <SearchField
-                    autoFocus
-                    aria-label={triggerText}
-                    variant="secondary"
-                    name="search"
+            <HAutocomplete.Popover className={"z-[9999] rounded-lg"}>
+                <HAutocomplete.Filter
+                    inputValue={searchValue}
+                    onInputChange={setSearchValue}
                 >
-                    <SearchField.Group>
-                        <SearchField.SearchIcon />
+                    <SearchField
+                        autoFocus
+                        aria-label={triggerText}
+                        variant="secondary"
+                        name="search"
+                    >
+                        <SearchField.Group>
+                            <SearchField.SearchIcon />
 
-                        <SearchField.Input
-                            placeholder={triggerText}
-                            value={searchValue}
-                            onInput={(e) =>
-                                setSearchValue(e.currentTarget.value)
-                            }
-                        />
+                            <SearchField.Input
+                                className={"rounded-lg"}
+                                placeholder={triggerText}
+                            />
 
-                        <SearchField.ClearButton />
-                    </SearchField.Group>
-                </SearchField>
+                            <SearchField.ClearButton />
+                        </SearchField.Group>
+                    </SearchField>
 
-                <ListBox
-                    renderEmptyState={() => (
-                        <EmptyState>No results found</EmptyState>
-                    )}
-                >
-                    {items && Array.isArray(items) && items.map((item) => {
-                        const id = getItemId(item);
+                    <ListBox
+                        renderEmptyState={() => (
+                            <EmptyState className="py-6">No results found</EmptyState>
+                        )}
+                    >
+                        {items && Array.isArray(items) && items.map((item) => {
+                            const id = getItemId(item);
 
-                        return (
-                            <ListBox.Item
-                                key={id}
-                                id={id}
-                                textValue={String(id)}
-                            >
-                                {renderItem(item)}
-                                <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                        );
-                    })}
-                </ListBox>
+                            return (
+                                <ListBox.Item
+                                    key={id}
+                                    id={id}
+                                    textValue={String(id)}
+                                >
+                                    {renderItem(item)}
+                                    <ListBox.ItemIndicator />
+                                </ListBox.Item>
+                            );
+                        })}
+                    </ListBox>
+                </HAutocomplete.Filter>
+
             </HAutocomplete.Popover>
         </HAutocomplete>
     );

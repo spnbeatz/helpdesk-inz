@@ -16,6 +16,7 @@ type SelectProps = {
     label?: string;
     options?: FilterOption[];
     isRequired?: boolean;
+    value?: string | string[] | null;
     defaultValue?: string | string[] | null;
     placeholder?: string;
     onChange?: (value: string | string[] | null) => void;
@@ -33,7 +34,8 @@ export const Select = ({
     onChange,
     className,
     mode = "single",
-    name
+    name,
+    value
 }: SelectProps) => {
 
     const [selectedValue, setSelectedValue] = useState<string | string[] | null>(
@@ -45,7 +47,7 @@ export const Select = ({
             name={name}
             aria-label="select"
             isRequired={isRequired}
-            value={defaultValue}
+            defaultValue={defaultValue}
             placeholder={placeholder}
             className={`${className}`}
             selectionMode={mode}

@@ -4,20 +4,31 @@ import { Row } from "@/components/ui/layout/flex";
 import { FormControl } from "./FormControl";
 import { FormProps } from "./types";
 import { Button, Description, FieldGroup, Fieldset, Form as HForm } from "@heroui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useModalStore } from "@/store/modals";
 
 export const Form = <T extends object,>({
     config,
     onSubmit,
-    children
+    children,
 }: FormProps<T>) => {
 
     const formRef = useRef<HTMLFormElement>(null);
+    const initialDataRef = useRef<string | null>(null);
+
+    useEffect(() => {
+        if (!formRef.current) return;
+
+        const formData = new FormData(formRef.current);
+
+        initialDataRef.current = JSON.stringify(
+            Object.fromEntries(formData.entries())
+        );
+    }, []);
 
     const [files, setFiles] = useState<Record<string, File[]>>({});
 
-    const { closeAllModals, openModal } = useModalStore();
+    const { closeAllModals, openModal, closePreviousModal, closeModal } = useModalStore();
 
 
     const handleFilesChange = (name: string, selectedFiles: File[]) => {
@@ -51,21 +62,28 @@ export const Form = <T extends object,>({
 
         const formData = new FormData(formRef.current);
 
-        const hasValues = Array.from(formData.values()).some(value =>
-            value.toString().trim().length > 0
+        const currentData = Object.fromEntries(formData.entries());
+
+        const hasFiles = Object.values(files).some(
+            selectedFiles => selectedFiles.length > 0
         );
 
-        if (hasValues) {
+        const hasChanges =
+            JSON.stringify(currentData) !== initialDataRef.current ||
+            hasFiles;
+
+        if (hasChanges) {
             openModal("confirmation", {
                 iconType: "warning",
                 title: "Discard changes?",
-                confirmAction: () => closeAllModals(),
+                confirmAction: () => closePreviousModal(),
                 confirmButtonText: "Yes"
-            })
+            });
+
             return;
         }
 
-        closeAllModals();
+        closeModal();
     };
 
     return (

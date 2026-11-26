@@ -11,8 +11,9 @@ export const useTicketActions = (ticket: TicketListItemType) => {
     const isAdmin = hasRole("Administrator");
     const isOwner = !!user && ticket.customer_id === user.id;
     const isTechnician = !!user && ticket.technician_id === user.id;
+    
 
-    const isClosed = ticket.status === "closed";
+    const isClosed = ticket.status === "resolved";
     const isAssigned = ticket.technician_id !== null;
 
     const canEdit =

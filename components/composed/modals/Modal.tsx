@@ -37,7 +37,10 @@ export const Modal = ({
         <HModal.Backdrop isOpen={isOpen} onOpenChange={handleOpenChange} isDismissable={isDismissable}>
             <HModal.Container size={size} className={"h-auto"}>
 
-                <HModal.Dialog className={`rounded-lg bg-white backdrop-blur-md p-10 ${className}`}>
+                <HModal.Dialog 
+                    className={`rounded-lg bg-white backdrop-blur-md p-10 ${className}`}
+                    aria-label="modal"
+                >
                     {closeTrigger && <HModal.CloseTrigger />}
                     <HModal.Body>
                         {children}

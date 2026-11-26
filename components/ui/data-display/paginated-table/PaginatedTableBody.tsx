@@ -17,9 +17,10 @@ export const PaginatedTableBody = <
     onRowClick,
     filters
 }: PaginatedTableBodyProps<T, TFilters>) => {
+
     return (
         <Table.Body
-            dependencies={[columns]}
+            dependencies={[columns, data]}
             items={data}
             renderEmptyState={() => (
                 <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center py-10">
@@ -30,6 +31,7 @@ export const PaginatedTableBody = <
         >
             {(item) => (
                 <PaginatedTableRow 
+                    key={String((item as { id: string }).id)}
                     item={item}
                     columns={columns}
                     selectable={selectable}

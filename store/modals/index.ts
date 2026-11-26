@@ -15,6 +15,8 @@ type ModalType =
     | "approveOrder"
     | "declineOrder"
     | "createUser"
+    | "ticketAttachments"
+    | "assignTechnician"
 
 type Modal = {
     id: string;
@@ -27,6 +29,7 @@ type ModalStateType = {
 
     openModal: (type: ModalType, data?: unknown) => void;
     closeModal: () => void;
+    closePreviousModal: () => void;
     closeAllModals: () => void;
 };
 
@@ -43,6 +46,10 @@ export const useModalStore = create<ModalStateType>((set) => ({
                     data,
                 },
             ],
+        })),
+    closePreviousModal: () =>
+        set((state) => ({
+            modals: state.modals.slice(0, -2),
         })),
 
     closeModal: () =>

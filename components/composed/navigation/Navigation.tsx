@@ -7,9 +7,10 @@ import { navigationRoutes } from "@/config/navigation";
 import { Accordion} from "@heroui/react";
 import { usePathname } from "next/navigation";
 import { UserPanel } from "./User";
-import { Notifications } from "./Notifications";
+import { Notifications } from "../../features/notifications/components/Notifications";
 import { Row } from "@/components/ui/layout/flex";
 import { UserSwitch } from "@/components/ui/controls/TabSwitch";
+import { UpperNavigation } from "./UpperNavigation";
 
 export const Navigation = () => {
     const { user } = useAuth();
@@ -42,8 +43,8 @@ export const Navigation = () => {
                     })}
                 </Accordion>
 
-                <UserPanel />
                 <UserSwitch />
+                <UserPanel />
             </div>
         </div>
     )

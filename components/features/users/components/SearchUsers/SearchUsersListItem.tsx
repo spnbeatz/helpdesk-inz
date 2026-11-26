@@ -1,7 +1,7 @@
-import { UserType } from "@/data/users"
+import { User, UserType } from "@/data/users"
 import { ListBox } from "@heroui/react"
 
-export const SearchUsersListItem = ({ user }: { user: UserType }) => {
+export const SearchUsersListItem = ({ user }: { user: User }) => {
     return (
         <ListBox.Item
             className="flex flex-col items-start justify-center"

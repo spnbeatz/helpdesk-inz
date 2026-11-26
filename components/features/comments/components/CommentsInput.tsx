@@ -6,21 +6,24 @@ import { Input } from "@/components/ui/controls/inputs/Input";
 import { IconButton } from "@/components/ui/controls/buttons/iconButton";
 import { LuSend } from "react-icons/lu";
 
-export const CommentsInput = ({ onSubmit }: { onSubmit: () => void }) => {
+export const CommentsInput = ({ placeholder, onSubmit }: { placeholder: string | null, onSubmit: () => void }) => {
 
     const { user } = useAuth();
 
-    const [value, setValue] = useState<string>("")
+    const [value, setValue] = useState<string>("");
+
+
 
     return (
         <Row CenterBetween className="w-full gap-2">
-            <Avatar>
+            <Avatar className="rounded-lg">
                 <Avatar.Image src={user?.avatarUrl || ""} />
             </Avatar>
             <Input
                 value={value}
+                disabled={!!placeholder}
                 onInput={(value, _) => setValue(value)}
-                placeholder="Write a comment..."
+                placeholder={placeholder || "Write a comment..."}
             />
             <IconButton Icon={LuSend} onClick={onSubmit} />
         </Row>

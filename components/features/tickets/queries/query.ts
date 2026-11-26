@@ -19,3 +19,11 @@ export const useTicketList = (filter?: TicketsPageFiltersType) => {
         queryFn: () => ticketsService.getTicketList(filter || {})
     });
 };
+
+export const useCommentsList = (ticketId: string) => {
+    return useQuery({
+        queryKey: ticketKeys.comments(ticketId),
+        queryFn: () => ticketsService.getCommentsList(ticketId),
+        enabled: !!ticketId
+    })
+}

@@ -9,12 +9,13 @@ export type ConfirmationModalProps = {
     title: string,
     description?: string,
     confirmAction?: () => void,
-    confirmButtonText?: string
+    confirmButtonText?: string,
+    closeToPrevious?: boolean
 }
 
 export const ConfirmationModal = ({ data }: { data: ConfirmationModalProps }) => {
 
-    const { closeModal, closeAllModals } = useModalStore();
+    const { closeModal, closeAllModals, closePreviousModal } = useModalStore();
 
     const getIcon = () => {
 
@@ -31,7 +32,7 @@ export const ConfirmationModal = ({ data }: { data: ConfirmationModalProps }) =>
     return (
         <Modal
             isOpen
-            
+
             onOpenChange={(open) => {
                 if (!open) {
                     closeModal();
@@ -52,13 +53,14 @@ export const ConfirmationModal = ({ data }: { data: ConfirmationModalProps }) =>
                             </Modal.Body>
                         }
                         <Modal.Footer className="w-full flex flex-row items-center justify-end">
-                            {data.confirmAction && 
-                            <Button variant="tertiary" onClick={closeModal} className={"rounded-lg"}>
-                                Cancel
-                            </Button>}
-                            <Button onClick={data.confirmAction ? data.confirmAction : closeAllModals} className={"rounded-lg bg-sky-700/60"}>
+                            <Button onClick={data.confirmAction ? data.confirmAction : data.closeToPrevious ? closePreviousModal : closeAllModals} className={"rounded-lg bg-sky-700/60"}>
                                 {data.confirmButtonText || "Confirm"}
                             </Button>
+                            {data.confirmAction &&
+                                <Button variant="tertiary" onClick={closeModal} className={"rounded-lg"}>
+                                    Cancel
+                                </Button>}
+
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Modal.Container>

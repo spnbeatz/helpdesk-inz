@@ -1,9 +1,9 @@
 import { locations } from "@/data/locations";
 import { usersList, CustomerType, customersList, users } from "@/data/users";
-import { CustomersPageFilterType } from "@/store/pages/customers.store";
+import { CustomersPageFilterType } from "@/components/features/customers/types/filters.types";
 import { PaginatedResponse } from "../types";
 import { createPaginatedData, searchResults, sortResults } from "../utils";
-import { UsersPageFiltersType } from "@/store/pages/settings/users.store";
+import { UsersPageFiltersType } from "@/components/features/settings/users/types/filters.types";
 import { User } from "@/data/users";
 
 export const searchUserList = (searchValue: string) => {

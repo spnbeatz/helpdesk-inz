@@ -4,15 +4,19 @@ import { useState } from "react";
 import { Key, Autocomplete, SearchField } from "@heroui/react";
 import { SearchUsersList } from "./SearchUsersList";
 import { Column } from "@/components/ui/layout/flex";
+import { UsersPageFiltersType } from "@/components/features/settings/users/types/filters.types";
+import { RoleNameType } from "../../types/role.types";
 
 type SearchUserProps = {
     onSelect: (userIds: string[] | null) => void;
-    placeholder?: string
+    placeholder?: string,
+    role: RoleNameType
 };
 
 export const SearchUser = ({
     placeholder,
     onSelect,
+    role
 }: SearchUserProps) => {
     const [searchValue, setSearchValue] = useState("");
     const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
@@ -63,7 +67,7 @@ export const SearchUser = ({
                             </SearchField.Group>
                         </SearchField>
 
-                        <SearchUsersList searchValue={searchValue} />
+                        <SearchUsersList searchValue={searchValue} role={role} />
 
                     </Autocomplete.Filter>
                 </Autocomplete.Popover>
